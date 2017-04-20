@@ -1,0 +1,16 @@
+<configuration>
+    <property>
+        <name>fs.DefaultFS</name>
+        <value>hdfs://master:9000</value>
+        <description>The master endpoint in cluster.</description>
+    </property>
+    <property>
+        <name>io.file.buffer.size</name>
+        <value>131072</value>
+    </property>
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>file:/<HADOOP_HOME>/temp</value>
+        <description>A base for other temporary directories.</description>
+    </property>
+</configuration>
