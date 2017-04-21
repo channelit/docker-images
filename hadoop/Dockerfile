@@ -24,7 +24,5 @@ RUN\
 	
 VOLUME /data
 
-ADD start-yarn.sh /usr/local/bin/start-yarn.sh
-
 EXPOSE 9000 50070 50010 50020 50075 50090
 CMD ["hdfs"]
