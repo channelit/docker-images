@@ -1,12 +1,8 @@
-FROM ubuntu:16.04
+FROM cithub/ubuntu
 MAINTAINER Channel IT Services, LLC
 ENV\
 	HADOOP_VER=2.8.0
 RUN\
-	apt-get update &&\
-	apt-get install -y vim curl wget openssh-server openssh-client rsync default-jdk ntp &&\
-	apt-get update &&\
-	apt-get clean &&\
 	wget http://ftp.twaren.net/Unix/Web/apache/hadoop/common/hadoop-$HADOOP_VER/hadoop-$HADOOP_VER.tar.gz &&\
 	tar xzvf hadoop-$HADOOP_VER.tar.gz &&\
 	rm hadoop-$HADOOP_VER.tar.gz
