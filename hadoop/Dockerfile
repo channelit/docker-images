@@ -3,7 +3,7 @@ MAINTAINER Channel IT Services, LLC
 ENV\
 	HADOOP_VER=2.8.0
 RUN\
-	wget http://ftp.twaren.net/Unix/Web/apache/hadoop/common/hadoop-$HADOOP_VER/hadoop-$HADOOP_VER.tar.gz &&\
+	wget http://mirrors.ocf.berkeley.edu/apache/hadoop/common/hadoop-$HADOOP_VER/hadoop-$HADOOP_VER.tar.gz &&\
 	tar xzvf hadoop-$HADOOP_VER.tar.gz &&\
 	rm hadoop-$HADOOP_VER.tar.gz
 
