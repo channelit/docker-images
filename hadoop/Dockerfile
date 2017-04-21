@@ -5,6 +5,7 @@ ENV	HADOOP_VER=2.8.0
 ENV	HADOOP_HOME=/usr/local/hadoop
 ENV	HADOOP_OPTS=-Djava. &&\library.path=/usr/local/hadoop/lib/native
 ENV	PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+ENG JAVA_HOME=/usr/lib/jvm/default-java
 
 RUN\
 	wget http://mirrors.ocf.berkeley.edu/apache/hadoop/common/hadoop-$HADOOP_VER/hadoop-$HADOOP_VER.tar.gz &&\
