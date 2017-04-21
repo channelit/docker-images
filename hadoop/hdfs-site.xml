@@ -4,4 +4,20 @@
         <name>dfs.replication</name>
         <value>1</value>
     </property>
+    <property>
+		<name>dfs.datanode.data.dir</name>
+		<value>file:///data/dfs/data</value>
+	</property>
+	<property>
+		<name>dfs.namenode.name.dir</name>
+		<value>file:///data/dfs/name</value>
+	</property>
+	<property>
+		<name>dfs.namenode.checkpoint.dir</name>
+		<value>file:///data/dfs/namesecondary </value>
+	</property>
+	<property>
+		<name>dfs.namenode.datanode.registration.ip-hostname-check</name>
+		<value>false</value>
+	</property>
 </configuration>
