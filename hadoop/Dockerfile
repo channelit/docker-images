@@ -29,11 +29,11 @@ RUN\
 
 RUN\
     mkdir -p /home/hadoop/logs &&\
-	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/core-site.xml -O $HADOOP_HOME/etc/hadoop &&\
-	wget https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/hdfs-site.xml -O $HADOOP_HOME/etc/hadoop &&\
-	wget https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/maprd-site.xml -O $HADOOP_HOME/etc/hadoop &&\
-	wget https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/yarn-site.xml -O $HADOOP_HOME/etc/hadoop &&\
-	wget https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/start.sh -O $HADOOP_HOME &&\
+	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/core-site.xml -O $HADOOP_HOME/etc/hadoop/core-site.xml &&\
+	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/hdfs-site.xml -O $HADOOP_HOME/etc/hadoop/hdfs-site.xml &&\
+	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/maprd-site.xml -O $HADOOP_HOME/etc/hadoop/maprd-site.xml &&\
+	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/yarn-site.xml -O $HADOOP_HOME/etc/hadoop/yarn-site.xml &&\
+	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/start.sh -O $HADOOP_HOME/start.sh &&\
 	chmod 755 $HADOOP_HOME/start.sh &&\
 	sed -i '/^export JAVA_HOME/ s:.*:export JAVA_HOME=/usr/lib/jvm/default-java\nexport HADOOP_HOME=/home/hadoop/hadoop\n:' $HADOOP_HOME/etc/hadoop/hadoop-env.sh &&\
 	sed -i '/^export HADOOP_CONF_DIR/ s:.*:export HADOOP_CONF_DIR=/home/hadoop/hadoop/etc/hadoop/:' $HADOOP_HOME/etc/hadoop/hadoop-env.sh &&\
