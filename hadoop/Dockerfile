@@ -23,18 +23,18 @@ RUN\
 	cd ~ &&\
 	wget http://mirrors.ocf.berkeley.edu/apache/hadoop/common/hadoop-$HADOOP_VER/hadoop-$HADOOP_VER.tar.gz &&\
 	tar xzvf hadoop-$HADOOP_VER.tar.gz &&\
-	mv hadoop-$HADOOP_VER ~/hadoop &&\
+	mv hadoop-$HADOOP_VER $HADOOP_HOME &&\
 	rm hadoop-$HADOOP_VER.tar.gz
 
 RUN\
     mkdir -p /home/hadoop/logs &&\
-	wget https://github.com/channelit/docker-images/blob/master/hadoop/core-site.xml -P $HADOOP_HOME/etc/hadoop &&\
-	wget https://github.com/channelit/docker-images/blob/master/hadoop/hdfs-site.xml -P $HADOOP_HOME/etc/hadoop &&\
-	wget https://github.com/channelit/docker-images/blob/master/hadoop/maprd-site.xml -P $HADOOP_HOME/etc/hadoop &&\
-	wget https://github.com/channelit/docker-images/blob/master/hadoop/yarn-site.xml -P $HADOOP_HOME/etc/hadoop &&\
-	wget https://github.com/channelit/docker-images/blob/master/hadoop/start.sh -P $HADOOP_HOME/start.sh &&\
+	wget https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/core-site.xml -P $HADOOP_HOME/etc/hadoop &&\
+	wget https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/hdfs-site.xml -P $HADOOP_HOME/etc/hadoop &&\
+	wget https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/maprd-site.xml -P $HADOOP_HOME/etc/hadoop &&\
+	wget https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/yarn-site.xml -P $HADOOP_HOME/etc/hadoop &&\
+	wget https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/start.sh -P $HADOOP_HOME &&\
 	mkdir -p /data/dfs/data /data/dfs/name /data/dfs/namesecondary
-    #hdfs namenode -format
+    hdfs namenode -format
 VOLUME /data
 
 EXPOSE 9000 50070 50010 50020 50075 50090
