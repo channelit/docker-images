@@ -16,7 +16,7 @@ ENV JAVA_HOME=/usr/lib/jvm/default-java
 RUN\
 	addgroup hadoop &&\
 	adduser --ingroup hadoop hadoop &&\
-	usermod -aG sudo hadoop
+	usermod -aG sudo hadoop &&\
 	su - hadoop &&\
 	ssh-keygen -t rsa -f /root/.ssh/id_rsa &&\
 	cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys &&\
