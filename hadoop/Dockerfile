@@ -33,7 +33,7 @@ RUN\
 	wget https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/maprd-site.xml -P $HADOOP_HOME/etc/hadoop &&\
 	wget https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/yarn-site.xml -P $HADOOP_HOME/etc/hadoop &&\
 	wget https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/start.sh -P $HADOOP_HOME &&\
-	mkdir -p /data/dfs/data /data/dfs/name /data/dfs/namesecondary
+	mkdir -p /data/dfs/data /data/dfs/name /data/dfs/namesecondary &&\
     hdfs namenode -format
 VOLUME /data
 
