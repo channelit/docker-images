@@ -16,6 +16,7 @@ ENV JAVA_HOME=/usr/lib/jvm/default-java
 RUN\
 	addgroup hadoop &&\
 	adduser --ingroup hadoop hadoop &&\
+	usermod -aG sudo hadoop
 	su - hadoop &&\
 	ssh-keygen -t rsa -f /root/.ssh/id_rsa &&\
 	cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys &&\
@@ -33,6 +34,7 @@ RUN\
 	wget https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/maprd-site.xml -P $HADOOP_HOME/etc/hadoop &&\
 	wget https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/yarn-site.xml -P $HADOOP_HOME/etc/hadoop &&\
 	wget https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/start.sh -P $HADOOP_HOME &&\
+	chmod 755 $HADOOP_HOME/start.sh
 	mkdir -p /data/dfs/data /data/dfs/name /data/dfs/namesecondary &&\
     hdfs namenode -format
 VOLUME /data
