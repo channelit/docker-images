@@ -1,9 +1,23 @@
 FROM cithub/hadoop
 MAINTAINER Channel IT Services, LLC
-USER hadoop
-ENV\
-	GIRAPH_VER=1.2.0
+
+ENV	GIRAPH_VER=1.2.0-hadoop2
+ENV GIRAPH_HOME /home/hadoop/giraph
+ENV HADOOP_HOME=/home/hadoop/hadoop
+ENV ZOOKEEPER_VER=3.4.10
+ENV ZOOKEEPER_HOME=/home/hadoop/zookeeper
+
 RUN\
-	wget http://apache.mirrors.lucidnetworks.net/giraph/giraph-$GIRAPH_VER/giraph-dist-$GIRAPH_VER-bin.tar.gz &&\
+	wget http://mirrors.advancedhosters.com/apache/giraph/giraph-1.2.0/giraph-dist-$GIRAPH_VER-bin.tar.gz &&\
 	tar xzvf giraph-dist-$GIRAPH_VER-bin.tar.gz &&\
+	mv giraph-1.2.0-hadoop2-for-hadoop-2.5.1 $GIRAPH_HOME &&\
 	rm giraph-dist-$GIRAPH_VER-bin.tar.gz
+RUN\
+	wget http://mirrors.koehn.com/apache/zookeeper/stable/zookeeper-$ZOOKEEPER_VER.tar.gz &&\
+	tar xzvf zookeeper-$ZOOKEEPER_VER.tar.gz &&\
+	mv zookeeper-$ZOOKEEPER_VER $ZOOKEEPER_HOME &&\
+	rm zookeeper-$ZOOKEEPER_VER.tar.gz
+RUN\
+	mkdir /data/giraph
+
+VOLUME	/data
