@@ -1,5 +1,6 @@
 FROM cithub/hadoop
 MAINTAINER Channel IT Services, LLC
+USER hadoop
 ENV\
 	GIRAPH_VER=1.2.0
 RUN\
