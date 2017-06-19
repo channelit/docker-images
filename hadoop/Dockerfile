@@ -42,5 +42,5 @@ RUN\
     hdfs namenode -format
 VOLUME /data
 
-EXPOSE 9000 50070 50010 50020 50075 50090
+EXPOSE 9000 50070 50010 50020 50075 50090 8088
 CMD ["./home/hadoop/hadoop/start.sh"]
