@@ -37,6 +37,7 @@ RUN\
 	chmod 755 $HADOOP_HOME/start.sh &&\
 	sed -i '/^export JAVA_HOME/ s:.*:export JAVA_HOME=/usr/lib/jvm/default-java\nexport HADOOP_HOME=/home/hadoop/hadoop\n:' $HADOOP_HOME/etc/hadoop/hadoop-env.sh &&\
 	sed -i '/^export HADOOP_CONF_DIR/ s:.*:export HADOOP_CONF_DIR=/home/hadoop/hadoop/etc/hadoop/:' $HADOOP_HOME/etc/hadoop/hadoop-env.sh &&\
+	sed -i '/^export HADOOP_OPTS/ s:.*:export HADOOP_OPTS=-Djava.net.preferIPv4Stack=true:' $HADOOP_HOME/etc/hadoop/hadoop-env.sh &&\
 	mkdir -p /data/dfs/data /data/dfs/name /data/dfs/namesecondary &&\
     hdfs namenode -format
 VOLUME /data
