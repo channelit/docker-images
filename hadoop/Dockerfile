@@ -28,6 +28,7 @@ RUN\
 	rm hadoop-$HADOOP_VER.tar.gz
 
 RUN\
+	chown -R .hadoop /data &&\
     mkdir -p /home/hadoop/logs &&\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/core-site.xml -O $HADOOP_HOME/etc/hadoop/core-site.xml &&\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/hdfs-site.xml -O $HADOOP_HOME/etc/hadoop/hdfs-site.xml &&\

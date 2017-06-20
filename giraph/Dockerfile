@@ -19,5 +19,6 @@ RUN\
 	rm zookeeper-$ZOOKEEPER_VER.tar.gz
 RUN\
 	mkdir /data/giraph
+	mkdir /data/zookeeper
 
 VOLUME	/data
