@@ -28,7 +28,6 @@ RUN\
 	rm hadoop-$HADOOP_VER.tar.gz
 
 RUN\
-	chown -R .hadoop /data &&\
     mkdir -p /home/hadoop/logs &&\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/core-site.xml -O $HADOOP_HOME/etc/hadoop/core-site.xml &&\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/hdfs-site.xml -O $HADOOP_HOME/etc/hadoop/hdfs-site.xml &&\
@@ -40,6 +39,7 @@ RUN\
 	sed -i '/^export HADOOP_CONF_DIR/ s:.*:export HADOOP_CONF_DIR=/home/hadoop/hadoop/etc/hadoop/:' $HADOOP_HOME/etc/hadoop/hadoop-env.sh &&\
 	sed -i '/^export HADOOP_OPTS/ s:.*:export HADOOP_OPTS=-Djava.net.preferIPv4Stack=true:' $HADOOP_HOME/etc/hadoop/hadoop-env.sh &&\
 	mkdir -p /data/dfs/data /data/dfs/name /data/dfs/namesecondary &&\
+	chown -R .hadoop /data &&\
     hdfs namenode -format
 VOLUME /data
 

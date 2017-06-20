@@ -18,7 +18,7 @@ RUN\
 	mv zookeeper-$ZOOKEEPER_VER $ZOOKEEPER_HOME &&\
 	rm zookeeper-$ZOOKEEPER_VER.tar.gz
 RUN\
-	mkdir /data/giraph
+	mkdir /data/giraph &&\
 	mkdir /data/zookeeper
 
 VOLUME	/data
