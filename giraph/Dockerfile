@@ -3,7 +3,7 @@ MAINTAINER Channel IT Services, LLC
 
 ENV	GIRAPH_VER=1.2.0-hadoop2
 ENV GIRAPH_HOME=/home/hadoop/giraph
-ENV HADOOP_VER=2.8.0 
+ENV HADOOP_VER=2.5.1
 ENV HADOOP_HOME=/home/hadoop/hadoop
 ENV ZOOKEEPER_VER=3.4.10
 ENV ZOOKEEPER_HOME=/home/hadoop/zookeeper
