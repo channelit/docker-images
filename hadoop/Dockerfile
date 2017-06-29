@@ -31,7 +31,7 @@ RUN\
     mkdir -p /home/hadoop/logs &&\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/core-site.xml -O $HADOOP_HOME/etc/hadoop/core-site.xml &&\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/hdfs-site.xml -O $HADOOP_HOME/etc/hadoop/hdfs-site.xml &&\
-	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/maprd-site.xml -O $HADOOP_HOME/etc/hadoop/maprd-site.xml &&\
+	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/mapred-site.xml -O $HADOOP_HOME/etc/hadoop/mapred-site.xml &&\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/yarn-site.xml -O $HADOOP_HOME/etc/hadoop/yarn-site.xml &&\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/hadoop/start.sh -O $HADOOP_HOME/start.sh &&\
 	chmod 755 $HADOOP_HOME/start.sh &&\
