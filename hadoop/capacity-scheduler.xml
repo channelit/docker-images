@@ -1,0 +1,17 @@
+<configuration>
+	<property>
+		<name>yarn.scheduler.capacity.root.queues</name>
+		<value>a,b,c</value>
+		<description>The queues at the this level (root is the root queue).</description>
+	</property>
+	<property>
+		<name>yarn.scheduler.capacity.root.a.queues</name>
+		<value>a1,a2</value>
+		<description>The queues at the this level (root is the root queue).</description>
+	</property>
+	<property>
+		<name>yarn.scheduler.capacity.root.b.queues</name>
+		<value>b1,b2,b3</value>
+		<description>The queues at the this level (root is the root queue).</description>
+	</property>
+</configuration>
