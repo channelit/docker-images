@@ -11,7 +11,7 @@ RUN\
 	tar xzvf spark-$SPRK_VER.tgz &&\
 	mv spark-$SPRK_VER $SPARK_HOME &&\
 	rm spark-$SPRK_VER.tgz &&\
-	ln -s spark-$SPRK_VER spark &&\
+	ln -s spark-$SPRK_VER spark
 RUN\
 	mkdir /data/spark
 
