@@ -6,6 +6,8 @@ ENV SPARK_HOME=/home/hadoop/spark
 ENV YARN_CONF_DIR=/home/hadoop/hadoop/etc/hadoop
 
 RUN\
+	apt-get install python -y &&\
+	apt-get update &&\
 	mkdir -p $SPARK_HOME &&\
 	wget https://d3kbcqa49mib13.cloudfront.net/spark-$SPARK_VER.tgz &&\
 	tar xzvf spark-$SPARK_VER.tgz &&\
