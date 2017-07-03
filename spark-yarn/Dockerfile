@@ -17,9 +17,11 @@ RUN\
 	apt-get install python3-pip -y &&\
 	apt-get install -y python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose &&\
 	apt-get install -y python-dev python-pip g++ libopenblas-dev git &&\
-	pip install spaCy &&\
-	pip install pyLDAvis scipy scipy gensim nltk bokeh &&\
-	pip install -U scikit-learn &&\
+	pip3 install --upgrade pip &&\
+	pip3 install jupyter &&\
+	pip3 install spaCy &&\
+	pip3 install pyLDAvis scipy scipy gensim nltk bokeh &&\
+	pip3 install -U scikit-learn &&\
 	apt-get update &&\
 	apt-get clean
 EXPOSE 50030
