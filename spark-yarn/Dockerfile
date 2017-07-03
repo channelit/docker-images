@@ -6,7 +6,6 @@ ENV SPARK_HOME=/home/hadoop/spark
 ENV YARN_CONF_DIR=/home/hadoop/hadoop/etc/hadoop
 
 RUN\
-	apt-get install python -y &&\
 	apt-get update &&\
 	mkdir -p $SPARK_HOME &&\
 	wget https://d3kbcqa49mib13.cloudfront.net/spark-$SPARK_VER.tgz &&\
@@ -15,7 +14,13 @@ RUN\
 	rm spark-$SPARK_VER.tgz &&\
 	ln -s /home/hadoop/spark/spark-$SPARK_VER /home/hadoop/spark/spark
 RUN\
-	mkdir /data/spark
-
+	apt-get install python3-pip -y &&\
+	apt-get install -y python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose &&\
+	apt-get install -y python-dev python-pip g++ libopenblas-dev git &&\
+	pip install spaCy &&\
+	pip install pyLDAvis scipy scipy gensim nltk bokeh &&\
+	pip install -U scikit-learn &&\
+	apt-get update &&\
+	apt-get clean
 EXPOSE 50030
 VOLUME	/data
