@@ -29,5 +29,5 @@ RUN\
 	apt-get update &&\
 	apt-get clean
 RUN\
-	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-yarn/firststart.sh -O /firststart.sh &&\
+	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-yarn/firststart.sh -O /firststart.sh
 EXPOSE 8888
