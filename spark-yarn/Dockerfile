@@ -9,12 +9,11 @@ VOLUME	/data
 
 RUN\
 	apt-get update &&\
-	mkdir -p $SPARK_HOME &&\
+	mkdir -p /home/hadoop/spark &&\
 	wget https://d3kbcqa49mib13.cloudfront.net/spark-$SPARK_VER.tgz &&\
 	tar xzvf spark-$SPARK_VER.tgz &&\
-	mv spark-$SPARK_VER /home/hadoop/spark &&\
-	rm spark-$SPARK_VER.tgz &&\
-	ln -s /home/hadoop/spark/spark-$SPARK_VER $SPARK_HOME
+	mv spark-$SPARK_VER $SPARK_HOME &&\
+	rm spark-$SPARK_VER.tgz
 RUN\
 	apt-get install python3-pip -y &&\
 	apt-get install -y python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose &&\
@@ -30,4 +29,5 @@ RUN\
 	apt-get clean
 RUN\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-yarn/firststart.sh -O /firststart.sh
+
 EXPOSE 8888
