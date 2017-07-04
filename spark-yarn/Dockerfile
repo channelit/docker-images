@@ -5,6 +5,8 @@ ENV SPARK_VER=2.1.1-bin-hadoop2.7
 ENV SPARK_HOME=/home/hadoop/spark
 ENV YARN_CONF_DIR=/home/hadoop/hadoop/etc/hadoop
 
+VOLUME	/data
+
 RUN\
 	apt-get update &&\
 	mkdir -p $SPARK_HOME &&\
@@ -22,7 +24,10 @@ RUN\
 	pip3 install spaCy &&\
 	pip3 install pyLDAvis scipy scipy gensim nltk bokeh &&\
 	pip3 install -U scikit-learn &&\
+	pip3 install toree &&\
+	jupyter toree install --spark_home=$SPARK_HOME &&\
 	apt-get update &&\
 	apt-get clean
-EXPOSE 50030
-VOLUME	/data
+RUN\
+	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-yarn/firststart.sh -O /firststart.sh &&\
+EXPOSE 8888
