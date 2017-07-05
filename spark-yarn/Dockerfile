@@ -22,6 +22,7 @@ RUN\
 	pip3 install spaCy &&\
 	pip3 install pyLDAvis scipy scipy gensim nltk bokeh &&\
 	pip3 install -U scikit-learn &&\
+	pip install https://dist.apache.org/repos/dist/dev/incubator/toree/0.2.0/snapshots/dev1/toree-pip/toree-0.2.0.dev1.tar.gz &&\
 	pip3 install toree &&\
 	jupyter toree install --spark_home=$SPARK_HOME &&\
 	rm /usr/bin/python &&\
