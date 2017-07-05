@@ -15,9 +15,8 @@ RUN\
 	mv spark-$SPARK_VER $SPARK_HOME &&\
 	rm spark-$SPARK_VER.tgz
 RUN\
-	apt-get install python3-pip -y &&\
-	apt-get install -y python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose &&\
-	apt-get install -y python-dev python-pip g++ libopenblas-dev git &&\
+	apt-get install -y python3-numpy python3-scipy python3-matplotlib ipython3 ipython-notebook python3-pandas python3-sympy python3-nose &&\
+	apt-get install -y python3-dev python3-pip g++ libopenblas-dev git &&\
 	pip3 install --upgrade pip &&\
 	pip3 install jupyter &&\
 	pip3 install spaCy &&\
