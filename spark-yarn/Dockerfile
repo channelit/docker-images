@@ -24,6 +24,8 @@ RUN\
 	pip3 install -U scikit-learn &&\
 	pip3 install toree &&\
 	jupyter toree install --spark_home=$SPARK_HOME &&\
+	rm /usr/bin/python &&\
+	ln -s /usr/bin/python3 /usr/bin/python &&\
 	apt-get update &&\
 	apt-get clean
 RUN\
