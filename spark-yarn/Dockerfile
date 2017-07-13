@@ -27,7 +27,7 @@ RUN\
 	pip3 install -U scikit-learn &&\
 	pip3 install https://dist.apache.org/repos/dist/dev/incubator/toree/0.2.0/snapshots/dev1/toree-pip/toree-0.2.0.dev1.tar.gz &&\
 	pip3 install toree &&\
-	jupyter toree install --spark_home=$SPARK_HOME --spark_opts="--packages graphframes:graphframes:0.5.0-spark2.1-s_2.11" &&\
+	jupyter toree install --replace --interpreters=Scala,PySpark --spark_home=$SPARK_HOME --spark_opts="--packages graphframes:graphframes:0.5.0-spark2.1-s_2.11,com.databricks:spark-csv_2.11:1.2.0" &&\
 	rm /usr/bin/python &&\
 	ln -s /usr/bin/python3 /usr/bin/python &&\
 	apt-get update &&\
