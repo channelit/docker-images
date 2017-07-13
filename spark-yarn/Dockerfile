@@ -3,6 +3,7 @@ MAINTAINER Channel IT Services, LLC
 
 ENV SPARK_VER=2.1.1-bin-hadoop2.7
 ENV SPARK_HOME=/home/hadoop/spark/spark
+ENV SPARK_OPTS=--packages graphframes:graphframes:0.5.0-spark2.1-s_2.11
 ENV YARN_CONF_DIR=/home/hadoop/hadoop/etc/hadoop
 
 VOLUME	/data
@@ -26,7 +27,7 @@ RUN\
 	pip3 install -U scikit-learn &&\
 	pip3 install https://dist.apache.org/repos/dist/dev/incubator/toree/0.2.0/snapshots/dev1/toree-pip/toree-0.2.0.dev1.tar.gz &&\
 	pip3 install toree &&\
-	jupyter toree install --spark_home=$SPARK_HOME &&\
+	jupyter toree install --spark_home=$SPARK_HOME --spark_opts="--packages graphframes:graphframes:0.5.0-spark2.1-s_2.11" &&\
 	rm /usr/bin/python &&\
 	ln -s /usr/bin/python3 /usr/bin/python &&\
 	apt-get update &&\
