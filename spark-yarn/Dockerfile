@@ -3,7 +3,7 @@ MAINTAINER Channel IT Services, LLC
 
 ENV SPARK_VER=2.1.1-bin-hadoop2.7
 ENV SPARK_HOME=/home/hadoop/spark/spark
-ENV SPARK_OPTS=--packages graphframes:graphframes:0.5.0-spark2.1-s_2.11
+ENV SPARK_OPTS=-"-packages graphframes:graphframes:0.5.0-spark2.1-s_2.11,,com.databricks:spark-csv_2.11:1.2.0"
 ENV YARN_CONF_DIR=/home/hadoop/hadoop/etc/hadoop
 
 VOLUME	/data
@@ -16,8 +16,11 @@ RUN\
 	mv spark-$SPARK_VER $SPARK_HOME &&\
 	rm spark-$SPARK_VER.tgz
 RUN\
+	apt-get update &&\
 	apt-get install -y python3-numpy python3-scipy python3-matplotlib ipython3 ipython-notebook python3-pandas python3-sympy python3-nose &&\
 	apt-get install -y python3-dev python3-pip g++ libopenblas-dev git &&\
+	apt-get clean &&\
+	ln -sf /usr/bin/python3 /usr/bin/python &&\
 	pip3 install --upgrade pip &&\
 	pip3 install jupyter &&\
 	pip3 uninstall ipython -y &&\
@@ -27,11 +30,7 @@ RUN\
 	pip3 install -U scikit-learn &&\
 	pip3 install https://dist.apache.org/repos/dist/dev/incubator/toree/0.2.0/snapshots/dev1/toree-pip/toree-0.2.0.dev1.tar.gz &&\
 	pip3 install toree &&\
-	jupyter toree install --replace --interpreters=Scala,PySpark --spark_home=$SPARK_HOME --spark_opts="--packages graphframes:graphframes:0.5.0-spark2.1-s_2.11,com.databricks:spark-csv_2.11:1.2.0" &&\
-	rm /usr/bin/python &&\
-	ln -s /usr/bin/python3 /usr/bin/python &&\
-	apt-get update &&\
-	apt-get clean
+	jupyter toree install --replace --interpreters=Scala,PySpark --spark_home=$SPARK_HOME --spark_opts=$SPARK_OPTS
 RUN\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-yarn/firststart.sh -O /firststart.sh &&\
 	chmod 755 firststart.sh
