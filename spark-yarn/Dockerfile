@@ -35,4 +35,12 @@ RUN\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-yarn/firststart.sh -O /firststart.sh &&\
 	chmod 755 firststart.sh
 
-EXPOSE 8888
+# Workaround to add graphframes to python jupyter
+RUN\
+	wget http://dl.bintray.com/spark-packages/maven/graphframes/graphframes/0.5.0-spark2.1-s_2.11/graphframes-0.5.0-spark2.1-s_2.11.jar -O /home/hadoop/spark/spark/graphframes.jar &&\
+	touch /home/hadoop/spark/spark/conf/spark-env.sh &&\
+	echo "#!/bin/sh" >> /home/hadoop/spark/spark/conf/spark-env.sh &&\
+	echo "export PYSPARK_PYTHON=python" >> /home/hadoop/spark/spark/conf/spark-env.sh &&\
+	echo "export PYTHONPATH=$PYTHONPATH:/home/hadoop/spark/spark/graphframes.jar:." >> /home/hadoop/spark/spark/conf/spark-env.sh
+
+EXPOSE 8888 4040 9000 8031 8032 8033
