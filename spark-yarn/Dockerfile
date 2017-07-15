@@ -26,7 +26,7 @@ RUN\
 	pip3 uninstall ipython -y &&\
 	pip3 install ipython &&\
 	pip3 install spaCy &&\
-	pip3 install pyLDAvis scipy gensim nltk bokeh &&\
+	pip3 install pyLDAvis scipy gensim nltk bokeh py4j &&\
 	pip3 install -U scikit-learn &&\
 	pip3 install https://dist.apache.org/repos/dist/dev/incubator/toree/0.2.0/snapshots/dev1/toree-pip/toree-0.2.0.dev1.tar.gz &&\
 	pip3 install toree &&\
