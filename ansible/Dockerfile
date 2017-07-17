@@ -1,5 +1,5 @@
 FROM cithub/ubuntu
-MAINTAINER hpatel@channelit.biz
+MAINTAINER hardikgw@gmail.com
 RUN apt-get update
 RUN apt-get install -y vim curl wget monit python-simplejson
 RUN apt-get update && \

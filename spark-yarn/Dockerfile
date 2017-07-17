@@ -3,7 +3,7 @@ MAINTAINER Channel IT Services, LLC
 
 ENV SPARK_VER=2.2.0-bin-hadoop2.7
 ENV SPARK_HOME=/home/hadoop/spark/spark
-ENV SPARK_OPTS=-"-packages graphframes:graphframes:0.5.0-spark2.1-s_2.11,,com.databricks:spark-csv_2.11:1.2.0"
+ENV SPARK_OPTS=-"-packages graphframes:graphframes:0.5.0-spark2.1-s_2.11,com.databricks:spark-csv_2.11:1.2.0"
 ENV YARN_CONF_DIR=/home/hadoop/hadoop/etc/hadoop
 
 VOLUME	/data
