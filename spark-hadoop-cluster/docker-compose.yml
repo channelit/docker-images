@@ -1,0 +1,67 @@
+version: '3'
+services:
+  master:
+    container_name: master
+    user: root
+    build:
+      context: .
+      dockerfile: Dockerfile-cluster
+    tty: false
+    volumes:
+      - ./master/data:/data
+    ports:
+      - "3121:22"
+      - "8081:8080"
+    extra_hosts:
+      - "master:172.16.237.11"
+      - "slave1:172.16.237.12"
+      - "slave2:172.16.237.13"
+    networks:
+      hadoop_net:
+        ipv4_address: 172.16.239.11
+  slave1:
+    container_name: slave1
+    user: root
+    build:
+      context: .
+      dockerfile: Dockerfile-cluster
+    volumes:
+      - ./slave1/data:/data
+    ports:
+      - "3122:22"
+      - "8082:8080"
+    extra_hosts:
+      - "master:172.16.237.11"
+      - "slave1:172.16.237.12"
+      - "slave2:172.16.237.13"
+    networks:
+      hadoop_net:
+        ipv4_address: 172.16.239.12
+  slave2:
+    container_name: slave2
+    user: root
+    build:
+      context: .
+      dockerfile: Dockerfile-cluster
+    volumes:
+      - ./slave2/data:/data
+    ports:
+      - "3122:22"
+      - "8082:8080"
+    extra_hosts:
+      - "master:172.16.237.11"
+      - "slave1:172.16.237.12"
+      - "slave2:172.16.237.13"
+    networks:
+      hadoop_net:
+        ipv4_address: 172.16.239.13
+networks:
+  hadoop_net:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "true"
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.16.239.0/24
+      - subnet: 2001:3984:3989::/64
