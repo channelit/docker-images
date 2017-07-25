@@ -10,4 +10,6 @@ export SPARK_EXECUTOR_MEMORY=1g
 hdfs namenode -format -nonInteractive
 ./home/hadoop/hadoop/start.sh
 
-jupyter notebook --port=8888 --no-browser --ip=0.0.0.0 --allow-root
+if [ $1 == "master" ]; then
+	jupyter notebook --port=8888 --no-browser --ip=0.0.0.0 --allow-root
+fi
