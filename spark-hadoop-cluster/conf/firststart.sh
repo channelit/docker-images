@@ -7,9 +7,7 @@ export PYSPARK_DRIVER_PYTHON=ipython3
 export PYSPARK_SUBMIT_ARGS="--packages graphframes:graphframes:0.5.0-spark2.1-s_2.11,com.databricks:spark-csv_2.11:1.2.0"
 export PYSPARK_DRIVER_PYTHON_OPTS="notebook --no-browser --port=8888"
 export SPARK_EXECUTOR_MEMORY=1g
-if [ -z $1 ]
-	hdfs namenode -format -nonInteractive -force
-fi
+hdfs namenode -format -nonInteractive
 ./home/hadoop/hadoop/start.sh
 
 jupyter notebook --port=8888 --no-browser --ip=0.0.0.0 --allow-root
