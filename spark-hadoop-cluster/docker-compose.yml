@@ -52,6 +52,8 @@ services:
       - "slave2:172.16.235.13"
     links:
       - master
+    depends_on:
+      - master
     networks:
       hadoop_cluster:
         ipv4_address: 172.16.235.12
@@ -75,6 +77,8 @@ services:
       - "slave1:172.16.235.12"
       - "slave2:172.16.235.13"
     links:
+      - master
+    depends_on:
       - master
     networks:
       hadoop_cluster:
