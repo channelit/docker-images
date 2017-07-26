@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-master
-    tty: false
+    tty: true
     volumes:
       - ./data/master/data:/data
     ports:
@@ -19,6 +19,9 @@ services:
       - "8031:8031"
       - "8032:8032"
       - "8033:8033"
+      - "50030:50030"
+      - "50070:50070"
+      - "50075:50075"
     extra_hosts:
       - "master:172.16.235.11"
       - "slave1:172.16.235.12"
@@ -33,6 +36,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-slave
+    tty: true
     volumes:
       - ./data/slave1/data:/data
     ports:
@@ -45,13 +49,14 @@ services:
     networks:
       hadoop_cluster:
         ipv4_address: 172.16.235.12
-    command: ["bin/sh", "/start.sh"]
+    command: ["bin/sh", "/start.sh", "slave"]
   slave2:
     container_name: slave2
     user: root
     build:
       context: .
       dockerfile: Dockerfile-slave
+    tty: true
     volumes:
       - ./data/slave2/data:/data
     ports:
@@ -64,7 +69,7 @@ services:
     networks:
       hadoop_cluster:
         ipv4_address: 172.16.235.13
-    command: ["bin/sh", "/start.sh"]
+    command: ["bin/sh", "/start.sh", "slave"]
 networks:
   hadoop_cluster:
     driver: bridge
