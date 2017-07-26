@@ -1,5 +1,5 @@
 Host *
-	UserKownHostsFile /dev/null
+	UserKnownHostsFile /dev/null
 	StrictHostKeyChecking no
 	LogLevel quiet
 	Port 22
