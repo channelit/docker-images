@@ -1,8 +1,8 @@
-version: '3'
+version: '3.3'
 services:
   master:
     container_name: master
-    user: hadoop
+    user: root
     build:
       context: .
       dockerfile: Dockerfile-master
@@ -14,10 +14,22 @@ services:
       - "8081:8080"
       - "4040:4040"
       - "8888:8888"
-    command: ["bin/sh", "/start.sh master"]
+      - "9000:9000"
+      - "8030:8030"
+      - "8031:8031"
+      - "8032:8032"
+      - "8033:8033"
+    extra_hosts:
+      - "master:172.16.235.11"
+      - "slave1:172.16.235.12"
+      - "slave2:172.16.235.13"
+    networks:
+      hadoop_cluster:
+        ipv4_address: 172.16.235.11
+    command: ["bin/sh", "/start.sh", "master"]
   slave1:
     container_name: slave1
-    user: hadoop
+    user: root
     build:
       context: .
       dockerfile: Dockerfile-slave
@@ -26,6 +38,13 @@ services:
     ports:
       - "3122:22"
       - "8082:8080"
+    extra_hosts:
+      - "master:172.16.235.11"
+      - "slave1:172.16.235.12"
+      - "slave2:172.16.235.13"
+    networks:
+      hadoop_cluster:
+        ipv4_address: 172.16.235.12
     command: ["bin/sh", "/start.sh"]
   slave2:
     container_name: slave2
@@ -38,4 +57,21 @@ services:
     ports:
       - "3123:22"
       - "8083:8080"
+    extra_hosts:
+      - "master:172.16.235.11"
+      - "slave1:172.16.235.12"
+      - "slave2:172.16.235.13"
+    networks:
+      hadoop_cluster:
+        ipv4_address: 172.16.235.13
     command: ["bin/sh", "/start.sh"]
+networks:
+  hadoop_cluster:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "true"
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.16.235.0/24
+      - subnet: 2001:3984:3989::/64
