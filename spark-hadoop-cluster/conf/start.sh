@@ -8,16 +8,16 @@ export PYSPARK_SUBMIT_ARGS="--packages graphframes:graphframes:0.5.0-spark2.1-s_
 export PYSPARK_DRIVER_PYTHON_OPTS="notebook --no-browser --port=8888"
 export SPARK_EXECUTOR_MEMORY=1g
 
-hdfs namenode -format -nonInteractive
-
 if [ $1 = "master" ]; then
-	./home/hadoop/hadoop/start.sh
+	hdfs namenode -format -nonInteractive
+	#./home/hadoop/hadoop/start.sh
+	./home/hadoop/hadoop/sbin/start-all.sh
 	jupyter notebook --port=8888 --no-browser --ip=0.0.0.0 --allow-root
 fi
 
 if [ $1 = "slave" ]; then
 	while true; 
-	do 
+	do
 		echo "slave";
 		sleep 1000; 
 	done
