@@ -1,6 +1,9 @@
 FROM cithub/spark-yarn
 RUN\
+	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-hadoop-cluster/conf/ssh_config -O /home/hadoop/.ssh/config &&\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-hadoop-cluster/conf/core-site.xml -O $HADOOP_HOME/etc/hadoop/core-site.xml &&\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-hadoop-cluster/conf/hdfs-site.xml -O $HADOOP_HOME/etc/hadoop/hdfs-site.xml &&\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-hadoop-cluster/conf/yarn-site.xml -O $HADOOP_HOME/etc/hadoop/yarn-site.xml &&\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-hadoop-cluster/conf/start.sh -O /start.sh
+
+EXPOSE 22

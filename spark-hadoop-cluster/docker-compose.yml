@@ -2,6 +2,7 @@ version: '3.3'
 services:
   master:
     container_name: master
+    hostname: master
     user: root
     build:
       context: .
@@ -33,6 +34,7 @@ services:
     command: ["bin/sh", "/start.sh", "master"]
   slave1:
     container_name: slave1
+    hostname: slave1
     user: root
     build:
       context: .
@@ -48,12 +50,15 @@ services:
       - "master:172.16.235.11"
       - "slave1:172.16.235.12"
       - "slave2:172.16.235.13"
+    links:
+      - master
     networks:
       hadoop_cluster:
         ipv4_address: 172.16.235.12
     command: ["bin/sh", "/start.sh", "slave"]
   slave2:
     container_name: slave2
+    hostname: slave2
     user: root
     build:
       context: .
@@ -69,6 +74,8 @@ services:
       - "master:172.16.235.11"
       - "slave1:172.16.235.12"
       - "slave2:172.16.235.13"
+    links:
+      - master
     networks:
       hadoop_cluster:
         ipv4_address: 172.16.235.13
