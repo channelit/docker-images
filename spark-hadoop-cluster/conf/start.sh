@@ -9,6 +9,7 @@ export PYSPARK_DRIVER_PYTHON_OPTS="notebook --no-browser --port=8888"
 export SPARK_EXECUTOR_MEMORY=1g
 
 ssh-keygen -R localhost
+ssh-keygen -R 0.0.0.0
 ssh-keygen -R master
 ssh-keygen -R slave1
 ssh-keygen -R slave2
@@ -16,6 +17,6 @@ ssh-keygen -R slave2
 hdfs namenode -format -nonInteractive
 ./home/hadoop/hadoop/start.sh
 
-if [ $1 = "master" ]; then
+if [ -z $1 ] && [ $1 = "master" ]; then
 	jupyter notebook --port=8888 --no-browser --ip=0.0.0.0 --allow-root
 fi
