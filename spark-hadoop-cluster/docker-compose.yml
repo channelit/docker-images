@@ -42,7 +42,7 @@ services:
     tty: true
     volumes:
       - ./data/slave1/data:/data
-      - ./data/master/logs:/home/hadoop/hadoop/logs
+      - ./data/slave1/logs:/home/hadoop/hadoop/logs
     ports:
       - "3122:22"
       - "8082:8080"
@@ -68,7 +68,7 @@ services:
     tty: true
     volumes:
       - ./data/slave2/data:/data
-      - ./data/master/logs:/home/hadoop/hadoop/logs
+      - ./data/slave2/logs:/home/hadoop/hadoop/logs
     ports:
       - "3123:22"
       - "8083:8080"

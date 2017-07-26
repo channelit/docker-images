@@ -10,18 +10,8 @@ export SPARK_EXECUTOR_MEMORY=1g
 
 hdfs namenode -format -nonInteractive
 
-#if [ $1 = "master" ]; then
-#	ssh-keygen -t rsa -P "" -f /root/.ssh/id_rsa
-#	cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
-#fi
-
-ssh-copy-id root@master
-ssh-copy-id root@slave1
-ssh-copy-id root@slave2
-
-./home/hadoop/hadoop/start.sh
-
 if [ $1 = "master" ]; then
+	./home/hadoop/hadoop/start.sh
 	jupyter notebook --port=8888 --no-browser --ip=0.0.0.0 --allow-root
 fi
 
