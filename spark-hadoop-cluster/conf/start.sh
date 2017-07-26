@@ -15,6 +15,10 @@ hdfs namenode -format -nonInteractive
 #	cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
 #fi
 
+ssh-copy-id root@master
+ssh-copy-id root@slave1
+ssh-copy-id root@slave2
+
 ./home/hadoop/hadoop/start.sh
 
 if [ $1 = "master" ]; then
