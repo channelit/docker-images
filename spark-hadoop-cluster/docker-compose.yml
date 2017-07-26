@@ -9,7 +9,7 @@ services:
     tty: true
     volumes:
       - ./data/master/data:/data
-      - ./ssh/:/root/.ssh/
+#      - ./ssh/:/root/.ssh/
     ports:
       - "3121:22"
       - "8081:8080"
@@ -40,7 +40,7 @@ services:
     tty: true
     volumes:
       - ./data/slave1/data:/data
-      - ./ssh/:/root/.ssh/
+#      - ./ssh/:/root/.ssh/
     ports:
       - "3122:22"
       - "8082:8080"
@@ -61,7 +61,7 @@ services:
     tty: true
     volumes:
       - ./data/slave2/data:/data
-      - ./ssh/:/root/.ssh/
+#      - ./ssh/:/root/.ssh/
     ports:
       - "3123:22"
       - "8083:8080"
