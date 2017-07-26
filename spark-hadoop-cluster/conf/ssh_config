@@ -1,0 +1,5 @@
+Host *
+	UserKownHostsFile /dev/null
+	StrictHostKeyChecking no
+	LogLevel quiet
+	Port 22
