@@ -16,5 +16,9 @@ if [ $1 = "master" ]; then
 fi
 
 if [ $1 = "slave" ]; then
-	while true; do sleep 1000; done
+	while true; 
+	do 
+		echo "slave";
+		sleep 1000; 
+	done
 fi
