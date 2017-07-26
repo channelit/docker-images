@@ -12,7 +12,6 @@ hdfs namenode -format -nonInteractive
 
 if [ $1 = "master" ]; then
 	ssh-keygen -t rsa -P "" -f /.ssh/id_rsa
-	ssh-keygen -T rsa
 	cat /.ssh/id_rsa.pub >> /.ssh/authorized_keys
 fi
 
