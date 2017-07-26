@@ -11,8 +11,9 @@ export SPARK_EXECUTOR_MEMORY=1g
 hdfs namenode -format -nonInteractive
 
 if [ $1 = "master" ]; then
-	ssh-keygen -t rsa
-	cp .ssh/id_rsa.pub /.ssh/authorized_keys
+	ssh-keygen -t rsa -P "" -f /.ssh/id_rsa
+	ssh-keygen -T rsa
+	cat /.ssh/id_rsa.pub >> /.ssh/authorized_keys
 fi
 
 ./home/hadoop/hadoop/start.sh
