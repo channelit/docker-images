@@ -16,6 +16,7 @@ if [ $1 = "master" ]; then
 fi
 
 if [ $1 = "slave" ]; then
+	./home/hadoop/hadoop/sbin/hadoop-daemon.sh start datanode
 	while true; 
 	do
 		echo "slave";
