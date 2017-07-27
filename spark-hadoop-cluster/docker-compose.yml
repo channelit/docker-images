@@ -11,6 +11,7 @@ services:
     volumes:
       - ./data/master/data:/data
       - ./data/master/logs:/home/hadoop/hadoop/logs
+      - ./data/master/spark/logs:/home/hadoop/spark/spark/logs
     ports:
       - "3121:22"
       - "8080:8080"
@@ -51,6 +52,7 @@ services:
     volumes:
       - ./data/slave1/data:/data
       - ./data/slave1/logs:/home/hadoop/hadoop/logs
+      - ./data/slave1/spark/logs:/home/hadoop/spark/spark/logs
     ports:
       - "3122:22"
     extra_hosts:
@@ -72,6 +74,7 @@ services:
     volumes:
       - ./data/slave2/data:/data
       - ./data/slave2/logs:/home/hadoop/hadoop/logs
+      - ./data/slave1/spark/logs:/home/hadoop/spark/spark/logs
     ports:
       - "3123:22"
     extra_hosts:
