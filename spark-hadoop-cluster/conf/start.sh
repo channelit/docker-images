@@ -8,6 +8,8 @@ export PYSPARK_SUBMIT_ARGS="--packages graphframes:graphframes:0.5.0-spark2.1-s_
 export PYSPARK_DRIVER_PYTHON_OPTS="notebook --no-browser --port=8888"
 export SPARK_EXECUTOR_MEMORY=1g
 
+service ssh start
+
 if [ $1 = "master" ]; then
 	hdfs namenode -format -nonInteractive
 	./home/hadoop/hadoop/start.sh
