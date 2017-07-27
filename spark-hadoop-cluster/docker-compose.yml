@@ -13,7 +13,7 @@ services:
       - ./data/master/logs:/home/hadoop/hadoop/logs
     ports:
       - "3121:22"
-      - "8081:8080"
+      - "8080:8080"
       - "4040:4040"
       - "8888:8888"
       - "9000:9000"
@@ -53,7 +53,6 @@ services:
       - ./data/slave1/logs:/home/hadoop/hadoop/logs
     ports:
       - "3122:22"
-      - "8082:8080"
     extra_hosts:
       - "master:172.16.235.11"
       - "slave1:172.16.235.12"
@@ -75,7 +74,6 @@ services:
       - ./data/slave2/logs:/home/hadoop/hadoop/logs
     ports:
       - "3123:22"
-      - "8083:8080"
     extra_hosts:
       - "master:172.16.235.11"
       - "slave1:172.16.235.12"

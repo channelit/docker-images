@@ -9,8 +9,8 @@ RUN\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-hadoop-cluster/conf/yarn-site.xml -O $HADOOP_HOME/etc/hadoop/yarn-site.xml &&\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-hadoop-cluster/conf/masters -O $HADOOP_HOME/etc/hadoop/masters &&\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-hadoop-cluster/conf/slaves -O $HADOOP_HOME/etc/hadoop/slaves &&\
-	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-hadoop-cluster/conf/slaves -O $$SPARK_HOME/conf/slaves &&\
-	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-hadoop-cluster/conf/spark-env.sh -O $$SPARK_HOME/conf/spark-env.sh &&\
+	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-hadoop-cluster/conf/slaves -O $SPARK_HOME/conf/slaves &&\
+	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-hadoop-cluster/conf/spark-env.sh -O $SPARK_HOME/conf/spark-env.sh &&\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-hadoop-cluster/conf/start.sh -O /start.sh
 
 EXPOSE 22
