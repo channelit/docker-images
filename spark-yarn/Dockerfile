@@ -30,6 +30,7 @@ RUN\
 	pip3 install -U scikit-learn &&\
 	pip3 install https://dist.apache.org/repos/dist/dev/incubator/toree/0.2.0/snapshots/dev1/toree-pip/toree-0.2.0.dev1.tar.gz &&\
 	pip3 install toree &&\
+	pip3 install tensorflow &&\
 	jupyter toree install --replace --interpreters=Scala,PySpark --spark_home=$SPARK_HOME --spark_opts=$SPARK_OPTS
 RUN\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/spark-yarn/firststart.sh -O /firststart.sh &&\
