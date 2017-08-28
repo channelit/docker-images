@@ -27,16 +27,16 @@ services:
       - "50070:50070"
       - "50075:50075"
       - "19888:19888"
-    extra_hosts:
-      - "master:172.16.235.11"
-      - "slave1:172.16.235.12"
-      - "slave2:172.16.235.13"
     depends_on:
       - slave1
       - slave2
     links:
       - slave1
       - slave2
+    extra_hosts:
+      - "master:172.16.235.11"
+      - "slave1:172.16.235.12"
+      - "slave2:172.16.235.13"      
     networks:
       hadoop_cluster:
         ipv4_address: 172.16.235.11
