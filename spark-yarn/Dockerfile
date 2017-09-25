@@ -44,4 +44,4 @@ RUN\
 	echo "export PYSPARK_PYTHON=python" >> /home/hadoop/spark/spark/conf/spark-env.sh &&\
 	echo "export PYTHONPATH=$PYTHONPATH:/home/hadoop/spark/spark/graphframes.jar:." >> /home/hadoop/spark/spark/conf/spark-env.sh
 
-EXPOSE 8888 4040 9000 8031 8032 8033
+EXPOSE 8888 4040 9000 8031 8032 8033 7077 8080 8081
