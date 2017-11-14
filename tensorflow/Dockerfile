@@ -8,7 +8,6 @@ RUN \
 	pip3 install pyLDAvis scipy gensim nltk bokeh py4j &&\
 	pip3 install -U scikit-learn &&\
 	pip3 install keras &&\
-	pip3 install queue &&\
 	apt-get update && \
 	apt-get clean && \
  	mkdir /opt/logs && \
@@ -17,6 +16,5 @@ RUN \
 	echo "#!/bin/sh" >> start.sh && \
 	echo "nohup tensorboard --logdir=/data/logs > tb.out & nohup ./run_jupyter.sh >jupyter.out &" >> start.sh && \
 	echo "tail -f jupyter.out" >> start.sh
-EXPOSE ls
-ls 8888
+EXPOSE 6006 8888
 CMD ["./start.sh"]
