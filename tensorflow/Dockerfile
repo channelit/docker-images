@@ -8,6 +8,7 @@ RUN \
 	pip3 install pyLDAvis scipy gensim nltk bokeh py4j &&\
 	pip3 install -U scikit-learn &&\
 	pip3 install keras &&\
+	pip3 install numpy &&\
 	apt-get update && \
 	apt-get clean && \
  	mkdir /opt/logs && \
