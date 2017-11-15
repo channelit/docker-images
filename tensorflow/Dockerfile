@@ -14,7 +14,7 @@ RUN \
 	touch start.sh && \
 	chmod 755 start.sh && \
 	echo "#!/bin/sh" >> start.sh && \
-	echo "nohup tensorboard --logdir=/data/logs > tb.out & nohup ./run_jupyter.sh >jupyter.out &" >> start.sh && \
+	echo "nohup tensorboard --logdir=/data/logs > tb.out & nohup ./run_jupyter.sh --allow-root>jupyter.out &" >> start.sh && \
 	echo "tail -f jupyter.out" >> start.sh
 EXPOSE 6006 8888
 CMD ["./start.sh"]
