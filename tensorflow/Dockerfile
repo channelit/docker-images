@@ -4,7 +4,7 @@ RUN \
 	pip3 install jupyter &&\
 	pip3 uninstall ipython -y &&\
 	pip3 install ipython &&\
-	pip3 install spaCy &&\
+	pip3 install spacy &&\
 	pip3 install pyLDAvis scipy nltk bokeh py4j &&\
 	pip3 install -U scikit-learn &&\
 	pip3 install keras &&\
