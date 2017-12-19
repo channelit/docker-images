@@ -1,0 +1,136 @@
+version: '3.3'
+services:
+  solr1:
+    container_name: solr1
+    image: solr
+    ports:
+     - "8981:8983"
+    volumes:
+      - ./data:/opt/solr/server/solr/mycores
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr
+      - start
+      - -f
+      - -c
+      - -z
+      - zoo1:2181,zoo2:2181,zoo3:2181
+      #- -a
+      #- "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
+    networks:
+      - solr
+
+  solr2:
+    image: solr
+    container_name: solr2
+    ports:
+     - "8982:8983"
+    volumes:
+      - ./data:/opt/solr/server/solr/mycores
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr
+      - start
+      - -f
+      - -c
+      - -z
+      - zoo1:2181,zoo2:2181,zoo3:2181
+      #- -a
+      #- "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
+    networks:
+      - solr
+
+  solr3:
+    image: solr
+    container_name: solr3
+    ports:
+     - "8983:8983"
+    volumes:
+      - ./data:/opt/solr/server/solr/mycores
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr
+      - start
+      - -f
+      - -c
+      - -z
+      - zoo1:2181,zoo2:2181,zoo3:2181
+      #- -a
+      #- "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
+    ports:
+      - 8983:8983
+    networks:
+      - solr
+
+  zoo1:
+    image: zookeeper
+    container_name: zoo1
+    restart: always
+    hostname: zoo1
+    ports:
+      - 2181:2181
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+    networks:
+      - solr
+
+  zoo2:
+    image: zookeeper
+    container_name: zoo2
+    restart: always
+    hostname: zoo2
+    ports:
+      - 2182:2181
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+    networks:
+      - solr
+
+  zoo3:
+    image: zookeeper
+    container_name: zoo3
+    restart: always
+    hostname: zoo3
+    ports:
+      - 2183:2181
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+    networks:
+      - solr
+
+  # elasticsearch:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.0.1
+  #   container_name: elasticsearch
+  #   environment:
+  #     - cluster.name=discoverer
+  #     - bootstrap.memory_lock=true
+  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  #     - ELASTIC_PASSWORD=password
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #   volumes:
+  #     - ./elasticsearch/data:/usr/share/elasticsearch/data
+  #     - ./elasticsearch/logs:/usr/share/elasticsearch/logs
+  #   ports:
+  #     - 9200:9200
+  #     - 9300:9300
+  #   networks:
+  #     - elastic
+  # kibana:
+  #   image: docker.elastic.co/kibana/kibana-oss:6.0.1
+  #   container_name: kibana
+  #   volumes:
+  #     - ./kibana/data:/usr/share/kibana/data
+  #     - ./kibana/logs:/usr/share/kibana/logs
+  #   ports:
+  #     - 5601:5601
+  #   networks:
+  #     - elastic
+
+networks:
+  solr:
