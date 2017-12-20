@@ -4,9 +4,9 @@ services:
     image: solr
     container_name: solr1
     logging:
-      driver: syslog
+      driver: gelf
       options:
-        syslog-address: tcp://localhost:5000
+        gelf-address: udp://localhost:5045
     depends_on:
       - logstash
     ports:
@@ -31,9 +31,9 @@ services:
     image: solr
     container_name: solr2
     logging:
-      driver: gelf
+      driver: syslog
       options:
-        gelf-address: udp://localhost:9600
+        syslog-address: tcp://localhost:5044
     depends_on:
       - logstash
     ports:
@@ -58,9 +58,9 @@ services:
     image: solr
     container_name: solr3
     logging:
-      driver: gelf
+      driver: syslog
       options:
-        gelf-address: udp://localhost:9600
+        syslog-address: tcp://localhost:5044
     depends_on:
       - logstash
     volumes:
@@ -85,9 +85,9 @@ services:
     image: zookeeper
     container_name: zoo1
     logging:
-      driver: gelf
+      driver: syslog
       options:
-        gelf-address: udp://localhost:9600
+        syslog-address: tcp://localhost:5044
     restart: always
     hostname: zoo1
     ports:
@@ -104,9 +104,9 @@ services:
     links:
       - logstash
     logging:
-      driver: gelf
+      driver: syslog
       options:
-        gelf-address: udp://localhost:9600
+        syslog-address: tcp://localhost:5044
     restart: always
     hostname: zoo2
     ports:
@@ -121,9 +121,9 @@ services:
     image: zookeeper
     container_name: zoo3
     logging:
-      driver: gelf
+      driver: syslog
       options:
-        gelf-address: udp://localhost:9600
+        syslog-address: tcp://localhost:5044
     restart: always
     hostname: zoo3
     ports:
@@ -153,9 +153,9 @@ services:
       - 9200:9200
       - 9300:9300
     logging:
-      driver: gelf
+      driver: syslog
       options:
-        gelf-address: udp://localhost:9600
+        syslog-address: tcp://localhost:5044
     networks:
       - elastic
   kibana:
@@ -165,9 +165,9 @@ services:
     depends_on:
       - elasticsearch
     logging:
-      driver: gelf
+      driver: syslog
       options:
-        gelf-address: udp://localhost:9600
+        syslog-address: tcp://localhost:5044
     volumes:
       - ./data/kibana/data:/usr/share/kibana/data
       - ./data/kibana/logs:/usr/share/kibana/logs
@@ -183,11 +183,12 @@ services:
       - elasticsearch
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - ./logstash/pipeline/:/usr/share/logstash/pipeline/:ro
+      - ./data/logstash/logs/:/usr/share/logstash/logs/
     ports:
       - 9600:9600
       - 5044:5044
-      - 5000:5000
+      - 5045:5045
     networks:
       - elastic
 
