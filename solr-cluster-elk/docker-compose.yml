@@ -3,6 +3,12 @@ services:
   solr1:
     container_name: solr1
     image: solr
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://logstash:9600"
+    depends_on:
+      - logstash
     ports:
      - "8981:8983"
     volumes:
@@ -19,10 +25,13 @@ services:
       #- "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
     networks:
       - solr
+      - elastic
 
   solr2:
     image: solr
     container_name: solr2
+    depends_on:
+      - logstash
     ports:
      - "8982:8983"
     volumes:
@@ -39,10 +48,13 @@ services:
       #- "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
     networks:
       - solr
+      - elastic
 
   solr3:
     image: solr
     container_name: solr3
+    depends_on:
+      - logstash
     ports:
      - "8983:8983"
     volumes:
@@ -61,6 +73,7 @@ services:
       - 8983:8983
     networks:
       - solr
+      - elastic
 
   zoo1:
     image: zookeeper
@@ -101,36 +114,44 @@ services:
     networks:
       - solr
 
-  # elasticsearch:
-  #   image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.0.1
-  #   container_name: elasticsearch
-  #   environment:
-  #     - cluster.name=discoverer
-  #     - bootstrap.memory_lock=true
-  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-  #     - ELASTIC_PASSWORD=password
-  #   ulimits:
-  #     memlock:
-  #       soft: -1
-  #       hard: -1
-  #   volumes:
-  #     - ./elasticsearch/data:/usr/share/elasticsearch/data
-  #     - ./elasticsearch/logs:/usr/share/elasticsearch/logs
-  #   ports:
-  #     - 9200:9200
-  #     - 9300:9300
-  #   networks:
-  #     - elastic
-  # kibana:
-  #   image: docker.elastic.co/kibana/kibana-oss:6.0.1
-  #   container_name: kibana
-  #   volumes:
-  #     - ./kibana/data:/usr/share/kibana/data
-  #     - ./kibana/logs:/usr/share/kibana/logs
-  #   ports:
-  #     - 5601:5601
-  #   networks:
-  #     - elastic
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:${ELASTIC_VER}
+    container_name: elasticsearch
+    environment:
+      - cluster.name=elk
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - ELASTIC_PASSWORD=password
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./elasticsearch/data:/usr/share/elasticsearch/data
+      - ./elasticsearch/logs:/usr/share/elasticsearch/logs
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - elastic
+  kibana:
+    image: docker.elastic.co/kibana/kibana-oss:${ELASTIC_VER}
+    container_name: kibana
+    volumes:
+      - ./kibana/data:/usr/share/kibana/data
+      - ./kibana/logs:/usr/share/kibana/logs
+    ports:
+      - 5601:5601
+    networks:
+      - elastic
+  logstash:
+    image: docker.elastic.co/logstash/logstash-oss:${ELASTIC_VER}
+    container_name: logstash
+    ports:
+      - 9600:9600
+    networks:
+      - elastic
 
 networks:
   solr:
+  elastic:
