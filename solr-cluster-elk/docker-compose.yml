@@ -1,18 +1,18 @@
-version: '3.3'
+version: '3.4'
 services:
   solr1:
-    container_name: solr1
     image: solr
+    container_name: solr1
     logging:
       driver: syslog
       options:
-        syslog-address: "tcp://logstash:9600"
+        syslog-address: tcp://localhost:5000
     depends_on:
       - logstash
     ports:
      - "8981:8983"
     volumes:
-      - ./data:/opt/solr/server/solr/mycores
+      - ./data/solr1:/opt/solr/server/solr/mycores
     entrypoint:
       - docker-entrypoint.sh
       - solr
@@ -30,12 +30,16 @@ services:
   solr2:
     image: solr
     container_name: solr2
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:9600
     depends_on:
       - logstash
     ports:
      - "8982:8983"
     volumes:
-      - ./data:/opt/solr/server/solr/mycores
+      - ./data/solr2:/opt/solr/server/solr/mycores
     entrypoint:
       - docker-entrypoint.sh
       - solr
@@ -53,12 +57,14 @@ services:
   solr3:
     image: solr
     container_name: solr3
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:9600
     depends_on:
       - logstash
-    ports:
-     - "8983:8983"
     volumes:
-      - ./data:/opt/solr/server/solr/mycores
+      - ./data/solr3:/opt/solr/server/solr/mycores
     entrypoint:
       - docker-entrypoint.sh
       - solr
@@ -78,6 +84,10 @@ services:
   zoo1:
     image: zookeeper
     container_name: zoo1
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:9600
     restart: always
     hostname: zoo1
     ports:
@@ -91,6 +101,12 @@ services:
   zoo2:
     image: zookeeper
     container_name: zoo2
+    links:
+      - logstash
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:9600
     restart: always
     hostname: zoo2
     ports:
@@ -104,6 +120,10 @@ services:
   zoo3:
     image: zookeeper
     container_name: zoo3
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:9600
     restart: always
     hostname: zoo3
     ports:
@@ -127,19 +147,30 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - ./elasticsearch/data:/usr/share/elasticsearch/data
-      - ./elasticsearch/logs:/usr/share/elasticsearch/logs
+      - ./data/elasticsearch/data:/usr/share/elasticsearch/data
+      - ./data/elasticsearch/logs:/usr/share/elasticsearch/logs
     ports:
       - 9200:9200
       - 9300:9300
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:9600
     networks:
       - elastic
   kibana:
     image: docker.elastic.co/kibana/kibana-oss:${ELASTIC_VER}
     container_name: kibana
+    hostname: kibana
+    depends_on:
+      - elasticsearch
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:9600
     volumes:
-      - ./kibana/data:/usr/share/kibana/data
-      - ./kibana/logs:/usr/share/kibana/logs
+      - ./data/kibana/data:/usr/share/kibana/data
+      - ./data/kibana/logs:/usr/share/kibana/logs
     ports:
       - 5601:5601
     networks:
@@ -147,8 +178,16 @@ services:
   logstash:
     image: docker.elastic.co/logstash/logstash-oss:${ELASTIC_VER}
     container_name: logstash
+    hostname: logstash
+    depends_on:
+      - elasticsearch
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
     ports:
       - 9600:9600
+      - 5044:5044
+      - 5000:5000
     networks:
       - elastic
 
