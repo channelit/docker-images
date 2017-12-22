@@ -4,15 +4,16 @@ services:
     image: solr
     container_name: solr1
     logging:
-      driver: gelf
+      driver: syslog
       options:
-        gelf-address: udp://localhost:5045
+        syslog-address: tcp://localhost:5055
+        tag: solr1
     depends_on:
       - logstash
     ports:
      - "8981:8983"
     volumes:
-      - ./data/solr1:/opt/solr/server/solr/mycores
+      - ./data/solr1/data:/opt/solr/server/solr/data
     entrypoint:
       - docker-entrypoint.sh
       - solr
@@ -33,13 +34,14 @@ services:
     logging:
       driver: syslog
       options:
-        syslog-address: tcp://localhost:5044
+        syslog-address: tcp://localhost:5055
+        tag: solr2
     depends_on:
       - logstash
     ports:
      - "8982:8983"
     volumes:
-      - ./data/solr2:/opt/solr/server/solr/mycores
+      - ./data/solr2/data:/opt/solr/server/solr/data
     entrypoint:
       - docker-entrypoint.sh
       - solr
@@ -60,11 +62,12 @@ services:
     logging:
       driver: syslog
       options:
-        syslog-address: tcp://localhost:5044
+        syslog-address: tcp://localhost:5055
+        tag: solr3
     depends_on:
       - logstash
     volumes:
-      - ./data/solr3:/opt/solr/server/solr/mycores
+      - ./data/solr3/data:/opt/solr/server/solr/data
     entrypoint:
       - docker-entrypoint.sh
       - solr
@@ -87,7 +90,8 @@ services:
     logging:
       driver: syslog
       options:
-        syslog-address: tcp://localhost:5044
+        syslog-address: tcp://localhost:5055
+        tag: zoo1
     restart: always
     hostname: zoo1
     ports:
@@ -106,7 +110,8 @@ services:
     logging:
       driver: syslog
       options:
-        syslog-address: tcp://localhost:5044
+        syslog-address: tcp://localhost:5055
+        tag: zoo2
     restart: always
     hostname: zoo2
     ports:
@@ -123,7 +128,8 @@ services:
     logging:
       driver: syslog
       options:
-        syslog-address: tcp://localhost:5044
+        syslog-address: tcp://localhost:5055
+        tag: zoo3
     restart: always
     hostname: zoo3
     ports:
@@ -155,9 +161,11 @@ services:
     logging:
       driver: syslog
       options:
-        syslog-address: tcp://localhost:5044
+        syslog-address: tcp://localhost:5055
+        tag: elasticsearch
     networks:
       - elastic
+
   kibana:
     image: docker.elastic.co/kibana/kibana-oss:${ELASTIC_VER}
     container_name: kibana
@@ -167,7 +175,8 @@ services:
     logging:
       driver: syslog
       options:
-        syslog-address: tcp://localhost:5044
+        syslog-address: tcp://localhost:5045
+        tag: kibana
     volumes:
       - ./data/kibana/data:/usr/share/kibana/data
       - ./data/kibana/logs:/usr/share/kibana/logs
@@ -175,6 +184,7 @@ services:
       - 5601:5601
     networks:
       - elastic
+
   logstash:
     image: docker.elastic.co/logstash/logstash-oss:${ELASTIC_VER}
     container_name: logstash
@@ -187,8 +197,8 @@ services:
       - ./data/logstash/logs/:/usr/share/logstash/logs/
     ports:
       - 9600:9600
-      - 5044:5044
       - 5045:5045
+      - 5055:5055
     networks:
       - elastic
 
