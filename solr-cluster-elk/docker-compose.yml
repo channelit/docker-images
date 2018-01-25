@@ -3,6 +3,7 @@ services:
   solr1:
     image: solr
     hostname: solr1
+    container_name: solr1
     logging:
       driver: syslog
       options:
@@ -33,6 +34,7 @@ services:
   solr2:
     image: solr
     hostname: solr2
+    container_name: solr2
     logging:
       driver: syslog
       options:
@@ -63,6 +65,7 @@ services:
   solr3:
     image: solr
     hostname: solr3
+    container_name: solr3
     logging:
       driver: syslog
       options:
@@ -92,6 +95,7 @@ services:
 
   zoo1:
     image: zookeeper
+    hostname: zoo1
     container_name: zoo1
     logging:
       driver: syslog
@@ -111,6 +115,7 @@ services:
   zoo2:
     image: zookeeper
     hostname: zoo2
+    container_name: zoo2
     links:
       - logstash
     logging:
@@ -131,6 +136,7 @@ services:
   zoo3:
     image: zookeeper
     hostname: zoo3
+    container_name: zoo3
     logging:
       driver: syslog
       options:
@@ -148,6 +154,7 @@ services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:${ELASTIC_VER}
     hostname: elasticsearch
+    container_name: elasticsearch
     environment:
       - cluster.name=elk
       - bootstrap.memory_lock=true
@@ -173,6 +180,7 @@ services:
   kibana:
     image: docker.elastic.co/kibana/kibana-oss:${ELASTIC_VER}
     hostname: kibana
+    container_name: kibana
     depends_on:
       - elasticsearch
     logging:
@@ -190,6 +198,7 @@ services:
   logstash:
     image: docker.elastic.co/logstash/logstash-oss:${ELASTIC_VER}
     hostname: logstash
+    container_name: logstash
     depends_on:
       - elasticsearch
     volumes:
