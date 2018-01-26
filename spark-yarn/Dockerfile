@@ -1,7 +1,8 @@
 FROM cithub/hadoop
 MAINTAINER Channel IT Services, LLC
 
-ENV SPARK_VER=2.2.1-bin-hadoop2.7
+ENV SPARK_FILE_VER=2.2.1-bin-hadoop2.7
+ENV SPARK_VER=2.2.1
 ENV SPARK_HOME=/home/hadoop/spark/spark
 ENV SPARK_OPTS=-"-packages graphframes:graphframes:0.5.0-spark2.1-s_2.11,com.databricks:spark-csv_2.11:1.2.0"
 ENV YARN_CONF_DIR=/home/hadoop/hadoop/etc/hadoop
@@ -11,10 +12,10 @@ VOLUME	/data
 RUN\
 	apt-get update &&\
 	mkdir -p /home/hadoop/spark &&\
-	wget https://d3kbcqa49mib13.cloudfront.net/spark-$SPARK_VER.tgz &&\
-	tar xzvf spark-$SPARK_VER.tgz &&\
-	mv spark-$SPARK_VER $SPARK_HOME &&\
-	rm spark-$SPARK_VER.tgz
+	wget https://www.apache.org/dyn/closer.lua/spark/spark-$SPARK_VER/spark-$SPARK_FILE_VER.tgz &&\
+	tar xzvf spark-$SPARK_FILE_VER.tgz &&\
+	mv spark-$SPARK_FILE_VER $SPARK_HOME &&\
+	rm spark-$SPARK_FILE_VER.tgz
 RUN\
 	apt-get update &&\
 	apt-get install -y python3-numpy python3-scipy python3-matplotlib ipython3 ipython-notebook python3-pandas python3-sympy python3-nose &&\
