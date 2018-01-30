@@ -12,7 +12,7 @@ VOLUME	/data
 RUN\
 	apt-get update &&\
 	mkdir -p /home/hadoop/spark &&\
-	wget https://www.apache.org/dyn/closer.lua/spark/spark-$SPARK_VER/spark-$SPARK_FILE_VER.tgz &&\
+	wget http://apache.mirrors.tds.net/spark/spark-$SPARK_VER/spark-$SPARK_FILE_VER.tgz &&\
 	tar xzvf spark-$SPARK_FILE_VER.tgz &&\
 	mv spark-$SPARK_FILE_VER $SPARK_HOME &&\
 	rm spark-$SPARK_FILE_VER.tgz
