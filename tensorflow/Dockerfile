@@ -11,6 +11,7 @@ RUN \
 	pip3 install numpy networkx gensim elasticsearch &&\
 	pip3 install -U gensim &&\
 	pip3 install pysal &&\
+	pip3 install geojson &&\
 	apt-get update &&\
 	apt-get clean &&\
  	mkdir /opt/logs &&\
