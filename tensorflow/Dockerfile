@@ -8,9 +8,9 @@ RUN \
 	pip3 install pyLDAvis scipy nltk bokeh py4j &&\
 	pip3 install -U scikit-learn &&\
 	pip3 install keras &&\
-	pip3 install numpy networkx gensim elasticsearch &&\
+	pip3 install numpy networkx gensim elasticsearch django pandas &&\
 	pip3 install -U gensim &&\
-	pip3 install pysal geojson folium &&\
+	pip3 install pysal geojson folium geopandas&&\
 	apt-get update &&\
 	apt-get clean &&\
  	mkdir /opt/logs &&\

@@ -93,6 +93,37 @@ services:
       - solr
       - elastic
 
+  solr4:
+    image: solr
+    hostname: solr4
+    container_name: solr4
+    logging:
+      driver: syslog
+      options:
+        syslog-address: tcp://localhost:5054
+    depends_on:
+      - logstash
+      - zoo1
+      - zoo2
+      - zoo3
+    volumes:
+      - ./data/solr3/data:/opt/solr/server/solr/data
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr
+      - start
+      - -f
+      - -c
+      - -z
+      - zoo1:2181,zoo2:2181,zoo3:2181
+      #- -a
+      #- "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
+    ports:
+      - 8984:8983
+    networks:
+      - solr
+      - elastic
+
   zoo1:
     image: zookeeper
     hostname: zoo1
@@ -211,6 +242,7 @@ services:
       - 5051:5051
       - 5052:5052
       - 5053:5053
+      - 5054:5054
       - 5061:5061
       - 5062:5062
       - 5063:5063
