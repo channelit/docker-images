@@ -20,6 +20,7 @@ RUN \
 	echo "nohup tensorboard --logdir=/data/logs > tb.out & nohup ./run_jupyter.sh --allow-root>jupyter.out &" >> start.sh &&\
 	echo "tail -f jupyter.out" >> start.sh
 RUN \
-	python -m nltk.downloader all
+	python -m nltk.downloader all &&\
+	python -m spacy download en
 EXPOSE 6006 8888
 CMD ["./start.sh"]
