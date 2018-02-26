@@ -1,6 +1,7 @@
 FROM gcr.io/tensorflow/tensorflow:latest-py3
 WORKDIR /
 RUN \
+	apt-get update &&\
 	pip3 install jupyter &&\
 	pip3 uninstall ipython -y &&\
 	pip3 install ipython &&\
@@ -11,7 +12,6 @@ RUN \
 	pip3 install numpy networkx gensim elasticsearch django pandas &&\
 	pip3 install -U gensim &&\
 	pip3 install pysal geojson folium geopandas &&\
-	apt-get update &&\
 	apt-get clean &&\
  	mkdir /opt/logs &&\
 	touch start.sh &&\
