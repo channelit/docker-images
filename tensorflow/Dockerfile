@@ -11,7 +11,7 @@ RUN \
 	pip3 install keras &&\
 	pip3 install numpy networkx gensim elasticsearch django pandas &&\
 	pip3 install -U gensim &&\
-	pip3 install pysal geojson folium geopandas &&\
+	pip3 install pysal geojson hdbscan folium geopandas &&\
 	apt-get clean &&\
  	mkdir /opt/logs &&\
 	touch start.sh &&\
