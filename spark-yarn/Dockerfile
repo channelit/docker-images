@@ -18,11 +18,9 @@ RUN\
 	rm spark-$SPARK_FILE_VER.tgz
 RUN\
 	apt-get update &&\
-	apt-get install -y python3-numpy python3-scipy python3-matplotlib python3-pandas python3-sympy python3-nose &&\
+	apt-get install -y python3-pip python3-numpy python3-scipy python3-matplotlib python3-pandas python3-sympy python3-nose &&\
 	apt-get install -y python3-dev python3-pip g++ libopenblas-dev git &&\
 	apt-get clean &&\
-	pip3 uninstall ipython -y &&\
-	pip3 install ipython3 &&\
 	pip3 install jupyter &&\
 	ln -sf /usr/bin/python3 /usr/bin/python &&\
 	pip3 install --upgrade pip &&\
