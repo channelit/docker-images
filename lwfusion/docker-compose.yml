@@ -1,25 +1,25 @@
 version: '3.4'
 services:
   fusion:
-    image: cithub/lwfusion
+    image: a4ca1a690b58
     hostname: fusion
     container_name: fusion
-  networks:
-    solr
-  ports:
-    - 8091:8091 # agent.port
-    - 8765:8765 # api.port
-    - 7765:7765 # api.stopPort
-    - 8771:8771 # connectors-rpc.port
-    - 8766:8766 # spark-master.port
-    - 8767:8767 # spark-master.uiPort
-    - 8769:8769 # spark-worker.port
-    - 8770:8770 # spark-worker.uiPort
-    - 8763:8763 # admin-ui.port
-    - 7763:7763 # admin-ui.stopPort
-    - 8768:8768 # sql.port
-    - 8780:8780 # webapps.port
-    - 7780:7780 # webapps.stopPort
+    ports:
+      - 8091:8091 # agent.port
+      - 8765:8765 # api.port
+      - 7765:7765 # api.stopPort
+      - 8771:8771 # connectors-rpc.port
+      - 8766:8766 # spark-master.port
+      - 8767:8767 # spark-master.uiPort
+      - 8769:8769 # spark-worker.port
+      - 8770:8770 # spark-worker.uiPort
+      - 8763:8763 # admin-ui.port
+      - 7763:7763 # admin-ui.stopPort
+      - 8768:8768 # sql.port
+      - 8780:8780 # webapps.port
+      - 7780:7780 # webapps.stopPort
+    networks:
+      - solr
 
   solr1:
     image: solr
@@ -56,7 +56,7 @@ services:
       - zoo2
       - zoo3
     ports:
-     - "8982:8983"
+     - 8982:8983
     volumes:
       - ./data/solr2/data:/opt/solr/server/solr/data
       - ./data/solr2/logs:/opt/solr/server/solr/logs
@@ -107,6 +107,7 @@ services:
       - zoo_fusion
     volumes:
       - ./data/solr_fusion/data:/opt/solr/server/solr/data
+      - ./data/solr_fusion/logs:/opt/solr/server/solr/logs
     entrypoint:
       - docker-entrypoint.sh
       - solr
@@ -118,7 +119,7 @@ services:
       #- -a
       #- "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
     ports:
-      - 8984:8983
+      - 8985:8983
     networks:
       - solr
 
@@ -140,8 +141,6 @@ services:
     image: zookeeper
     hostname: zoo2
     container_name: zoo2
-    links:
-      - logstash
     restart: always
     hostname: zoo2
     ports:
@@ -173,8 +172,8 @@ services:
     ports:
       - 2185:2181
     environment:
-      ZOO_MY_ID: 3
-      ZOO_SERVERS: server.1=zoo_fusion:2888:3888
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888
     networks:
       - solr
 
