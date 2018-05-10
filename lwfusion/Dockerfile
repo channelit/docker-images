@@ -5,6 +5,8 @@ RUN\
 	apt-get update &&\
 	wget https://download.lucidworks.com/fusion-$FUSION_VER/fusion-$FUSION_VER.tar.gz &&\
 	tar xzvf fusion-$FUSION_VER.tar.gz
+RUN\
+	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/lwfusion/conf/fusion.properties -O /fusion/$FUSION_VER/conf/fusion.properties
 
 ENTRYPOINT [ "/fusion/$FUSION_VER/bin/fusion", "start" ]
 
