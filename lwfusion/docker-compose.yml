@@ -19,8 +19,20 @@ services:
       - 8780:8780 # webapps.port
       - 7780:7780 # webapps.stopPort
     volumes:
-      - ./data/fusion/log:/lwfusion/var/log
-    command: ./lwfusion/bin/fusion start
+      - ./data/fusion/log/admin-ui:/lwfusion/var/log/admin-ui
+      - ./data/fusion/log/agent:/lwfusion/var/log/agent
+      - ./data/fusion/log/api:/lwfusion/var/log/api
+      - ./data/fusion/log/connectors:/lwfusion/var/log/connectors
+      - ./data/fusion/log/proxy:/lwfusion/var/log/proxy
+      - ./data/fusion/log/solr:/lwfusion/var/log/solr
+      - ./data/fusion/log/spark-master:/lwfusion/var/log/spark-master
+      - ./data/fusion/log/spark-worker:/lwfusion/var/log/spark-worker
+      - ./data/fusion/log/sql:/lwfusion/var/log/sql
+      - ./data/fusion/log/webapps:/lwfusion/var/log/webapps
+      - ./data/fusion/log/zookeeper:/lwfusion/var/log/zookeeper
+    entrypoint: 
+      - ./lwfusion/bin/fusion
+      - start
     networks:
       - solr
 

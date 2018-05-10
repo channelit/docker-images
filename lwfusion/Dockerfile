@@ -9,6 +9,6 @@ RUN\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/lwfusion/conf/fusion.properties -O /fusion/$FUSION_VER/conf/fusion.properties &&\
 	ln -s /fusion/$FUSION_VER lwfusion
 
-ENTRYPOINT [ "/lwfusion/bin/fusion", "start"]
+ENTRYPOINT [ "./lwfusion/bin/fusion", "start"]
 
 EXPOSE 3000 8764 8765 8983 8984 8766 8769
