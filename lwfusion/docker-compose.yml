@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   fusion:
-    image: a4ca1a690b58
+    image: cithub/lwfusion
     hostname: fusion
     container_name: fusion
     ports:
@@ -18,6 +18,8 @@ services:
       - 8768:8768 # sql.port
       - 8780:8780 # webapps.port
       - 7780:7780 # webapps.stopPort
+    volumes:
+      - ./data/fusion/log:/lwfusion/var/log
     networks:
       - solr
 
