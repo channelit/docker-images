@@ -20,6 +20,7 @@ services:
       - 7780:7780 # webapps.stopPort
     volumes:
       - ./data/fusion/log:/lwfusion/var/log
+    command: ./lwfusion/bin/fusion start
     networks:
       - solr
 
