@@ -1,40 +1,5 @@
 version: '3.4'
 services:
-  fusion:
-    image: cithub/lwfusion
-    hostname: fusion
-    container_name: fusion
-    ports:
-      - 8091:8091 # agent.port
-      - 8765:8765 # api.port
-      - 7765:7765 # api.stopPort
-      - 8771:8771 # connectors-rpc.port
-      - 8766:8766 # spark-master.port
-      - 8767:8767 # spark-master.uiPort
-      - 8769:8769 # spark-worker.port
-      - 8770:8770 # spark-worker.uiPort
-      - 8763:8763 # admin-ui.port
-      - 7763:7763 # admin-ui.stopPort
-      - 8768:8768 # sql.port
-      - 8780:8780 # webapps.port
-      - 7780:7780 # webapps.stopPort
-    volumes:
-      - ./data/fusion/log/admin-ui:/lwfusion/var/log/admin-ui
-      - ./data/fusion/log/agent:/lwfusion/var/log/agent
-      - ./data/fusion/log/api:/lwfusion/var/log/api
-      - ./data/fusion/log/connectors:/lwfusion/var/log/connectors
-      - ./data/fusion/log/proxy:/lwfusion/var/log/proxy
-      - ./data/fusion/log/solr:/lwfusion/var/log/solr
-      - ./data/fusion/log/spark-master:/lwfusion/var/log/spark-master
-      - ./data/fusion/log/spark-worker:/lwfusion/var/log/spark-worker
-      - ./data/fusion/log/sql:/lwfusion/var/log/sql
-      - ./data/fusion/log/webapps:/lwfusion/var/log/webapps
-      - ./data/fusion/log/zookeeper:/lwfusion/var/log/zookeeper
-    entrypoint: 
-      - ./lwfusion/bin/fusion
-      - start
-    networks:
-      - solr
 
   solr1:
     image: solr
@@ -189,6 +154,46 @@ services:
     environment:
       ZOO_MY_ID: 1
       ZOO_SERVERS: server.1=0.0.0.0:2888:3888
+    networks:
+      - solr
+
+  fusion:
+    image: cithub/lwfusion
+    hostname: fusion
+    container_name: fusion
+    depends_on:
+      - solr_fusion
+    ports:
+      - 8091:8091 # agent.port
+      - 8765:8765 # api.port
+      - 7765:7765 # api.stopPort
+      - 8771:8771 # connectors-rpc.port
+      - 8766:8766 # spark-master.port
+      - 8767:8767 # spark-master.uiPort
+      - 8769:8769 # spark-worker.port
+      - 8770:8770 # spark-worker.uiPort
+      - 8763:8763 # admin-ui.port
+      - 7763:7763 # admin-ui.stopPort
+      - 8768:8768 # sql.port
+      - 8780:8780 # webapps.port
+      - 7780:7780 # webapps.stopPort
+    volumes:
+      - ./data/fusion/log/admin-ui:/lwfusion/var/log/admin-ui
+      - ./data/fusion/log/agent:/lwfusion/var/log/agent
+      - ./data/fusion/log/api:/lwfusion/var/log/api
+      - ./data/fusion/log/connectors:/lwfusion/var/log/connectors
+      - ./data/fusion/log/proxy:/lwfusion/var/log/proxy
+      - ./data/fusion/log/solr:/lwfusion/var/log/solr
+      - ./data/fusion/log/spark-master:/lwfusion/var/log/spark-master
+      - ./data/fusion/log/spark-worker:/lwfusion/var/log/spark-worker
+      - ./data/fusion/log/sql:/lwfusion/var/log/sql
+      - ./data/fusion/log/webapps:/lwfusion/var/log/webapps
+      - ./data/fusion/log/zookeeper:/lwfusion/var/log/zookeeper
+      - ./data/fusion/var/spark-worker:/lwfusion/var/spark-worker
+      - ./data/fusion/var/spark-master:/lwfusion/var/spark-master
+    entrypoint: 
+      - ./lwfusion/bin/fusion
+      - start
     networks:
       - solr
 
