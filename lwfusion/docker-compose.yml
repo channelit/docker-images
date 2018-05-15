@@ -10,7 +10,7 @@ services:
       - zoo2
       - zoo3
     ports:
-     - "8981:8983"
+     - 8981:8983
     volumes:
       - ./data/solr1/data:/opt/solr/server/solr/data
       - ./data/solr1/logs:/opt/solr/server/solr/logs
@@ -177,6 +177,8 @@ services:
       - 8768:8768 # sql.port
       - 8780:8780 # webapps.port
       - 7780:7780 # webapps.stopPort
+      - 8764:8764 # proxy.port
+      - 7764:7764 # proxy.stopPort
     volumes:
       - ./data/fusion/log/admin-ui:/lwfusion/var/log/admin-ui
       - ./data/fusion/log/agent:/lwfusion/var/log/agent
@@ -191,11 +193,27 @@ services:
       - ./data/fusion/log/zookeeper:/lwfusion/var/log/zookeeper
       - ./data/fusion/var/spark-worker:/lwfusion/var/spark-worker
       - ./data/fusion/var/spark-master:/lwfusion/var/spark-master
+      - ./data/fusion/var/agent:/lwfusion/var/agent
+      - ./data/fusion/var/api:/lwfusion/var/api
+      - ./data/fusion/var/connectors:/lwfusion/var/connectors
+      - ./data/fusion/var/proxy:/lwfusion/var/proxy
+      - ./data/fusion/var/sql:/lwfusion/var/sql
+      - ./data/fusion/var/webapps:/lwfusion/var/webapps
+      - ./data/fusion/var/admin-ui:/lwfusion/var/admin-ui
+      - ./data/fusion/var/agent:/lwfusion/var/agent
     entrypoint: 
       - ./lwfusion/bin/fusion
       - start
     networks:
       - solr
-
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 512M
 networks:
   solr:
