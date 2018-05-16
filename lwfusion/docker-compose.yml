@@ -180,30 +180,27 @@ services:
       - 8764:8764 # proxy.port
       - 7764:7764 # proxy.stopPort
     volumes:
-      - ./data/fusion/log/admin-ui:/lwfusion/var/log/admin-ui
-      - ./data/fusion/log/agent:/lwfusion/var/log/agent
-      - ./data/fusion/log/api:/lwfusion/var/log/api
-      - ./data/fusion/log/connectors:/lwfusion/var/log/connectors
-      - ./data/fusion/log/proxy:/lwfusion/var/log/proxy
-      - ./data/fusion/log/solr:/lwfusion/var/log/solr
-      - ./data/fusion/log/spark-master:/lwfusion/var/log/spark-master
-      - ./data/fusion/log/spark-worker:/lwfusion/var/log/spark-worker
-      - ./data/fusion/log/sql:/lwfusion/var/log/sql
-      - ./data/fusion/log/webapps:/lwfusion/var/log/webapps
-      - ./data/fusion/log/zookeeper:/lwfusion/var/log/zookeeper
-      - ./data/fusion/var/spark-worker:/lwfusion/var/spark-worker
-      - ./data/fusion/var/spark-master:/lwfusion/var/spark-master
-      - ./data/fusion/var/agent:/lwfusion/var/agent
-      - ./data/fusion/var/api:/lwfusion/var/api
-      - ./data/fusion/var/connectors:/lwfusion/var/connectors
-      - ./data/fusion/var/proxy:/lwfusion/var/proxy
-      - ./data/fusion/var/sql:/lwfusion/var/sql
-      - ./data/fusion/var/webapps:/lwfusion/var/webapps
-      - ./data/fusion/var/admin-ui:/lwfusion/var/admin-ui
-      - ./data/fusion/var/agent:/lwfusion/var/agent
-    entrypoint: 
-      - ./lwfusion/bin/fusion
-      - start
+      - ./data/fusion/log/admin-ui:/fusion/var/log/admin-ui
+      - ./data/fusion/log/agent:/fusion/var/log/agent
+      - ./data/fusion/log/api:/fusion/var/log/api
+      - ./data/fusion/log/connectors:/fusion/var/log/connectors
+      - ./data/fusion/log/proxy:/fusion/var/log/proxy
+      - ./data/fusion/log/solr:/fusion/var/log/solr
+      - ./data/fusion/log/spark-master:/fusion/var/log/spark-master
+      - ./data/fusion/log/spark-worker:/fusion/var/log/spark-worker
+      - ./data/fusion/log/sql:/fusion/var/log/sql
+      - ./data/fusion/log/webapps:/fusion/var/log/webapps
+      - ./data/fusion/log/zookeeper:/fusion/var/log/zookeeper
+      # - ./data/fusion/var/spark-worker:/lwfusion/var/spark-worker
+      # - ./data/fusion/var/spark-master:/lwfusion/var/spark-master
+      # - ./data/fusion/var/agent:/lwfusion/var/agent
+      # - ./data/fusion/var/api:/lwfusion/var/api
+      # - ./data/fusion/var/connectors:/lwfusion/var/connectors
+      # - ./data/fusion/var/proxy:/lwfusion/var/proxy
+      # - ./data/fusion/var/sql:/lwfusion/var/sql
+      # - ./data/fusion/var/webapps:/lwfusion/var/webapps
+      # - ./data/fusion/var/admin-ui:/lwfusion/var/admin-ui
+      # - ./data/fusion/var/agent:/lwfusion/var/agent
     networks:
       - solr
     deploy:
