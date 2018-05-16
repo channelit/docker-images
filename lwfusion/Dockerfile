@@ -9,7 +9,7 @@ RUN\
 	tar xzvf fusion-$FUSION_VER.tar.gz
 RUN\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/lwfusion/conf/fusion.properties -O /fusion/$FUSION_VER/conf/fusion.properties &&\
-	mv /fusion/$FUSION_VER /fusion
+	mv fusion/$FUSION_VER/* fusion/.
 
 ENTRYPOINT [ "./fusion/bin/fusion", "start"]
 
