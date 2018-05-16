@@ -161,6 +161,8 @@ services:
     image: cithub/lwfusion
     hostname: fusion
     container_name: fusion
+    environment:
+      - FUSION_VER=4.0.1
     depends_on:
       - solr_fusion
     ports:
@@ -180,27 +182,27 @@ services:
       - 8764:8764 # proxy.port
       - 7764:7764 # proxy.stopPort
     volumes:
-      - ./data/fusion/log/admin-ui:/fusion/var/log/admin-ui
-      - ./data/fusion/log/agent:/fusion/var/log/agent
-      - ./data/fusion/log/api:/fusion/var/log/api
-      - ./data/fusion/log/connectors:/fusion/var/log/connectors
-      - ./data/fusion/log/proxy:/fusion/var/log/proxy
-      - ./data/fusion/log/solr:/fusion/var/log/solr
-      - ./data/fusion/log/spark-master:/fusion/var/log/spark-master
-      - ./data/fusion/log/spark-worker:/fusion/var/log/spark-worker
-      - ./data/fusion/log/sql:/fusion/var/log/sql
-      - ./data/fusion/log/webapps:/fusion/var/log/webapps
-      - ./data/fusion/log/zookeeper:/fusion/var/log/zookeeper
-      # - ./data/fusion/var/spark-worker:/lwfusion/var/spark-worker
-      # - ./data/fusion/var/spark-master:/lwfusion/var/spark-master
-      # - ./data/fusion/var/agent:/lwfusion/var/agent
-      # - ./data/fusion/var/api:/lwfusion/var/api
-      # - ./data/fusion/var/connectors:/lwfusion/var/connectors
-      # - ./data/fusion/var/proxy:/lwfusion/var/proxy
-      # - ./data/fusion/var/sql:/lwfusion/var/sql
-      # - ./data/fusion/var/webapps:/lwfusion/var/webapps
-      # - ./data/fusion/var/admin-ui:/lwfusion/var/admin-ui
-      # - ./data/fusion/var/agent:/lwfusion/var/agent
+      - ./data/fusion/log/admin-ui:/fusion/$FUSION_VER/var/log/admin-ui
+      - ./data/fusion/log/agent:/fusion/$FUSION_VER/var/log/agent
+      - ./data/fusion/log/api:/fusion/$FUSION_VER/var/log/api
+      - ./data/fusion/log/connectors:/fusion/$FUSION_VER/var/log/connectors
+      - ./data/fusion/log/proxy:/fusion/$FUSION_VER/var/log/proxy
+      - ./data/fusion/log/solr:/fusion/$FUSION_VER/var/log/solr
+      - ./data/fusion/log/spark-master:/fusion/$FUSION_VER/var/log/spark-master
+      - ./data/fusion/log/spark-worker:/fusion/$FUSION_VER/var/log/spark-worker
+      - ./data/fusion/log/sql:/fusion/$FUSION_VER/var/log/sql
+      - ./data/fusion/log/webapps:/fusion/$FUSION_VER/var/log/webapps
+      - ./data/fusion/log/zookeeper:/fusion/$FUSION_VER/var/log/zookeeper
+      # - ./data/fusion/var/spark-worker:/fusion/$FUSION_VER/var/spark-worker
+      # - ./data/fusion/var/spark-master:/fusion/$FUSION_VER/var/spark-master
+      # - ./data/fusion/var/agent:/fusion/$FUSION_VER/var/agent
+      # - ./data/fusion/var/api:/fusion/$FUSION_VER/var/api
+      # - ./data/fusion/var/connectors:/fusion/$FUSION_VER/var/connectors
+      # - ./data/fusion/var/proxy:/fusion/$FUSION_VER/var/proxy
+      # - ./data/fusion/var/sql:/fusion/$FUSION_VER/var/sql
+      # - ./data/fusion/var/webapps:/fusion/$FUSION_VER/var/webapps
+      # - ./data/fusion/var/admin-ui:/fusion/$FUSION_VER/var/admin-ui
+      # - ./data/fusion/var/agent:/fusion/$FUSION_VER/var/agent
     networks:
       - solr
     deploy:
