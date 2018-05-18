@@ -1,13 +1,9 @@
 FROM cithub/ubuntu
 ENV\
-	FUSION_VER=4.0.1
+	FUSION_VER=3.1.0
 RUN\
 	apt-get update &&\
 	apt-get install scala -y &&\
 	apt-get clean &&\
 	wget https://download.lucidworks.com/fusion-$FUSION_VER/fusion-$FUSION_VER.tar.gz &&\
 	tar xzvf fusion-$FUSION_VER.tar.gz
-RUN\
-	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/lwfusion/conf/fusion.properties -O /fusion/$FUSION_VER/conf/fusion.properties
-
-ENTRYPOINT [ "./fusion/$FUSION_VER/bin/fusion", "start"]

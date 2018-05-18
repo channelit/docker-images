@@ -29,6 +29,7 @@ services:
 
   solr2:
     image: solr
+    
     hostname: solr2
     container_name: solr2
     depends_on:
@@ -171,8 +172,10 @@ services:
     ports:
       - 8091:8091 # agent.port
       - 8765:8765 # api.port
-      # - 7765:7765 # api.stopPort
+      - 7765:7765 # api.stopPort
       - 8771:8771 # connectors-rpc.port
+      - 8984:8984 # connectors-classic.port
+      - 7984:7984 # connectors-classic.stopPort
       - 8766:8766 # spark-master.port
       - 8767:8767 # spark-master.uiPort
       - 8769:8769 # spark-worker.port
