@@ -23,6 +23,8 @@ RUN\
 	chown -R $APP_USER:$APP_GROUP $APP_HOME
 RUN\
 	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/lwfusion/conf/fusion.properties -O $APP_HOME/$FUSION_VER/conf/fusion.properties
-	
+
 WORKDIR $APP_HOME
 USER $APP_USER
+
+EXPOSE 9983 8983 8765 8984 8764
