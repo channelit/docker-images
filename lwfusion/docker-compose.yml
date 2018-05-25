@@ -29,7 +29,7 @@ services:
 
   solr2:
     image: solr
-    
+
     hostname: solr2
     container_name: solr2
     depends_on:
@@ -162,11 +162,11 @@ services:
       - fusion
 
   fusion:
-    image: cithub/lwfusion
+    image: 554ba2179e82
     hostname: fusion
     container_name: fusion
     environment:
-      - FUSION_VER=4.0.1
+      - FUSION_VER=3.1.0
     # depends_on:
     #   - solr_fusion
     ports:
@@ -210,9 +210,7 @@ services:
       # - ./data/fusion/var/webapps:/fusion/$FUSION_VER/var/webapps
       # - ./data/fusion/var/admin-ui:/fusion/$FUSION_VER/var/admin-ui
       # - ./data/fusion/var/agent:/fusion/$FUSION_VER/var/agent
-    entrypoint:
-      - ./fusion/$FUSION_VER/bin/fusion
-      - start
+    command: /bin/bash /opt/lucidworks/fusion/$FUSION_VER/bin/fusion start
     networks:
       - solr
       - fusion
