@@ -4,7 +4,7 @@ ENV\
 	DEBIAN_FRONTEND=noninteractive
 RUN\
 	apt-get update &&\
-	apt-get install -y vim curl sudo wget openssh-server openssh-client rsync default-jdk ntp &&\
+	apt-get install -y vim curl sudo wget openssh-server openssh-client rsync &&\
 	apt-get update &&\
 	apt-get clean &&\
 	apt-get install software-properties-common -y &&\
