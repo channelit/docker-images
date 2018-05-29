@@ -162,7 +162,7 @@ services:
       - fusion
 
   fusion:
-    image: 554ba2179e82
+    image: cithub/lwfusion
     hostname: fusion
     container_name: fusion
     environment:
@@ -187,18 +187,17 @@ services:
       # - 7780:7780 # webapps.stopPort
       - 8764:8764 # proxy.port
       # - 7764:7764 # proxy.stopPort
-    # volumes:
-    #   - ./data/fusion/log/admin-ui:/fusion/$FUSION_VER/var/log/admin-ui
-    #   - ./data/fusion/log/agent:/fusion/$FUSION_VER/var/log/agent
-    #   - ./data/fusion/log/api:/fusion/$FUSION_VER/var/log/api
-    #   - ./data/fusion/log/connectors:/fusion/$FUSION_VER/var/log/connectors
-    #   - ./data/fusion/log/proxy:/fusion/$FUSION_VER/var/log/proxy
-    #   - ./data/fusion/log/solr:/fusion/$FUSION_VER/var/log/solr
-    #   - ./data/fusion/log/spark-master:/fusion/$FUSION_VER/var/log/spark-master
-    #   - ./data/fusion/log/spark-worker:/fusion/$FUSION_VER/var/log/spark-worker
-    #   - ./data/fusion/log/sql:/fusion/$FUSION_VER/var/log/sql
-    #   - ./data/fusion/log/webapps:/fusion/$FUSION_VER/var/log/webapps
-    #   - ./data/fusion/log/zookeeper:/fusion/$FUSION_VER/var/log/zookeeper
+    volumes:
+      - ./data/fusion/log/admin-ui:/opt/lucidworks/fusion/$FUSION_VER/var/log/admin-ui
+      - ./data/fusion/log/agent:/opt/lucidworks/fusion/$FUSION_VER/var/log/agent
+      - ./data/fusion/log/api:/opt/lucidworks/fusion/$FUSION_VER/var/log/api
+      - ./data/fusion/log/connectors/connectors-rpc:/opt/lucidworks/fusion/$FUSION_VER/var/log/connectors/connectors-rpc
+      - ./data/fusion/log/connectors/connectors-classic:/opt/lucidworks/fusion/$FUSION_VER/var/log/connectors/connectors-classic
+      - ./data/fusion/log/proxy:/opt/lucidworks/fusion/$FUSION_VER/var/log/proxy
+      - ./data/fusion/log/spark-master:/opt/lucidworks/fusion/$FUSION_VER/var/log/spark-master
+      - ./data/fusion/log/spark-worker:/opt/lucidworks/fusion/$FUSION_VER/var/log/spark-worker
+      - ./data/fusion/log/sql:/opt/lucidworks/fusion/$FUSION_VER/var/log/sql
+      - ./data/fusion/log/webapps:/opt/lucidworks/fusion/$FUSION_VER/var/log/webapps
     #   - ./data/fusion/data:/fusion/data
       # - ./data/fusion/var/spark-worker:/fusion/$FUSION_VER/var/spark-worker
       # - ./data/fusion/var/spark-master:/fusion/$FUSION_VER/var/spark-master
