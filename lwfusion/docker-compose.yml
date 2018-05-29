@@ -209,10 +209,11 @@ services:
       # - ./data/fusion/var/webapps:/fusion/$FUSION_VER/var/webapps
       # - ./data/fusion/var/admin-ui:/fusion/$FUSION_VER/var/admin-ui
       # - ./data/fusion/var/agent:/fusion/$FUSION_VER/var/agent
-    command: /bin/bash /opt/lucidworks/fusion/$FUSION_VER/bin/fusion start
+    command: bash -c "/opt/lucidworks/fusion/$FUSION_VER/bin/fusion start && tail -f /dev/null"
     networks:
       - solr
       - fusion
+    tty: true
     deploy:
       mode: global
       resources:
