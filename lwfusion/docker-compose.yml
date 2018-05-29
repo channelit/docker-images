@@ -165,8 +165,6 @@ services:
     image: cithub/lwfusion
     hostname: fusion
     container_name: fusion
-    environment:
-      - FUSION_VER=3.1.0
     depends_on:
       - solr_fusion
     ports:
