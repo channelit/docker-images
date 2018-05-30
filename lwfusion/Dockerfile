@@ -1,7 +1,7 @@
 FROM cithub/ubuntu
 
 ENV\
-	FUSION_VER=4.0.2 \
+	FUSION_VER=3.1.5 \
 	APP_USER=fusion \
 	APP_GROUP=fusion \
 	APP_HOME=/opt/lucidworks/fusion
