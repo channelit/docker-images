@@ -22,7 +22,7 @@ RUN\
 	usermod -aG sudo $APP_USER &&\
 	chown -R $APP_USER:$APP_GROUP $APP_HOME
 RUN\
-	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/lwfusion/conf/fusion.properties -O $APP_HOME/$FUSION_VER/conf/fusion.properties
+	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/lwfusion/conf/fusion.$FUSION_VER.properties -O $APP_HOME/$FUSION_VER/conf/fusion.properties
 
 WORKDIR $APP_HOME
 USER $APP_USER
