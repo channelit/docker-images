@@ -1,2 +1,2 @@
 FROM node:8-alpine
-RUN npm install -g express
+RUN npm install express --save
