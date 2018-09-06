@@ -1,1 +1,2 @@
-FROM cithub/ubuntu
+FROM node
+RUN npm install -g @angular/cli express
