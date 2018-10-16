@@ -1,4 +1,4 @@
-FROM gcr.io/tensorflow/tensorflow:latest-py3
+FROM tensorflow/tensorflow:latest-py3
 WORKDIR /
 RUN \
 	apt-get update &&\
