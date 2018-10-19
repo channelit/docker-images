@@ -23,4 +23,5 @@ RUN \
 	python -m nltk.downloader all &&\
 	python -m spacy download en
 EXPOSE 6006 8888
+VOLUME /projects
 CMD ["./start.sh"]
