@@ -1,10 +1,10 @@
 FROM cithub/hadoop
 MAINTAINER Channel IT Services, LLC
 
-ENV SPARK_FILE_VER=2.3.0-bin-hadoop2.7
-ENV SPARK_VER=2.3.0
+ENV SPARK_FILE_VER=2.3.2-bin-hadoop2.7
+ENV SPARK_VER=2.3.2
 ENV SPARK_HOME=/home/hadoop/spark/spark
-ENV SPARK_OPTS=-"-packages graphframes:graphframes:0.5.0-spark2.1-s_2.11,com.databricks:spark-csv_2.11:1.2.0"
+ENV SPARK_OPTS=-"--packages graphframes:graphframes:0.6.0-spark2.3-s_2.11,com.databricks:spark-csv_2.11:1.2.0"
 ENV YARN_CONF_DIR=/home/hadoop/hadoop/etc/hadoop
 
 VOLUME	/data
@@ -12,7 +12,7 @@ VOLUME	/data
 RUN\
 	apt-get update &&\
 	mkdir -p /home/hadoop/spark &&\
-	wget http://apache.mirrors.tds.net/spark/spark-$SPARK_VER/spark-$SPARK_FILE_VER.tgz &&\
+	wget https://www.apache.org/dyn/closer.lua/spark/spark-$SPARK_VER/spark-$SPARK_FILE_VER.tgz &&\
 	tar xzvf spark-$SPARK_FILE_VER.tgz &&\
 	mv spark-$SPARK_FILE_VER $SPARK_HOME &&\
 	rm spark-$SPARK_FILE_VER.tgz
@@ -38,7 +38,6 @@ RUN\
 
 # Workaround to add graphframes to python jupyter
 RUN\
-	wget http://dl.bintray.com/spark-packages/maven/graphframes/graphframes/0.5.0-spark2.1-s_2.11/graphframes-0.5.0-spark2.1-s_2.11.jar -O /home/hadoop/spark/spark/graphframes.jar &&\
 	touch /home/hadoop/spark/spark/conf/spark-env.sh &&\
 	echo "#!/bin/sh" >> /home/hadoop/spark/spark/conf/spark-env.sh &&\
 	echo "export PYSPARK_PYTHON=python" >> /home/hadoop/spark/spark/conf/spark-env.sh &&\

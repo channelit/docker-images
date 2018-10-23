@@ -1,7 +1,7 @@
 FROM cithub/ubuntu
 MAINTAINER Channel IT Services, LLC
 
-ENV	HADOOP_VER=3.1.0
+ENV	HADOOP_VER=3.1.1
 ENV HADOOP_HOME=/home/hadoop/hadoop
 ENV HADOOP_INSTALL=$HADOOP_HOME
 ENV HADOOP_MAPRED_HOME=$HADOOP_HOME
@@ -22,7 +22,7 @@ RUN\
 	cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys &&\
 	chmod 0600 ~/.ssh/authorized_keys &&\
 	cd ~ &&\
-	wget http://mirrors.ocf.berkeley.edu/apache/hadoop/common/hadoop-$HADOOP_VER/hadoop-$HADOOP_VER.tar.gz &&\
+	wget http://apache.cs.utah.edu/hadoop/common/hadoop-$HADOOP_VER/hadoop-$HADOOP_VER.tar.gz &&\
 	tar xzvf hadoop-$HADOOP_VER.tar.gz &&\
 	mv hadoop-$HADOOP_VER $HADOOP_HOME &&\
 	rm hadoop-$HADOOP_VER.tar.gz
