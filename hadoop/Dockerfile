@@ -1,4 +1,4 @@
-FROM cithub/ubuntu
+FROM alpine
 MAINTAINER Channel IT Services, LLC
 
 ENV	HADOOP_VER=3.1.1
@@ -11,9 +11,12 @@ ENV YARN_HOME=$HADOOP_HOME
 ENV HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
 ENV PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
 ENV	HADOOP_OPTS=-Djava. &&\library.path=/home/hadoop/lib/native
-ENV JAVA_HOME=/usr/lib/jvm/default-java
+ENV JAVA_HOME=/usr/lib/jvm/default-jvm
+
 
 RUN\
+	apk -U update && \
+	apk add bash curl openssh-client wget openssl openjdk8-jre supervisor && \
 	addgroup hadoop &&\
 	adduser --ingroup hadoop hadoop &&\
 	usermod -aG sudo hadoop &&\
