@@ -1,15 +1,10 @@
 version: '3.4'
 services:
   solr1:
-    image: solr
+    image: cithub/solr
     hostname: solr1
     container_name: solr1
-    logging:
-      driver: syslog
-      options:
-        syslog-address: tcp://localhost:5051
     depends_on:
-      - logstash
       - zoo1
       - zoo2
       - zoo3
@@ -29,18 +24,12 @@ services:
       #- "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
     networks:
       - solr
-      - elastic
 
   solr2:
-    image: solr
+    image: cithub/solr
     hostname: solr2
     container_name: solr2
-    logging:
-      driver: syslog
-      options:
-        syslog-address: tcp://localhost:5052
     depends_on:
-      - logstash
       - zoo1
       - zoo2
       - zoo3
@@ -60,18 +49,12 @@ services:
       #- "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
     networks:
       - solr
-      - elastic
 
   solr3:
-    image: solr
+    image: cithub/solr
     hostname: solr3
     container_name: solr3
-    logging:
-      driver: syslog
-      options:
-        syslog-address: tcp://localhost:5053
     depends_on:
-      - logstash
       - zoo1
       - zoo2
       - zoo3
@@ -91,18 +74,12 @@ services:
       - 8983:8983
     networks:
       - solr
-      - elastic
 
   solr4:
     image: solr
     hostname: solr4
     container_name: solr4
-    logging:
-      driver: syslog
-      options:
-        syslog-address: tcp://localhost:5054
     depends_on:
-      - logstash
       - zoo1
       - zoo2
       - zoo3
@@ -122,16 +99,11 @@ services:
       - 8984:8983
     networks:
       - solr
-      - elastic
 
   zoo1:
-    image: zookeeper
+    image: cithub/zookeeper
     hostname: zoo1
     container_name: zoo1
-    logging:
-      driver: syslog
-      options:
-        syslog-address: tcp://localhost:5061
     restart: always
     hostname: zoo1
     ports:
@@ -141,18 +113,11 @@ services:
       ZOO_SERVERS: server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
     networks:
       - solr
-      - elastic
 
   zoo2:
-    image: zookeeper
+    image: cithub/zookeeper
     hostname: zoo2
     container_name: zoo2
-    links:
-      - logstash
-    logging:
-      driver: syslog
-      options:
-        syslog-address: tcp://localhost:5062
     restart: always
     hostname: zoo2
     ports:
@@ -162,16 +127,11 @@ services:
       ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
     networks:
       - solr
-      - elastic
 
   zoo3:
-    image: zookeeper
+    image: cithub/zookeeper
     hostname: zoo3
     container_name: zoo3
-    logging:
-      driver: syslog
-      options:
-        syslog-address: tcp://localhost:5063
     restart: always
     ports:
       - 2183:2181
@@ -180,77 +140,6 @@ services:
       ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=0.0.0.0:2888:3888
     networks:
       - solr
-      - elastic
-
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:${ELASTIC_VER}
-    hostname: elasticsearch
-    container_name: elasticsearch
-    environment:
-      - cluster.name=elk
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - ELASTIC_PASSWORD=password
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - ./data/elasticsearch/data:/usr/share/elasticsearch/data
-      - ./data/elasticsearch/logs:/usr/share/elasticsearch/logs
-    ports:
-      - 9200:9200
-      - 9300:9300
-    logging:
-      driver: syslog
-      options:
-        syslog-address: tcp://localhost:5071
-    networks:
-      - elastic
-
-  kibana:
-    image: docker.elastic.co/kibana/kibana-oss:${ELASTIC_VER}
-    hostname: kibana
-    container_name: kibana
-    depends_on:
-      - elasticsearch
-    logging:
-      driver: syslog
-      options:
-        syslog-address: tcp://localhost:5072
-    volumes:
-      - ./data/kibana/data:/usr/share/kibana/data
-      - ./data/kibana/logs:/usr/share/kibana/logs
-    ports:
-      - 5601:5601
-    networks:
-      - elastic
-
-  logstash:
-    image: docker.elastic.co/logstash/logstash-oss:${ELASTIC_VER}
-    hostname: logstash
-    container_name: logstash
-    depends_on:
-      - elasticsearch
-    volumes:
-      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ./logstash/pipeline/:/usr/share/logstash/pipeline/:ro
-      - ./data/logstash/logs/:/usr/share/logstash/logs/
-    ports:
-      - 9600:9600
-      - 5045:5045
-      - 5051:5051
-      - 5052:5052
-      - 5053:5053
-      - 5054:5054
-      - 5061:5061
-      - 5062:5062
-      - 5063:5063
-      - 5071:5071
-      - 5072:5072
-    networks:
-      - elastic
 
 networks:
   solr:
-  elastic:

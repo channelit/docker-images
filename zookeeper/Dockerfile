@@ -29,7 +29,7 @@ RUN groupadd -r --gid $ZOO_GID $ZOO_GROUP && \
 RUN mkdir -p /opt/zookeeper && \
     wget -nv https://apache.claz.org/zookeeper/zookeeper-${ZOO_VER}/zookeeper-${ZOO_VER}.tar.gz -O /opt/zookeeper/zookeeper.tar.gz && \
     tar -zxf /opt/zookeeper/zookeeper.tar.gz && \
-    chown ${ZOO_USER}:${ZOO_GROUP} /opt/zookeeper
+    chown -R ${ZOO_USER} /opt/zookeeper
 
 WORKDIR /opt/zookeeper/
 VOLUME ["$ZOO_DATA_DIR", "$ZOO_DATA_LOG_DIR", "$ZOO_LOG_DIR"]
@@ -38,5 +38,5 @@ EXPOSE $ZOO_PORT 2888 3888
 
 ENV PATH=$PATH:/opt/zookeeper/zookeeper/bin \
     ZOOCFGDIR=$ZOO_CONF_DIR
-    
+
 CMD ["zkServer.sh", "start-foreground"]
