@@ -36,7 +36,7 @@ VOLUME ["$ZOO_DATA_DIR", "$ZOO_DATA_LOG_DIR", "$ZOO_LOG_DIR"]
 
 EXPOSE $ZOO_PORT 2888 3888
 
-ENV PATH=$PATH:/opt/zookeeper/zookeeper/bin \
+ENV PATH=$PATH:/opt/zookeeper/bin \
     ZOOCFGDIR=$ZOO_CONF_DIR
 
 CMD ["zkServer.sh", "start-foreground"]
