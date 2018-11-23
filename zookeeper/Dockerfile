@@ -28,7 +28,7 @@ RUN groupadd -r --gid $ZOO_GID $ZOO_GROUP && \
 
 RUN mkdir -p /opt/zookeeper && \
     wget -nv https://apache.claz.org/zookeeper/zookeeper-${ZOO_VER}/zookeeper-${ZOO_VER}.tar.gz -O /opt/zookeeper/zookeeper.tar.gz && \
-    tar -zxf /opt/zookeeper/zookeeper.tar.gz && \
+    tar -xzf /opt/zookeeper/zookeeper.tar.gz -C /opt/zookeeper --strip-components=1 && \
     chown -R ${ZOO_USER} /opt/zookeeper
 
 WORKDIR /opt/zookeeper/
