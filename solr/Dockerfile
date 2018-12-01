@@ -23,7 +23,7 @@ RUN	mkdir -p /opt/solr && \
 	wget -nv ${SOLR_DOWNLOAD_SERVER}/${SOLR_VER}/solr-${SOLR_VER}.tgz -O /opt/solr.tgz && \
 	tar -C /opt/solr --extract --file /opt/solr.tgz --strip-components=1 && \
 	rm /opt/solr.tgz* && \
-	rm -Rf /opt/solr/docs
+	rm -Rf /opt/solr/docs && \
 	chown -R $SOLR_USER:$SOLR_GROUP /opt/solr
 
 EXPOSE 8983
