@@ -42,8 +42,8 @@ services:
       SOLR_LOGS_DIR: /solr_logs
       SOLR_DATA_HOME: /solr_data
     volumes:
-      - ./data/solr1/data:/solr_data
-      - ./data/solr1/logs:/solr_logs
+      - ./data/solr2/data:/solr_data
+      - ./data/solr2/logs:/solr_logs
     entrypoint:
       - bin/solr
       - start
@@ -68,8 +68,8 @@ services:
       SOLR_LOGS_DIR: /solr_logs
       SOLR_DATA_HOME: /solr_data
     volumes:
-      - ./data/solr1/data:/solr_data
-      - ./data/solr1/logs:/solr_logs
+      - ./data/solr3/data:/solr_data
+      - ./data/solr3/logs:/solr_logs
     entrypoint:
       - bin/solr
       - start

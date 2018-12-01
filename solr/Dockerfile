@@ -24,6 +24,7 @@ RUN	mkdir -p /opt/solr && \
 	tar -C /opt/solr --extract --file /opt/solr.tgz --strip-components=1 && \
 	rm /opt/solr.tgz* && \
 	rm -Rf /opt/solr/docs
+	chown -R $SOLR_USER:$SOLR_GROUP /opt/solr
 
 EXPOSE 8983
 WORKDIR /opt/solr
