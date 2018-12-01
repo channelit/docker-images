@@ -44,4 +44,4 @@ ENV PATH=$PATH:/opt/zookeeper/zookeeper/bin \
 
 ENTRYPOINT ["/zookeeper-entrypoint.sh"]
 
-CMD ["zkServer.sh", "start-foreground"]
+CMD ["/opt/zookeeper/bin/zkServer.sh", "start-foreground"]
