@@ -13,8 +13,7 @@ services:
     volumes:
       - ./data/solr1/data:/opt/solr/server/solr/data
     entrypoint:
-      - docker-entrypoint.sh
-      - solr
+      - bin/solr
       - start
       - -f
       - -c
@@ -38,8 +37,7 @@ services:
     volumes:
       - ./data/solr2/data:/opt/solr/server/solr/data
     entrypoint:
-      - docker-entrypoint.sh
-      - solr
+      - bin/solr
       - start
       - -f
       - -c
@@ -61,8 +59,7 @@ services:
     volumes:
       - ./data/solr3/data:/opt/solr/server/solr/data
     entrypoint:
-      - docker-entrypoint.sh
-      - solr
+      - bin/solr
       - start
       - -f
       - -c
