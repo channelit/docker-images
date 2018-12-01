@@ -8,7 +8,7 @@ ENV ZOO_VER=3.4.13 \
     ZOO_USER=zookeeper \
     ZOO_GID=2121 \
     ZOO_GROUP=zoo \
-    ZOO_CONF_DIR=/conf \
+    ZOO_CONF_DIR=/opt/zookeeper/conf \
     ZOO_DATA_DIR=/data \
     ZOO_DATA_LOG_DIR=/datalog \
     ZOO_LOG_DIR=/logs \
@@ -39,7 +39,7 @@ VOLUME ["$ZOO_DATA_DIR", "$ZOO_DATA_LOG_DIR", "$ZOO_LOG_DIR"]
 
 EXPOSE $ZOO_PORT 2888 3888
 
-ENV PATH=$PATH:/opt/zookeeper/zookeeper/bin \
+ENV PATH=$PATH:/opt/zookeeper/bin \
     ZOOCFGDIR=$ZOO_CONF_DIR
 
 ENTRYPOINT ["/zookeeper-entrypoint.sh"]
