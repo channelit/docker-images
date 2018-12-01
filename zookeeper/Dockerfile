@@ -31,7 +31,7 @@ RUN mkdir -p /opt/zookeeper && \
     tar -xzf /opt/zookeeper/zookeeper.tar.gz -C /opt/zookeeper --strip-components=1 && \
     chown -R ${ZOO_USER} /opt/zookeeper
 
-RUN wget -q https://raw.githubusercontent.com/channelit/docker-images/master/zookeeper/docker-entrypoint.sh -O /docker-entrypoint.sh
+RUN wget -q https://raw.githubusercontent.com/channelit/docker-images/master/zookeeper/zookeeper-entrypoint.sh -O /zookeeper-entrypoint.sh
     
 WORKDIR /opt/zookeeper/
 VOLUME ["$ZOO_DATA_DIR", "$ZOO_DATA_LOG_DIR", "$ZOO_LOG_DIR"]
@@ -41,6 +41,6 @@ EXPOSE $ZOO_PORT 2888 3888
 ENV PATH=$PATH:/opt/zookeeper/zookeeper/bin \
     ZOOCFGDIR=$ZOO_CONF_DIR
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/zookeeper-entrypoint.sh"]
 
 CMD ["zkServer.sh", "start-foreground"]
