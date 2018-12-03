@@ -1,4 +1,4 @@
-FROM openjdk:11-jre-slim
+FROM openjdk:11-slim
 MAINTAINER  Hardik Patel "hpatel@channelit.biz"
 
 ARG SOLR_DOWNLOAD_SERVER
@@ -13,6 +13,9 @@ ENV	SOLR_VER="7.5.0" \
 	SOLR_GROUP="solr" \
  	SOLR_GID="8983" \
 	SOLR_VERSION="7.5.0" \
+	SOLR_LOGS_DIR=/solr_logs \
+    SOLR_DATA_HOME=/solr_data \
+    SOLR_CONFIG=/solr_conf \
 	SOLR_DOWNLOAD_SERVER="${SOLR_DOWNLOAD_SERVER:-https://apache.claz.org/lucene/solr}" \
 	PATH="/opt/solr/bin:$PATH"
 
@@ -24,7 +27,12 @@ RUN	mkdir -p /opt/solr && \
 	tar -C /opt/solr --extract --file /opt/solr.tgz --strip-components=1 && \
 	rm /opt/solr.tgz* && \
 	rm -Rf /opt/solr/docs && \
-	chown "$SOLR_USER:$SOLR_USER" /opt/solr
+	rm -Rf /opt/solr/example
+
+RUN	chown "$SOLR_USER:$SOLR_USER" /opt/solr &&\
+	mkdir -p "$SOLR_LOGS_DIR" "$SOLR_DATA_HOME" "$SOLR_CONFIG" && \
+	cp /opt/solr/server/solr/solr.xml $SOLR_CONFIG/ &&\
+	cp -r /opt/solr/server/solr/configsets/_default $SOLR_CONFIG/
 
 EXPOSE 8983
 WORKDIR /opt/solr

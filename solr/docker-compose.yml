@@ -1,9 +1,10 @@
 version: '3.7'
 services:
   solr1:
-    image: cithub/solr
+    image: 6befee700904
     hostname: solr1
     container_name: solr1
+    user: solr
     depends_on:
       - zoo1
       - zoo2
@@ -12,26 +13,27 @@ services:
      - "8981:8983"
     environment:
       SOLR_LOGS_DIR: /solr_logs
-      SOLR_DATA_HOME: /solr_data
+      SOLR_DATA_HOME: /solr_conf
     volumes:
-      - ./data/solr1/data:/solr_data
+      - ./data/solr1/data:/solr_data/data
       - ./data/solr1/logs:/solr_logs
     entrypoint:
-      - bin/solr
-      - start
-      - -f
-      - -c
-      - -z
-      - zoo1:2181,zoo2:2181,zoo3:2181
-      #- -a
-      #- "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
+      - /opt/solr/server/scripts/cloud-scripts/zkcli.sh
+      - -zkhost
+      - zoo1:2181
+      - -cmd
+      - bootstrap
+      - -solrhome
+      - /solr_conf/
+    command: ["bin/solr start -f -c -z zoo1:2181,zoo2:2181,zoo3:2181 -t /solr_conf"]
     networks:
       - solr
 
   solr2:
-    image: cithub/solr
+    image: 6befee700904
     hostname: solr2
     container_name: solr2
+    user: solr
     depends_on:
       - zoo1
       - zoo2
@@ -41,46 +43,34 @@ services:
     environment:
       SOLR_LOGS_DIR: /solr_logs
       SOLR_DATA_HOME: /solr_data
+      ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181
     volumes:
-      - ./data/solr2/data:/solr_data
+      - ./data/solr2/data:/solr_data/data
       - ./data/solr2/logs:/solr_logs
-    entrypoint:
-      - bin/solr
-      - start
-      - -f
-      - -c
-      - -z
-      - zoo1:2181,zoo2:2181,zoo3:2181
-      #- -a
-      #- "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
+    command: ["bin/solr", "start", "-f", "-c", "-t", "/solr_data"]
     networks:
       - solr
 
   solr3:
-    image: cithub/solr
+    image: 6befee700904
     hostname: solr3
     container_name: solr3
+    user: solr
     depends_on:
       - zoo1
       - zoo2
       - zoo3
+    volumes:
+      - ./data/solr3/data:/solr_data/data
+      - ./data/solr3/logs:/solr_logs
+    command: ["bin/solr", "start", "-f", "-c", "-t", "/solr_data"]
+    ports:
+      - 8983:8983
     environment:
       SOLR_LOGS_DIR: /solr_logs
       SOLR_DATA_HOME: /solr_data
-    volumes:
-      - ./data/solr3/data:/solr_data
-      - ./data/solr3/logs:/solr_logs
-    entrypoint:
-      - bin/solr
-      - start
-      - -f
-      - -c
-      - -z
-      - zoo1:2181,zoo2:2181,zoo3:2181
-      #- -a
-      #- "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
-    ports:
-      - 8983:8983
+
+      ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181
     networks:
       - solr
 
