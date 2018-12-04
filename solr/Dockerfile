@@ -34,6 +34,9 @@ RUN	chown "$SOLR_USER:$SOLR_USER" /opt/solr &&\
 	cp /opt/solr/server/solr/solr.xml $SOLR_CONFIG/ &&\
 	cp -r /opt/solr/server/solr/configsets/_default $SOLR_CONFIG/
 
+RUN wget -q https://raw.githubusercontent.com/channelit/docker-images/master/solr/solr-entrypoint.sh -O /opt/solr/solr-entrypoint.sh && \
+	chmod 755 /opt/solr/solr-entrypoint.sh
+
 EXPOSE 8983
 WORKDIR /opt/solr
 USER $SOLR_USER

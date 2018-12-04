@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   solr1:
-    image: 6befee700904
+    image: cithub/solr
     hostname: solr1
     container_name: solr1
     user: solr
@@ -13,24 +13,19 @@ services:
      - "8981:8983"
     environment:
       SOLR_LOGS_DIR: /solr_logs
-      SOLR_DATA_HOME: /solr_conf
+      SOLR_DATA_HOME: /solr_data
+      SOLR_INIT: "true"
     volumes:
-      - ./data/solr1/data:/solr_data/data
+      - ./data/solr1/data:/solr_data
       - ./data/solr1/logs:/solr_logs
     entrypoint:
-      - /opt/solr/server/scripts/cloud-scripts/zkcli.sh
-      - -zkhost
-      - zoo1:2181
-      - -cmd
-      - bootstrap
-      - -solrhome
-      - /solr_conf/
-    command: ["bin/solr start -f -c -z zoo1:2181,zoo2:2181,zoo3:2181 -t /solr_conf"]
+      - ./solr-entrypoint.sh
+    command: ["bin/solr start -f -c -z zoo1:2181,zoo2:2181,zoo3:2181 -s /solr_conf"]
     networks:
       - solr
 
   solr2:
-    image: 6befee700904
+    image: cithub/solr
     hostname: solr2
     container_name: solr2
     user: solr
@@ -45,14 +40,14 @@ services:
       SOLR_DATA_HOME: /solr_data
       ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181
     volumes:
-      - ./data/solr2/data:/solr_data/data
+      - ./data/solr2/data:/solr_data
       - ./data/solr2/logs:/solr_logs
     command: ["bin/solr", "start", "-f", "-c", "-t", "/solr_data"]
     networks:
       - solr
 
   solr3:
-    image: 6befee700904
+    image: cithub/solr
     hostname: solr3
     container_name: solr3
     user: solr
@@ -61,7 +56,7 @@ services:
       - zoo2
       - zoo3
     volumes:
-      - ./data/solr3/data:/solr_data/data
+      - ./data/solr3/data:/solr_data
       - ./data/solr3/logs:/solr_logs
     command: ["bin/solr", "start", "-f", "-c", "-t", "/solr_data"]
     ports:
@@ -69,7 +64,6 @@ services:
     environment:
       SOLR_LOGS_DIR: /solr_logs
       SOLR_DATA_HOME: /solr_data
-
       ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181
     networks:
       - solr
