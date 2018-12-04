@@ -14,13 +14,15 @@ services:
     environment:
       SOLR_LOGS_DIR: /solr_logs
       SOLR_DATA_HOME: /solr_data
+      SOLR_CONF: /solr_conf
       SOLR_INIT: "true"
+      ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181
     volumes:
       - ./data/solr1/data:/solr_data
       - ./data/solr1/logs:/solr_logs
     entrypoint:
-      - ./solr-entrypoint.sh
-    command: ["bin/solr start -f -c -z zoo1:2181,zoo2:2181,zoo3:2181 -s /solr_conf"]
+      - /opt/solr/solr-entrypoint.sh
+    command: ["./bin/solr", "start", "-f", "-c", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr", "-s", "/solr_conf"]
     networks:
       - solr
 
@@ -38,11 +40,11 @@ services:
     environment:
       SOLR_LOGS_DIR: /solr_logs
       SOLR_DATA_HOME: /solr_data
-      ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181
+      ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181/solr
     volumes:
       - ./data/solr2/data:/solr_data
       - ./data/solr2/logs:/solr_logs
-    command: ["bin/solr", "start", "-f", "-c", "-t", "/solr_data"]
+    command: ["./bin/solr", "start", "-f", "-c", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr", "-s", "/solr_conf"]
     networks:
       - solr
 
@@ -58,13 +60,13 @@ services:
     volumes:
       - ./data/solr3/data:/solr_data
       - ./data/solr3/logs:/solr_logs
-    command: ["bin/solr", "start", "-f", "-c", "-t", "/solr_data"]
+    command: ["./bin/solr", "start", "-f", "-c", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr", "-t", "/solr_conf"]
     ports:
       - 8983:8983
     environment:
       SOLR_LOGS_DIR: /solr_logs
       SOLR_DATA_HOME: /solr_data
-      ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181
+      ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181/solr
     networks:
       - solr
 
