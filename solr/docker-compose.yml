@@ -23,7 +23,7 @@ services:
       - ./data/solr1/logs:/solr_logs
     entrypoint:
       - /opt/solr/solr-entrypoint.sh
-    command: ["./bin/solr", "start", "-f", "-c", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr"]
+    command: ["./bin/solr", "start", "-f", "-c", "-p", "8983", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr"]
     networks:
       - solr
 
@@ -45,7 +45,7 @@ services:
     volumes:
       - ./data/solr2/data:/solr_data
       - ./data/solr2/logs:/solr_logs
-    command: ["./bin/solr", "start", "-f", "-c", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr"]
+    command: ["./bin/solr", "start", "-f", "-c", "-p", "8983", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr"]
     networks:
       - solr
 
@@ -68,7 +68,7 @@ services:
       SOLR_HOME: /solr_data
       ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181/solr
       SOLR_HOST: solr3
-    command: ["./bin/solr", "start", "-f", "-c", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr", "-t", "/solr_conf"]
+    command: ["./bin/solr", "start", "-f", "-c", "-p", "8983", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr", "-t", "/solr_conf"]
     networks:
       - solr
 
@@ -83,6 +83,8 @@ services:
     environment:
       ZOO_MY_ID: 1
       ZOO_SERVERS: server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+    volumes:
+      - ./data/zoo1/logs:/datalog
     networks:
       - solr
 
@@ -97,6 +99,8 @@ services:
     environment:
       ZOO_MY_ID: 2
       ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
+    volumes:
+      - ./data/zoo2/logs:/datalog
     networks:
       - solr
 
@@ -110,6 +114,8 @@ services:
     environment:
       ZOO_MY_ID: 3
       ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=0.0.0.0:2888:3888
+    volumes:
+      - ./data/zoo3/logs:/datalog
     networks:
       - solr
 
