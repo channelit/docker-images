@@ -1,3 +1,5 @@
+
+mkdir data
 chmod 775 data
 chmod g+s data
 docker-compose up --no-start
