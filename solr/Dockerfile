@@ -5,17 +5,17 @@ ARG SOLR_DOWNLOAD_SERVER
 
 RUN	apt-get update && \
 	apt-get -y install lsof procps wget gpg && \
-  	rm -rf /var/lib/apt/lists/*
+	rm -rf /var/lib/apt/lists/*
 
 ENV	SOLR_VER="7.5.0" \
 	SOLR_USER="solr" \
- 	SOLR_UID="8983" \
+	SOLR_UID="8983" \
 	SOLR_GROUP="solr" \
- 	SOLR_GID="8983" \
+	SOLR_GID="8983" \
 	SOLR_VERSION="7.5.0" \
 	SOLR_LOGS_DIR=/solr_logs \
-    SOLR_DATA_HOME=/solr_data \
-    SOLR_CONFIG=/solr_conf \
+	SOLR_DATA_HOME=/solr_data \
+	SOLR_CONFIG=/solr_conf \
 	SOLR_DOWNLOAD_SERVER="${SOLR_DOWNLOAD_SERVER:-https://apache.claz.org/lucene/solr}" \
 	PATH="/opt/solr/bin:$PATH"
 
@@ -34,7 +34,7 @@ RUN	chown "$SOLR_USER:$SOLR_USER" /opt/solr &&\
 	cp /opt/solr/server/solr/solr.xml $SOLR_CONFIG/ &&\
 	cp -r /opt/solr/server/solr/configsets/_default $SOLR_CONFIG/
 
-RUN wget -q https://raw.githubusercontent.com/channelit/docker-images/master/solr/solr-entrypoint.sh -O /opt/solr/solr-entrypoint.sh && \
+RUN	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/solr/solr-entrypoint.sh -O /opt/solr/solr-entrypoint.sh && \
 	chmod 755 /opt/solr/solr-entrypoint.sh
 
 EXPOSE 8983

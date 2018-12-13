@@ -1,0 +1,65 @@
+# JDK
+cd /opt
+wget https://download.java.net/java/GA/jdk11/13/GPL/openjdk-11.0.1_linux-x64_bin.tar.gz
+tar xvf openjdk-11*_bin.tar.gz
+ln -s jdk-11.0.1 jdk
+export JAVA_HOME=/opt/jdk
+export PATH=$JAVA_HOME/bin:$PATH
+
+# ZOOKEEPER
+cd /opt
+wget http://mirror.cogentco.com/pub/apache/zookeeper/stable/zookeeper-3.4.12.tar.gz
+tar -xzf zookeeper-3.4.12.tar.gz
+ln -s zookeeper-3.4.12 zookeeper
+mkdir -p /var/zookeeper/conf /var/zookeeper/data /var/zookeeper/logs
+cp /opt/zookeeper/conf/* /var/zookeeper/conf/.
+cp /var/zookeeper/conf/zoo_sample.cfg /var/zookeeper/conf/zoo.cfg
+<modify zoo.cfg> dataDir=/var/zookeeper/data
+
+groupadd --gid 2121 zookeeper
+useradd --uid 2121 --gid 2121 zookeeper
+chown -R zookeeper /var/zookeeper
+export ZOOCFGDIR=/var/zookeeper/conf
+export JAVA_HOME=/opt/jdk
+export ZOO_DATA_DIR=/var/zookeeper/data
+export ZOO_LOG_DIR=/var/zookeeper/logs
+export ZOO_DATA_LOG_DIR=/var/zookeeper/data/logs
+/opt/zookeeper/bin/zkServer.sh start
+
+$ SOLR
+cd /opt
+wget http://ftp.wayne.edu/apache/lucene/solr/7.5.0/solr-7.5.0.tgz
+tar -xzf solr-7.5.0.tgz
+ln -s solr-7.5.0 solr
+mkdir -p /var/solr/conf /var/solr/data /var/solr/logs
+groupadd --gid 8983 solr
+useradd --uid 8983 --gid 8983 solr
+chown -R solr /var/solr
+cp /opt/solr/server/solr/solr.xml /var/solr/conf/.
+cp -r /opt/solr/server/solr/configsets/_default /var/solr/conf/
+
+# SOLR SETUP ZOOKEEPER
+export ZK_HOST=10.0.100.22:2181,10.0.100.42:2181,10.0.100.57:2181
+/opt/solr/server/scripts/cloud-scripts/zkcli.sh -zkhost $ZK_HOST -cmd makepath /solr
+/opt/solr/bin/solr zk upconfig -n cit_default -d /var/solr/conf/_default -z $ZK_HOST/solr -r
+/opt/solr/bin/solr zk cp file:/var/solr/conf/solr.xml zk:/solr/solr.xml -z $ZK_HOST
+
+# SOLR START
+sudo su solr
+export SOLR_LOGS_DIR=/var/solr/logs
+export SOLR_HOME=/var/solr/data
+export SOLR_CONF=/var/solr/conf
+export ZK_HOST=10.0.100.22:2181,10.0.100.42:2181,10.0.100.57:2181
+export SOLR_HOST=10.0.100.42  # changes per host
+/opt/solr/bin/solr start -f -c -p 8983 -z $ZK_HOST/solr
+
+export SOLR_HOST=10.0.100.42
+
+
+#server.1=34.220.18.63:2888:3888
+#server.2=34.220.182.2:2888:3888
+#server.3=54.212.72.177:2888:3888
+
+#server.1=10.0.100.22:2888:3888
+#server.2=10.0.100.42:2888:3888
+#server.3=10.0.100.57:2888:3888
