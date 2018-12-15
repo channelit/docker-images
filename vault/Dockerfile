@@ -6,7 +6,7 @@ RUN	addgroup vault && \
 	adduser -S -G vault vault
 
 RUN	wget https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip &&\
-	unzip -d /bin vault_${VAULT_VERSION}_linux_${ARCH}.zip && \
+	unzip -d /bin vault_${VAULT_VERSION}_linux_amd64.zip
 
 RUN	mkdir -p /vault/logs && \
 	mkdir -p /vault/file && \
