@@ -1,6 +1,6 @@
 FROM alpine:3.8
 
-ENV	VAULT_VERSION=1.0.0
+ENV	VAULT_VERSION=1.0.1
 
 RUN	addgroup vault && \
 	adduser -S -G vault vault
@@ -13,7 +13,8 @@ RUN	mkdir -p /vault/logs && \
 	mkdir -p /vault/config && \
 	chown -R vault:vault /vault
 
-RUN wget -q https://raw.githubusercontent.com/channelit/docker-images/master/vault/vault-entrypoint.sh -O /usr/local/bin/vault-entrypoint.sh
+RUN wget -q https://raw.githubusercontent.com/channelit/docker-images/master/vault/vault-entrypoint.sh -O /usr/local/bin/vault-entrypoint.sh &&\
+	chmod 755 /usr/local/bin/vault-entrypoint.sh
 
 VOLUME /vault/logs
 
