@@ -5,6 +5,9 @@ ENV	VAULT_VERSION=1.0.1
 RUN	addgroup vault && \
 	adduser -S -G vault vault
 
+RUN set -eux; \
+    apk add --no-cache ca-certificates gnupg openssl libcap su-exec dumb-init tzdata
+
 RUN	wget https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip &&\
 	unzip -d /bin vault_${VAULT_VERSION}_linux_amd64.zip
 
