@@ -1,7 +1,4 @@
 #!/bin/sh
-openssl s_client -connect solr1:8983 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > /certs/solr1.crt
-openssl s_client -connect solr2:8983 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > /certs/solr2.crt
-openssl s_client -connect solr3:8983 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > /certs/solr3.crt
-keytool -import -alias solr1 -file /certs/solr1.crt -keystore /certs/solr-ssl.keystore.jks -storepass secret -noprompt
-keytool -import -alias solr2 -file /certs/solr2.crt -keystore /certs/solr-ssl.keystore.jks -storepass secret -noprompt
-keytool -import -alias solr3 -file /certs/solr3.crt -keystore /certs/solr-ssl.keystore.jks -storepass secret -noprompt
+keytool -genkeypair -alias solr-ssl -keyalg RSA -keysize 2048 -keypass secret -storepass secret -validity 9999 -keystore /certs/solr-ssl.keystore.jks -ext SAN=DNS:localhost,DNS:solr1,DNS:solr2,DNS:solr3,IP:192.168.1.3,IP:127.0.0.1 -dname "CN=$SOLR_HOST, OU=CITS, O=CITS, L=DC, ST=VA, C=USA"
+keytool -importkeystore -srckeystore /certs/solr-ssl.keystore.jks -srcstorepass secret -destkeystore /certs/solr-ssl.keystore.p12 -srcstoretype jks -deststoretype pkcs12 -deststorepass secret -noprompt
+openssl pkcs12 -in /certs/solr-ssl.keystore.p12 -out /certs/solr-ssl.pem -passin pass:secret -passout pass:secret
