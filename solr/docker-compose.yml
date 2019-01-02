@@ -58,6 +58,15 @@ services:
       SOLR_LOGS_DIR: /solr_logs
       SOLR_HOME: /solr_data
       SOLR_HOST: solr2
+      SOLR_SSL_KEY_STORE: /solr_data/solr-ssl.keystore.jks
+      SOLR_SSL_KEY_STORE_PASSWORD: secret
+      SOLR_SSL_TRUST_STORE: /solr_data/solr-ssl.keystore.jks
+      SOLR_SSL_TRUST_STORE_PASSWORD: secret
+      SOLR_SSL_NEED_CLIENT_AUTH: "false"
+      SOLR_SSL_WANT_CLIENT_AUTH: "false"
+      SOLR_SSL_CHECK_PEER_NAME: "true"
+      SOLR_SSL_KEY_STORE_TYPE: JKS
+      SOLR_SSL_TRUST_STORE_TYPE: JKS
     volumes:
       - ./data/solr2/data:/solr_data
       - ./data/solr2/logs:/solr_logs
@@ -84,6 +93,15 @@ services:
       SOLR_HOME: /solr_data
       ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181/solr
       SOLR_HOST: solr3
+      SOLR_SSL_KEY_STORE: /solr_data/solr-ssl.keystore.jks
+      SOLR_SSL_KEY_STORE_PASSWORD: secret
+      SOLR_SSL_TRUST_STORE: /solr_data/solr-ssl.keystore.jks
+      SOLR_SSL_TRUST_STORE_PASSWORD: secret
+      SOLR_SSL_NEED_CLIENT_AUTH: "false"
+      SOLR_SSL_WANT_CLIENT_AUTH: "false"
+      SOLR_SSL_CHECK_PEER_NAME: "true"
+      SOLR_SSL_KEY_STORE_TYPE: JKS
+      SOLR_SSL_TRUST_STORE_TYPE: JKS
     command: ["./bin/solr", "start", "-f", "-c", "-p", "8983", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr"]
     networks:
       - solr
