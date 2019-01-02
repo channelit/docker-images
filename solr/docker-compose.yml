@@ -19,13 +19,13 @@ services:
       SOLR_HOST: solr1
       ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181
       SOLR_SSL_ENABLED: "true"
-      SOLR_SSL_KEY_STORE: /solr_data/solr-ssl.keystore.jks
+      SOLR_SSL_KEY_STORE: /certs/solr-ssl.keystore.jks
       SOLR_SSL_KEY_STORE_PASSWORD: secret
-      SOLR_SSL_TRUST_STORE: /solr_data/solr-ssl.keystore.jks
+      SOLR_SSL_TRUST_STORE: /certs/solr-ssl.keystore.jks
       SOLR_SSL_TRUST_STORE_PASSWORD: secret
       SOLR_SSL_NEED_CLIENT_AUTH: "false"
       SOLR_SSL_WANT_CLIENT_AUTH: "false"
-      SOLR_SSL_CHECK_PEER_NAME: "true"
+      SOLR_SSL_CHECK_PEER_NAME: "false"
       SOLR_SSL_KEY_STORE_TYPE: JKS
       SOLR_SSL_TRUST_STORE_TYPE: JKS
     healthcheck:
@@ -37,6 +37,7 @@ services:
     volumes:
       - ./data/solr1/data:/solr_data
       - ./data/solr1/logs:/solr_logs
+      - ./data/solr1/certs:/certs
     entrypoint:
       - /opt/solr/solr-entrypoint.sh
     command: ["./bin/solr", "start", "-f", "-c", "-p", "8983", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr"]
@@ -57,19 +58,25 @@ services:
     environment:
       SOLR_LOGS_DIR: /solr_logs
       SOLR_HOME: /solr_data
+      SOLR_CONF: /solr_conf
+      SOLR_INIT: "true"
       SOLR_HOST: solr2
-      SOLR_SSL_KEY_STORE: /solr_data/solr-ssl.keystore.jks
+      ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181
+      SOLR_SSL_KEY_STORE: /certs/solr-ssl.keystore.jks
       SOLR_SSL_KEY_STORE_PASSWORD: secret
-      SOLR_SSL_TRUST_STORE: /solr_data/solr-ssl.keystore.jks
+      SOLR_SSL_TRUST_STORE: /certs/solr-ssl.keystore.jks
       SOLR_SSL_TRUST_STORE_PASSWORD: secret
       SOLR_SSL_NEED_CLIENT_AUTH: "false"
       SOLR_SSL_WANT_CLIENT_AUTH: "false"
-      SOLR_SSL_CHECK_PEER_NAME: "true"
+      SOLR_SSL_CHECK_PEER_NAME: "false"
       SOLR_SSL_KEY_STORE_TYPE: JKS
       SOLR_SSL_TRUST_STORE_TYPE: JKS
     volumes:
       - ./data/solr2/data:/solr_data
       - ./data/solr2/logs:/solr_logs
+      - ./data/solr2/certs:/certs
+    entrypoint:
+      - /opt/solr/solr-entrypoint.sh
     command: ["./bin/solr", "start", "-f", "-c", "-p", "8983", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr"]
     networks:
       - solr
@@ -86,22 +93,27 @@ services:
     volumes:
       - ./data/solr3/data:/solr_data
       - ./data/solr3/logs:/solr_logs
+      - ./data/solr3/certs:/certs      
     ports:
       - 8983:8983
     environment:
       SOLR_LOGS_DIR: /solr_logs
       SOLR_HOME: /solr_data
-      ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181/solr
+      SOLR_CONF: /solr_conf
+      SOLR_INIT: "true"
       SOLR_HOST: solr3
-      SOLR_SSL_KEY_STORE: /solr_data/solr-ssl.keystore.jks
+      ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181
+      SOLR_SSL_KEY_STORE: /certs/solr-ssl.keystore.jks
       SOLR_SSL_KEY_STORE_PASSWORD: secret
-      SOLR_SSL_TRUST_STORE: /solr_data/solr-ssl.keystore.jks
+      SOLR_SSL_TRUST_STORE: /certs/solr-ssl.keystore.jks
       SOLR_SSL_TRUST_STORE_PASSWORD: secret
       SOLR_SSL_NEED_CLIENT_AUTH: "false"
       SOLR_SSL_WANT_CLIENT_AUTH: "false"
-      SOLR_SSL_CHECK_PEER_NAME: "true"
+      SOLR_SSL_CHECK_PEER_NAME: "false"
       SOLR_SSL_KEY_STORE_TYPE: JKS
       SOLR_SSL_TRUST_STORE_TYPE: JKS
+    entrypoint:
+      - /opt/solr/solr-entrypoint.sh
     command: ["./bin/solr", "start", "-f", "-c", "-p", "8983", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr"]
     networks:
       - solr
