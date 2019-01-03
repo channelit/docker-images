@@ -38,7 +38,7 @@ RUN	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/sol
 	chmod 755 /opt/solr/solr-entrypoint.sh
 
 RUN	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/solr/setup-certs.sh -O /opt/solr/setup-certs.sh && \
-	chmod 755 /opt/solr/setup-certs.sh.sh
+	chmod 755 /opt/solr/setup-certs.sh
 
 RUN	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/solr/setup-jks.sh -O /opt/solr/setup-jks.sh && \
 	chmod 755 /opt/solr/setup-jks.sh
