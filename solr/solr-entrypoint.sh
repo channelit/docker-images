@@ -7,4 +7,8 @@ if [[ ! -z "$SOLR_INIT" ]]; then
     ./bin/solr zk cp file:"$SOLR_CONF"/solr.xml zk:/solr/solr.xml -z "$ZK_HOST"
     ./server/scripts/cloud-scripts/zkcli.sh -zkhost "$ZK_HOST"/solr -cmd clusterprop -name urlScheme -val https
 fi
+if [[ ! -z "$SOLR_INIT" ]]; then
+	echo "Setting up SSL"
+	./setup-certs.sh
+fi
 exec "$@"
