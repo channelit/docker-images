@@ -18,6 +18,7 @@ services:
       SOLR_INIT: "true"
       SOLR_HOST: solr1
       ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181
+      SOLR_SSL: "true"
       SOLR_SSL_ENABLED: "true"
       SOLR_SSL_KEY_STORE: /certs/solr-ssl.keystore.jks
       SOLR_SSL_KEY_STORE_PASSWORD: secret
@@ -62,6 +63,7 @@ services:
       SOLR_INIT: "true"
       SOLR_HOST: solr2
       ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181
+      SOLR_SSL: "true"
       SOLR_SSL_KEY_STORE: /certs/solr-ssl.keystore.jks
       SOLR_SSL_KEY_STORE_PASSWORD: secret
       SOLR_SSL_TRUST_STORE: /certs/solr-ssl.keystore.jks
@@ -103,6 +105,7 @@ services:
       SOLR_INIT: "true"
       SOLR_HOST: solr3
       ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181
+      SOLR_SSL: "true"
       SOLR_SSL_KEY_STORE: /certs/solr-ssl.keystore.jks
       SOLR_SSL_KEY_STORE_PASSWORD: secret
       SOLR_SSL_TRUST_STORE: /certs/solr-ssl.keystore.jks
