@@ -10,3 +10,7 @@ docker-compose up -d solr2 solr3
 docker exec solr1 ./setup-jks.sh
 docker exec solr2 ./setup-jks.sh
 docker exec solr3 ./setup-jks.sh
+
+docker cp setup-jks.sh solr1:/opt/solr/setup-jks.sh
+docker cp setup-jks.sh solr2:/opt/solr/setup-jks.sh
+docker cp setup-jks.sh solr3:/opt/solr/setup-jks.sh

@@ -1,7 +1,10 @@
-#!/bin/sh
-openssl x509 -in <(openssl s_client -connect solr1:443 -prexit 2>/dev/null) -out /certs/solr1.crt
-openssl x509 -in <(openssl s_client -connect solr2:443 -prexit 2>/dev/null) -out /certs/solr2.crt
-openssl x509 -in <(openssl s_client -connect solr3:443 -prexit 2>/dev/null) -out /certs/solr3.crt
-keytool -importcert -file /certs/solr1.crt -alias solr1 -keystore /certs/solr-ssl.keystore.jks
-keytool -importcert -file /certs/solr2.crt -alias solr2 -keystore /certs/solr-ssl.keystore.jks
-keytool -importcert -file /certs/solr3.crt -alias solr3 -keystore /certs/solr-ssl.keystore.jks
+#!/bin/bash
+#openssl rsa -in <(openssl s_client -connect solr1:443 -prexit 2>/dev/null) -out /certs/solr1.crt
+#openssl rsa -in <(openssl s_client -connect solr2:443 -prexit 2>/dev/null) -out /certs/solr2.crt
+#openssl rsa -in <(openssl s_client -connect solr3:443 -prexit 2>/dev/null) -out /certs/solr3.crt
+openssl s_client -connect solr1:8983 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > /certs/solr1.crt
+openssl s_client -connect solr2:8983 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > /certs/solr2.crt
+openssl s_client -connect solr3:8983 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > /certs/solr3.crt
+keytool -import -alias solr1 -file /certs/solr1.crt -keystore /certs/solr-ssl.keystore.jks -storepass secret -noprompt
+keytool -import -alias solr2 -file /certs/solr2.crt -keystore /certs/solr-ssl.keystore.jks -storepass secret -noprompt
+keytool -import -alias solr3 -file /certs/solr3.crt -keystore /certs/solr-ssl.keystore.jks -storepass secret -noprompt
