@@ -12,6 +12,7 @@ if [[ ! -z "$SOLR_SSL" ]]; then
 		./server/scripts/cloud-scripts/zkcli.sh -zkhost "$ZK_HOST"/solr -cmd clusterprop -name urlScheme -val https
 		./setup-certs.sh
 	fi
+	echo "Setting Solr SSL Environment"
 	export SOLR_SSL_KEY_STORE="/certs/solr-ssl.keystore.jks"
 	export SOLR_SSL_KEY_STORE_PASSWORD="secret"
 	export SOLR_SSL_TRUST_STORE="/certs/solr-ssl.keystore.jks"
