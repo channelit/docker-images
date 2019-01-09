@@ -1,0 +1,32 @@
+version: '3'
+services:
+  ansible:
+    image: cithub/ansible
+    hostname: ansible
+    container_name: ansible
+    networks:
+      - ansible
+    command: ["tail", "-f", "/dev/null"]
+
+
+  vault:
+    image: cithub/vault
+    hostname: vault
+    container_name: vault
+    ports:
+      - "8200:8200"
+    networks:
+      - ansible
+
+  microservice:
+    image: ubuntu
+    hostname: microservice
+    container_name: microservice
+    ports:
+      - "8080:8080"
+    networks:
+      - ansible
+    command: ["tail", "-f", "/dev/null"]
+
+networks:
+  ansible:
