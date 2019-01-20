@@ -3,11 +3,15 @@ FROM openjdk:11-slim
 RUN groupadd -r --gid 7474 neo4j && \
     useradd -r --uid 7474 --gid 7474 neo4j
 
+RUN apt-get update && \
+    apt-get -y install lsof procps wget gpg && \
+    rm -rf /var/lib/apt/lists/*
+
 ENV NEO4J_TARBALL=neo4j-community-3.5.1-unix.tar.gz \
     NEO4J_EDITION=community \
     NEO4J_URI=http://dist.neo4j.org/neo4j-community-3.5.1-unix.tar.gz
 
-RUN apt-get install -y curl \
+RUN apt-get install -y wget \
     && wget -q ${NEO4J_URI} \
     && tar --extract --file ${NEO4J_TARBALL} --directory /var/lib \
     && mv /var/lib/neo4j-* /var/lib/neo4j \
@@ -29,6 +33,6 @@ VOLUME /data
 
 EXPOSE 7474 7473 7687
 
-ENTRYPOINT ["/sbin/tini", "-g", "--", "/docker-entrypoint.sh"]
+ENTRYPOINT ["/sbin/tini", "-g", "--", "/neo4j-entrypoint.sh"]
 
 CMD ["neo4j"]
