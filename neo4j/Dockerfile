@@ -15,6 +15,7 @@ ENV NEO4J_TARBALL=neo4j-community-3.5.1-unix.tar.gz \
     NEO4J_dbms_memory_pagecache_size=512M \
     NEO4J_dbms_memory_heap_initial__size=512M \
     NEO4J_dbms_memory_heap_max__size=512M \
+    NEO4J_wrapper_java_additional="-Dneo4j.ext.udc.source=docker" \
     NEO4J_dbms_connectors_default__listen__address=0.0.0.0 \
     NEO4J_dbms_connector_http_listen__address=0.0.0.0:7474 \
     NEO4J_dbms_connector_https_listen__address=0.0.0.0:7473 \
