@@ -1,13 +1,14 @@
 FROM openjdk:11-slim
 
-RUN addgroup -S neo4j && adduser -S -H -h /var/lib/neo4j -G neo4j neo4j
+RUN groupadd -r --gid 7474 neo4j && \
+    useradd -r --uid 7474 --gid 7474 neo4j
 
 ENV NEO4J_TARBALL=neo4j-community-3.5.1-unix.tar.gz \
     NEO4J_EDITION=community \
     NEO4J_URI=http://dist.neo4j.org/neo4j-community-3.5.1-unix.tar.gz
 
 RUN apt-get install -y curl \
-    && curl --fail --silent --show-error --location --remote-name ${NEO4J_URI} \
+    && wget -q ${NEO4J_URI} \
     && tar --extract --file ${NEO4J_TARBALL} --directory /var/lib \
     && mv /var/lib/neo4j-* /var/lib/neo4j \
     && rm ${NEO4J_TARBALL} \
@@ -17,7 +18,7 @@ RUN apt-get install -y curl \
     && chown -R neo4j:neo4j /var/lib/neo4j \
     && chmod -R 777 /var/lib/neo4j \
     && ln -s /data /var/lib/neo4j/data \
-    && wget -q https://raw.githubusercontent.com/channelit/docker-images/master/neo4j/neo4j-entrypoint.sh -O /neo4j-entrypoint.sh && \
+    && wget -q https://raw.githubusercontent.com/channelit/docker-images/master/neo4j/neo4j-entrypoint.sh -O /neo4j-entrypoint.sh \
     && chmod 755 /neo4j-entrypoint.sh
 
 ENV PATH /var/lib/neo4j/bin:$PATH
