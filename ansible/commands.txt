@@ -1,0 +1,4 @@
+docker exec vault
+
+Unseal Key: rZitZxgWDV3fO37zvvfk1yDICbvID/9wQNgnbviLmXc=
+Root Token: s.bULuw2mZQvNWcLhVdqjWZvEO

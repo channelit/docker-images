@@ -4,6 +4,8 @@ services:
     image: cithub/ansible
     hostname: ansible
     container_name: ansible
+    volumes:
+      - ./data/ansible:/data
     networks:
       - ansible
     command: ["tail", "-f", "/dev/null"]
@@ -15,6 +17,8 @@ services:
     container_name: vault
     ports:
       - "8200:8200"
+    volumes:
+      - ./data/vault:/data
     networks:
       - ansible
 
@@ -24,6 +28,8 @@ services:
     container_name: microservice
     ports:
       - "8080:8080"
+    volumes:
+      - ./data/service:/data
     networks:
       - ansible
     command: ["tail", "-f", "/dev/null"]
