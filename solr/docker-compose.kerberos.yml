@@ -1,0 +1,181 @@
+version: '3.7'
+services:
+  solr1:
+    image: cithub/solr
+    hostname: solr1
+    container_name: solr1
+    user: solr
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+    ports:
+     - "8981:8983"
+    environment:
+      SOLR_LOGS_DIR: /solr_logs
+      SOLR_HOME: /solr_data
+      SOLR_CONF: /solr_conf
+      SOLR_INIT: "true"
+      SOLR_HOST: solr1
+      ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181
+      SOLR_SSL: "true"
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "https://localhost:8983"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 40s
+    volumes:
+      - ./data/solr1/data:/solr_data
+      - ./data/solr1/logs:/solr_logs
+      - ./data/solr1/certs:/certs
+    entrypoint:
+      - /opt/solr/solr-entrypoint.sh
+    command: ["./bin/solr", "start", "-f", "-c", "-p", "8983", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr"]
+    networks:
+      - solr
+      - keycloak
+
+  solr2:
+    image: cithub/solr
+    hostname: solr2
+    container_name: solr2
+    user: solr
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+    ports:
+     - "8982:8983"
+    environment:
+      SOLR_LOGS_DIR: /solr_logs
+      SOLR_HOME: /solr_data
+      SOLR_CONF: /solr_conf
+      SOLR_INIT: "true"
+      SOLR_HOST: solr2
+      ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181
+      SOLR_SSL: "true"
+    volumes:
+      - ./data/solr2/data:/solr_data
+      - ./data/solr2/logs:/solr_logs
+      - ./data/solr2/certs:/certs
+    entrypoint:
+      - /opt/solr/solr-entrypoint.sh
+    command: ["./bin/solr", "start", "-f", "-c", "-p", "8983", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr"]
+    networks:
+      - solr
+      - keycloak
+
+  solr3:
+    image: cithub/solr
+    hostname: solr3
+    container_name: solr3
+    user: solr
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+    volumes:
+      - ./data/solr3/data:/solr_data
+      - ./data/solr3/logs:/solr_logs
+      - ./data/solr3/certs:/certs      
+    ports:
+      - 8983:8983
+    environment:
+      SOLR_LOGS_DIR: /solr_logs
+      SOLR_HOME: /solr_data
+      SOLR_CONF: /solr_conf
+      SOLR_INIT: "true"
+      SOLR_HOST: solr3
+      ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181
+      SOLR_SSL: "true"
+    entrypoint:
+      - /opt/solr/solr-entrypoint.sh
+    command: ["./bin/solr", "start", "-f", "-c", "-p", "8983", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr"]
+    networks:
+      - solr
+      - keycloak
+
+  zoo1:
+    image: cithub/zookeeper
+    hostname: zoo1
+    container_name: zoo1
+    restart: always
+    hostname: zoo1
+    ports:
+      - 2181:2181
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+    volumes:
+      - ./data/zoo1/logs:/datalog
+    networks:
+      - solr
+      - keycloak
+
+  zoo2:
+    image: cithub/zookeeper
+    hostname: zoo2
+    container_name: zoo2
+    restart: always
+    hostname: zoo2
+    ports:
+      - 2182:2181
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
+    volumes:
+      - ./data/zoo2/logs:/datalog
+    networks:
+      - solr
+      - keycloak
+
+  zoo3:
+    image: cithub/zookeeper
+    hostname: zoo3
+    container_name: zoo3
+    restart: always
+    ports:
+      - 2183:2181
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=0.0.0.0:2888:3888
+    volumes:
+      - ./data/zoo3/logs:/datalog
+    networks:
+      - solr
+      - keycloak
+      
+  keycloak:
+    image: jboss/keycloak
+    hostname: keycloak
+    container_name: keycloak
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      KEYCLOAK_USER: "admin"
+      KEYCLOAK_PASSWORD: "admin"
+    volumes:
+      - ./data/zoo3/logs:/datalog
+    networks:
+      - keycloak
+
+  freeipa:
+    image: freeipa/freeipa-server
+    hostname: freeipa
+    container_name: freeipa
+    restart: always
+    ports:
+      - 8443:443
+    environment:
+      KEYCLOAK_USER: "admin"
+      KEYCLOAK_PASSWORD: "admin"
+    volumes:
+      - ./data/zoo3/logs:/datalog
+    networks:
+      - keycloak
+
+networks:
+  solr:
+  keycloak:
