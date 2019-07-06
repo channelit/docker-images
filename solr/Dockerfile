@@ -7,12 +7,11 @@ RUN	apt-get update && \
 	apt-get -y install lsof procps wget gpg && \
 	rm -rf /var/lib/apt/lists/*
 
-ENV	SOLR_VER="7.6.0" \
+ENV	SOLR_VER="7.7.2" \
 	SOLR_USER="solr" \
 	SOLR_UID="8983" \
 	SOLR_GROUP="solr" \
 	SOLR_GID="8983" \
-	SOLR_VERSION="7.7.2" \
 	SOLR_LOGS_DIR=/solr_logs \
 	SOLR_DATA_HOME=/solr_data \
 	SOLR_CONFIG=/solr_conf \
