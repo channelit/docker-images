@@ -8,18 +8,25 @@ chmod g+s data
 docker-compose up --no-start
 
 
-### Certificates
+### Setup Certificates
 
-#### Copy Script
+#### Copy script
 docker cp setup-jks.sh solr1:/opt/solr/setup-jks.sh
 docker cp setup-jks.sh solr2:/opt/solr/setup-jks.sh
 docker cp setup-jks.sh solr3:/opt/solr/setup-jks.sh
-#### Run Script
+
+#### Start cluster
+docker-compose up -d zoo1 zoo2 zoo3
+docker-compose up -d solr1
+docker-compose up -d solr2 solr3
+
+
+#### Run script (You may need to run these couple of times untill you don't see any errors)
 docker exec solr1 ./setup-jks.sh
 docker exec solr2 ./setup-jks.sh
 docker exec solr3 ./setup-jks.sh
 
-### Start Cluster
-docker-compose up -d zoo1 zoo2 zoo3
-docker-compose up -d solr1
-docker-compose up -d solr2 solr3
+#### Stop and start Solr nodes
+docker-compose stop solr1 solr2 solr3
+docker-compose up
+
