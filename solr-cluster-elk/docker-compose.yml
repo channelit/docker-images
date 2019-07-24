@@ -189,6 +189,7 @@ services:
     environment:
       - cluster.name=elk
       - bootstrap.memory_lock=true
+      - discovery.type=single-node
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - ELASTIC_PASSWORD=password
     ulimits:
@@ -201,10 +202,10 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
-    logging:
-      driver: syslog
-      options:
-        syslog-address: tcp://localhost:5071
+    # logging:
+    #   driver: syslog
+    #   options:
+    #     syslog-address: tcp://localhost:5071
     networks:
       - elastic
 
@@ -214,10 +215,10 @@ services:
     container_name: kibana
     depends_on:
       - elasticsearch
-    logging:
-      driver: syslog
-      options:
-        syslog-address: tcp://localhost:5072
+    # logging:
+    #   driver: syslog
+    #   options:
+    #     syslog-address: tcp://localhost:5072
     volumes:
       - ./data/kibana/data:/usr/share/kibana/data
       - ./data/kibana/logs:/usr/share/kibana/logs
