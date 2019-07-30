@@ -20,6 +20,10 @@ docker-compose up -d zoo1 zoo2 zoo3
 docker-compose up -d solr1
 docker-compose up -d solr2 solr3
 
+#### If you get SSL errors
+Stop and kill containers
+Change permissions of data folder again
+docker-compose up
 
 #### Run script (You may need to run these couple of times untill you don't see any errors)
 docker exec solr1 ./setup-jks.sh
