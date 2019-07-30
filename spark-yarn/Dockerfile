@@ -1,10 +1,10 @@
 FROM cithub/hadoop
 MAINTAINER Channel IT Services, LLC
 
-ENV SPARK_FILE_VER=2.3.2-bin-hadoop2.7
-ENV SPARK_VER=2.3.2
+ENV SPARK_FILE_VER=2.4.3-bin-hadoop2.7
+ENV SPARK_VER=2.4.3
 ENV SPARK_HOME=/home/hadoop/spark/spark
-ENV SPARK_OPTS=-"--packages graphframes:graphframes:0.6.0-spark2.3-s_2.11,com.databricks:spark-csv_2.11:1.2.0"
+ENV SPARK_OPTS=-"--packages graphframes:graphframes:0.7.0-spark2.3-s_2.11,com.databricks:spark-csv_2.11:1.5.0"
 ENV YARN_CONF_DIR=/home/hadoop/hadoop/etc/hadoop
 
 VOLUME	/data
@@ -27,7 +27,6 @@ RUN\
 	pip3 install spaCy &&\
 	pip3 install pyLDAvis scipy gensim nltk bokeh py4j &&\
 	pip3 install -U scikit-learn &&\
-	pip3 install https://dist.apache.org/repos/dist/dev/incubator/toree/0.2.0/snapshots/dev1/toree-pip/toree-0.2.0.dev1.tar.gz &&\
 	pip3 install toree &&\
 	pip3 install tensorflow &&\
 	pip3 install keras &&\
