@@ -1,4 +1,5 @@
 from locust import HttpLocust, TaskSet, task
+import os
 
 def index(l):
     l.client.get("/")
@@ -19,7 +20,9 @@ class WebsiteUser(HttpLocust):
     """
     Locust user class that does requests to the locust web server running on localhost
     """
-    host = "http://127.0.0.1:8089"
+    URL_HOST = os.environ.get('URL_HOST', '127.0.0.1')
+    URL_PORT = os.environ.get('URL_PORT', '8089')
+    host = "http://" + URL_HOST + ":" + URL_PORT
     min_wait = 2000
     max_wait = 5000
     task_set = UserTasks
