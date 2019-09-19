@@ -1,0 +1,1 @@
+### Simplified version of wurstmeister/kafka-docker
