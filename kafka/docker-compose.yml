@@ -1,0 +1,120 @@
+version: '3.7'
+services:
+  kafka1:
+    image: cithub/kafka
+    hostname: kafka1
+    container_name: kafka1
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+    ports:
+     - "9091:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
+      SOLR_SSL: "true"
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "https://localhost:8983"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 40s
+    volumes:
+      - ./data/kafka1/data:/kafka_data
+      - ./conf/server.properties:/conf/server.properties
+      - ./data/kafka1/logs:/kafka_logs
+    command: ["./opt/kafka/bin/kafka-server-start.sh", "/conf/server.properties"]
+    networks:
+      - kafka
+
+  kafka2:
+    image: cithub/kafka
+    hostname: kafka2
+    container_name: kafka2
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+    ports:
+     - "9092:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
+      SOLR_SSL: "true"
+    volumes:
+      - ./data/kafka2/data:/kafka_data
+      - ./conf/server.properties:/conf/server.properties
+      - ./data/kafka2/logs:/kafka_logs
+    command: ["./opt/kafka/bin/kafka-server-start.sh", "/conf/server.properties"]
+    networks:
+      - kafka
+
+  kafka3:
+    image: cithub/kafka
+    hostname: kafka3
+    container_name: kafka3
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+    volumes:
+      - ./data/kafka3/data:/kafka_data
+      - ./conf/server.properties:/conf/server.properties
+      - ./data/kafka3/logs:/kafka_logs 
+    ports:
+      - 9093:9092
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
+      SOLR_SSL: "true"
+    command: ["./opt/kafka/bin/kafka-server-start.sh", "/conf/server.properties"]
+    networks:
+      - kafka
+
+  zoo1:
+    image: cithub/zookeeper
+    hostname: zoo1
+    container_name: zoo1
+    restart: always
+    hostname: zoo1
+    ports:
+      - 2181:2181
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+    volumes:
+      - ./data/zoo1/logs:/datalog
+    networks:
+      - kafka
+
+  zoo2:
+    image: cithub/zookeeper
+    hostname: zoo2
+    container_name: zoo2
+    restart: always
+    hostname: zoo2
+    ports:
+      - 2182:2181
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
+    volumes:
+      - ./data/zoo2/logs:/datalog
+    networks:
+      - kafka
+
+  zoo3:
+    image: cithub/zookeeper
+    hostname: zoo3
+    container_name: zoo3
+    restart: always
+    ports:
+      - 2183:2181
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=0.0.0.0:2888:3888
+    volumes:
+      - ./data/zoo3/logs:/datalog
+    networks:
+      - kafka
+
+networks:
+  kafka:
