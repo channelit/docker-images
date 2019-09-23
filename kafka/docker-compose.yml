@@ -74,7 +74,6 @@ services:
     hostname: zoo1
     container_name: zoo1
     restart: always
-    hostname: zoo1
     ports:
       - 2181:2181
     environment:
@@ -90,7 +89,6 @@ services:
     hostname: zoo2
     container_name: zoo2
     restart: always
-    hostname: zoo2
     ports:
       - 2182:2181
     environment:
