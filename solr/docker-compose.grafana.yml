@@ -1,4 +1,3 @@
- # TODO: Complete setup
 version: '3.7'
 services:
   solr1:
@@ -35,7 +34,6 @@ services:
     command: ["./bin/solr", "start", "-f", "-c", "-p", "8983", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr"]
     networks:
       - solr
-      - keycloak
 
   solr2:
     image: cithub/solr
@@ -65,7 +63,6 @@ services:
     command: ["./bin/solr", "start", "-f", "-c", "-p", "8983", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr"]
     networks:
       - solr
-      - keycloak
 
   solr3:
     image: cithub/solr
@@ -95,7 +92,6 @@ services:
     command: ["./bin/solr", "start", "-f", "-c", "-p", "8983", "-z", "zoo1:2181,zoo2:2181,zoo3:2181/solr"]
     networks:
       - solr
-      - keycloak
 
   zoo1:
     image: cithub/zookeeper
@@ -112,7 +108,6 @@ services:
       - ./data/zoo1/logs:/datalog
     networks:
       - solr
-      - keycloak
 
   zoo2:
     image: cithub/zookeeper
@@ -129,7 +124,6 @@ services:
       - ./data/zoo2/logs:/datalog
     networks:
       - solr
-      - keycloak
 
   zoo3:
     image: cithub/zookeeper
@@ -145,38 +139,6 @@ services:
       - ./data/zoo3/logs:/datalog
     networks:
       - solr
-      - keycloak
-      
-  keycloak:
-    image: jboss/keycloak
-    hostname: keycloak
-    container_name: keycloak
-    restart: always
-    ports:
-      - 8080:8080
-    environment:
-      KEYCLOAK_USER: "admin"
-      KEYCLOAK_PASSWORD: "admin"
-    volumes:
-      - ./data/zoo3/logs:/datalog
-    networks:
-      - keycloak
-
-  freeipa:
-    image: freeipa/freeipa-server
-    hostname: freeipa
-    container_name: freeipa
-    restart: always
-    ports:
-      - 8443:443
-    environment:
-      KEYCLOAK_USER: "admin"
-      KEYCLOAK_PASSWORD: "admin"
-    volumes:
-      - ./data/zoo3/logs:/datalog
-    networks:
-      - keycloak
 
 networks:
   solr:
-  keycloak:

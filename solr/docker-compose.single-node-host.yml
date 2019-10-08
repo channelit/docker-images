@@ -1,0 +1,38 @@
+version: '3.7'
+services:
+  solr:
+    image: cithub/solr
+    container_name: solr
+    user: solr
+    depends_on:
+      - zoo
+    ports:
+     - "8983:8983"
+    environment:
+      SOLR_LOGS_DIR: /solr_logs
+      SOLR_HOME: /solr_data
+      SOLR_CONF: /solr_conf
+      SOLR_INIT: "true"
+      SOLR_HOST: localhost
+      ZK_HOST: host.docker.internal:2181
+    volumes:
+      - ./data/solr/data:/solr_data
+      - ./data/solr/logs:/solr_logs
+      - ./data/solr/certs:/certs
+    entrypoint:
+      - /opt/solr/solr-entrypoint.sh
+    command: ["./bin/solr", "start", "-f", "-c", "-p", "8983", "-z", "host.docker.internal:2181/solr"]
+    network_mode: bridge
+
+  zoo:
+    image: cithub/zookeeper
+    container_name: zoo
+    restart: always
+    ports:
+      - 2181:2181
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=localhost:2888:3888
+    volumes:
+      - ./data/zoo/logs:/datalog
+    network_mode: bridge

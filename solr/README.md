@@ -33,4 +33,3 @@ docker exec solr3 ./setup-jks.sh
 #### Stop and start Solr nodes
 docker-compose stop solr1 solr2 solr3
 docker-compose up
-
