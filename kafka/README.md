@@ -2,6 +2,6 @@
 
 ```shell
 docker-compose up --no-start
-docker-compose up zoo1 zoo2 zoo3 -d
+docker-compose up -d zoo1 zoo2 zoo3
 docker-compose up -d
 ```
