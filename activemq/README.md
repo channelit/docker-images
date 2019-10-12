@@ -1,0 +1,1 @@
+##### Mostly copied from https://hub.docker.com/r/rmohr/activemq/dockerfile
