@@ -14,15 +14,16 @@ services:
       SOLR_CONF: /solr_conf
       SOLR_INIT: "true"
       SOLR_HOST: localhost
-      ZK_HOST: host.docker.internal:2181
+      ZK_HOST: zoo:2181
     volumes:
       - ./data/solr/data:/solr_data
       - ./data/solr/logs:/solr_logs
       - ./data/solr/certs:/certs
     entrypoint:
       - /opt/solr/solr-entrypoint.sh
-    command: ["./bin/solr", "start", "-f", "-c", "-p", "8983", "-z", "host.docker.internal:2181/solr"]
-    network_mode: bridge
+    command: ["./bin/solr", "start", "-f", "-c", "-p", "8983", "-z", "zoo:2181/solr"]
+    networks:
+      - solr
 
   zoo:
     image: cithub/zookeeper
@@ -32,7 +33,11 @@ services:
       - 2181:2181
     environment:
       ZOO_MY_ID: 1
-      ZOO_SERVERS: server.1=localhost:2888:3888
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888
     volumes:
       - ./data/zoo/logs:/datalog
-    network_mode: bridge
+    networks:
+      - solr
+
+networks:
+  solr:
