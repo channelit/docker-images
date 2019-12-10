@@ -114,35 +114,18 @@ services:
     networks:
       - kafka
 
-  lenses:
-    image: landoop/kafka-lenses-dev
-    hostname: lenses
-    container_name: lenses
+  manager:
+    image: 8ecab936713c
+    hostname: manager
+    container_name: manager
     depends_on:
       - kafka1
       - kafka2
       - kafka3
     environment:
-      ADV_HOST: 127.0.0.1
-      EULA: https://dl.lenses.stream/d/?id=f6b55fc2-0043-49eb-84eb-65eb4c69ec62
-      LICENSE_URL: https://dl.lenses.stream/d/?id=f6b55fc2-0043-49eb-84eb-65eb4c69ec62
-      LENSES_PORT: 9991
-      LENSES_KAFKA_BROKERS: PLAINTEXT://kafka1:9092,PLAINTEXT://kafka2:9092,PLAINTEXT://kafka3:9092
-      LENSES_SECURITY_MODE: BASIC
-      LENSES_SECURITY_GROUPS: |
-        [
-          {"name": "adminGroup", "roles": ["Admin", "DataPolicyWrite", "AlertsWrite", "TableStorageWrite"]},
-          {"name": "readGroup",  "roles": ["Read"]}
-        ]
-      LENSES_SECURITY_USERS: |
-        [
-          {"username": "admin", "password": "admin", "displayname": "Lenses Admin", "groups": ["adminGroup"]},
-          {"username": "read", "password": "read", "displayname": "Read Only", "groups": ["readGroup"]}
-        ]
+      ZK_HOSTS: "zoo1:2181,zoo2:2181,zoo3:2181"
     ports:
-      - 3030:3030
-      - 9092:9092
-      - 9991:9991
+      - 9000:9000
     networks:
       - kafka
 
