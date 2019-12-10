@@ -115,7 +115,7 @@ services:
       - kafka
 
   manager:
-    image: 8ecab936713c
+    image: cithub/kafka-manager
     hostname: manager
     container_name: manager
     depends_on:
