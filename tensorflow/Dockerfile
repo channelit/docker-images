@@ -3,12 +3,10 @@ WORKDIR /
 RUN \
 	apt-get update &&\
 	pip3 install spacy &&\
-	pip3 install pyLDAvis scipy nltk bokeh py4j &&\
+	pip3 install pyLDAvis scipy nltk bokeh &&\
 	pip3 install -U scikit-learn &&\
 	pip3 install keras &&\
-	pip3 install numpy networkx gensim elasticsearch django pandas &&\
-	pip3 install -U gensim &&\
-	pip3 install pysal geojson hdbscan folium geopandas &&\
+	pip3 install numpy networkx gensim django pandas &&\
 	apt-get clean
 RUN \
 	python -m nltk.downloader all &&\

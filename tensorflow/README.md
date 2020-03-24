@@ -1,4 +1,4 @@
-# TensorFlow with Spark processing and Solr data
+# TensorFlow with addional libraries
 ### Running Tensorflow on Docker 
 
 `docker run -it -p 8888:8888 -p 6006:6006 --name=tensorflow -v $(pwd)/data:/data -e PASSWORD=password cithub/tensorflow`
