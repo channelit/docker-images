@@ -1,8 +1,8 @@
 FROM cithub/hadoop
 MAINTAINER Channel IT Services, LLC
 
-ENV SPARK_FILE_VER=2.4.3-bin-hadoop2.7
-ENV SPARK_VER=2.4.3
+ENV SPARK_FILE_VER=2.4.5-bin-hadoop2.7
+ENV SPARK_VER=2.4.5
 ENV SPARK_HOME=/home/hadoop/spark/spark
 ENV SPARK_OPTS=-"--packages graphframes:graphframes:0.7.0-spark2.3-s_2.11,com.databricks:spark-csv_2.11:1.5.0"
 ENV YARN_CONF_DIR=/home/hadoop/hadoop/etc/hadoop
