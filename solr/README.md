@@ -43,3 +43,9 @@ docker exec solr3 ./setup-jks.sh
 docker-compose stop solr1 solr2 solr3
 docker-compose up
 ```
+
+# Solr without SSL
+```sh
+docker-compose --file=docker-compose_local.yml up -d zoo1 zoo2 zoo3
+docker-compose --file=docker-compose_local.yml up -d
+```
