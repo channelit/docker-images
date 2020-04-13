@@ -14,7 +14,7 @@ ENV	SOLR_VER="8.2.0" \
 	SOLR_GID="8983" \
 	SOLR_LOGS_DIR=/solr_logs \
 	SOLR_DATA_HOME=/solr_data \
-	SOLR_CONFIG=/solr_conf \
+	SOLR_CONF=/solr_conf \
 	SOLR_DOWNLOAD_SERVER="${SOLR_DOWNLOAD_SERVER:-https://apache.claz.org/lucene/solr}" \
 	PATH="/opt/solr/bin:$PATH"
 
@@ -29,9 +29,9 @@ RUN	mkdir -p /opt/solr && \
 	rm -Rf /opt/solr/example
 
 RUN	chown "$SOLR_USER:$SOLR_USER" /opt/solr &&\
-	mkdir -p "$SOLR_LOGS_DIR" "$SOLR_DATA_HOME" "$SOLR_CONFIG" && \
-	cp /opt/solr/server/solr/solr.xml $SOLR_CONFIG/ &&\
-	cp -r /opt/solr/server/solr/configsets/_default $SOLR_CONFIG/
+	mkdir -p "$SOLR_LOGS_DIR" "$SOLR_DATA_HOME" "$SOLR_CONF" && \
+	cp /opt/solr/server/solr/solr.xml $SOLR_CONF/ &&\
+	cp -r /opt/solr/server/solr/configsets/_default $SOLR_CONF/
 
 RUN	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/solr/solr-entrypoint.sh -O /opt/solr/solr-entrypoint.sh && \
 	chmod 755 /opt/solr/solr-entrypoint.sh
