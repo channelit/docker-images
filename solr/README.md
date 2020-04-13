@@ -46,6 +46,6 @@ docker-compose up
 
 # Solr without SSL
 ```sh
-docker-compose --file=docker-compose_local.yml up -d zoo1 zoo2 zoo3
-docker-compose --file=docker-compose_local.yml up -d
+docker-compose -f docker-compose_local.yml up -d zoo1 zoo2 zoo3
+docker-compose -f docker-compose_local.yml up -d
 ```
