@@ -14,6 +14,7 @@ services:
     environment:
       SOLR_LOGS_DIR: /solr_logs
       SOLR_HOME: /solr_data
+      SOLR_CONF: /solr_conf
       SOLR_HOST: solr1
       SOLR_INIT: "true"
       ZK_HOST: zoo1:2181,zoo2:2181,zoo3:2181
