@@ -4,7 +4,7 @@ RUN apt-get update && \
     apt-get -y install lsof procps wget gpg && \
     rm -rf /var/lib/apt/lists/*
 
-ENV ZOO_VER=3.5.5 \
+ENV ZOO_VER=3.6.2 \
     ZOO_USER=zookeeper \
     ZOO_GID=2121 \
     ZOO_GROUP=zoo \
