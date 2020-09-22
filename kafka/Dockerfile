@@ -1,7 +1,7 @@
   
-FROM openjdk:13-slim
+FROM openjdk:16-slim
 
-ARG kafka_version=2.4.0
+ARG kafka_version=2.6.0
 ARG scala_version=2.13
 
 ENV KAFKA_VERSION=$kafka_version \
