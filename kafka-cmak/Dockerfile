@@ -1,18 +1,20 @@
-FROM hseeberger/scala-sbt:8u222_1.3.4_2.13.1
+FROM openjdk:11-jre as build
 
-ENV ZK_HOSTS=localhost:2181 \
-    CMAK_VERSION=3.0.0.5
+ARG CMAK_VERSION="3.0.0.5"
 
-RUN mkdir -p /tmp && \
-    cd /tmp && \
-    wget https://github.com/yahoo/CMAK/archive/${CMAK_VERSION}.tar.gz && \
-    tar xxf ${CMAK_VERSION}.tar.gz && \
-    cd /tmp/kafka-manager-${CMAK_VERSION} && \
-    sbt clean dist && \
-    unzip  -d / ./target/universal/kafka-manager-${CMAK_VERSION}.zip && \
-    rm -rf /tmp/${CMAK_VERSION} /tmp/CMAK-${CMAK_VERSION}
+RUN curl -L https://github.com/yahoo/CMAK/releases/download/${CMAK_VERSION}/cmak-${CMAK_VERSION}.zip -o /tmp/cmak.zip \
+    && unzip /tmp/cmak.zip -d / \
+    && ln -s /cmak-$CMAK_VERSION /cmak \
+    && rm -rf /tmp/cmak.zip
 
-WORKDIR /CMAK-${CMAK_VERSION}
+FROM openjdk:11-jre-slim
 
-EXPOSE 9000
-ENTRYPOINT ["./bin/kafka-manager","-Dconfig.file=conf/application.conf"]
+COPY --from=build /cmak /cmak
+
+VOLUME /cmak/conf
+
+ENV JAVA_OPTS=-XX:MaxRAMPercentage=80
+
+WORKDIR /cmak
+
+ENTRYPOINT ["/cmak/bin/cmak", "-Dpidfile.path=/dev/null", "-Dapplication.home=/cmak", ""]
