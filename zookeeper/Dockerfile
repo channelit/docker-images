@@ -1,4 +1,4 @@
-FROM openjdk:11-jre-slim
+FROM openjdk:jdk-slim
 
 RUN apt-get update && \
     apt-get -y install lsof procps wget gpg && \
