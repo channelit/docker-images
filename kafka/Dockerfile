@@ -19,4 +19,6 @@ RUN mkdir -p /opt/kafka && \
     tar -C /opt/kafka --extract --file /opt/kafka.tgz --strip-components=1 && \
     rm /opt/kafka.tgz*
 
+CMD ["./opt/kafka/bin/kafka-server-start.sh", "/conf/server.properties"]
+
 EXPOSE 2181 9092
