@@ -15,7 +15,7 @@ ENV	SOLR_VER="8.6.2" \
 	SOLR_LOGS_DIR=/solr_logs \
 	SOLR_DATA_HOME=/solr_data \
 	SOLR_CONF=/solr_conf \
-	SOLR_DOWNLOAD_SERVER="${SOLR_DOWNLOAD_SERVER:-https://apache.claz.org/lucene/solr}" \
+	SOLR_DOWNLOAD_SERVER="${SOLR_DOWNLOAD_SERVER:-http://mirrors.ibiblio.org/apache/lucene/solr}" \
 	PATH="/opt/solr/bin:$PATH"
 
 RUN	groupadd -r --gid $SOLR_GID $SOLR_GROUP && \
