@@ -115,9 +115,9 @@ services:
       - kafka
 
   manager:
-    image: cithub/kafka-manager
-    hostname: manager
-    container_name: manager
+    image: cithub/kafka-cmak
+    hostname: kafka-cmak
+    container_name: kafka-cmak
     depends_on:
       - kafka1
       - kafka2
