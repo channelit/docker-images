@@ -1,0 +1,16 @@
+  
+FROM openjdk:16-slim
+
+ARG full_version=6.0.1 \
+	major_version=6.0
+
+ENV FULL_VERSION=$full_version \
+	MAJOR_VERSION=$major_version
+
+RUN apt-get update && \
+    apt-get -y install wget
+
+RUN mkdir -p /opt/kafka && \
+	wget -nv http://packages.confluent.io/archive/"$MAJOR_VERSION"/confluent-"$FULL_VERSION".tar.gz  -O /opt/kafka.tgz && \
+    tar -C /opt/kafka --extract --file /opt/kafka.tgz --strip-components=1 && \
+    rm /opt/kafka.tgz*
