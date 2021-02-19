@@ -20,30 +20,18 @@ RUN mkdir -p /opt/clamav
 RUN curl -LSo /opt/clamav.tar.gz https://www.clamav.net/downloads/production/clamav-$CLAM_VERSION.tar.gz
 RUN tar xvf /opt/clamav.tar.gz --strip-components=1 -C /opt/clamav/
 RUN cd /opt/clamav &&\
-	./configure --enable-check --sysconfdir=/etc &&\
+	./configure --enable-check &&\
 	make -j2 &&\
-	make check
+	make check &&\
+	make install
 
+RUN mkdir /usr/local/share/clamav
+RUN cp /usr/local/etc/freshclam.conf.sample /usr/local/etc/freshclam.conf
+RUN cp /usr/local/etc/clamd.conf.sample /usr/local/etc/clamd.conf
 
 # Add clamav user
-RUN adduser -S -G clamav -u 1000 clamav -h /var/lib/clamav && \
-    mkdir -p /var/lib/clamav && \
-    mkdir /usr/local/share/clamav && \
-    chown -R clamav_user:clamav /var/lib/clamav /usr/local/share/clamav /etc/clamav
-
-# Configure Clam AV...
-#COPY --chown=clamav:clamav ./*.conf /etc/clamav/
-#COPY --chown=clamav:clamav eicar.com /
-#COPY --chown=clamav:clamav ./readyness.sh /
-
-# permissions
-RUN mkdir /var/run/clamav && \
-    chown clamav:clamav /var/run/clamav && \
-    chmod 750 /var/run/clamav
-
-USER 1000
-
-# initial update of av databases
-RUN freshclam
+RUN groupadd clamav &&\
+    useradd -g clamav -s /bin/false -c "Clam Antivirus" clamav &&\
+    chown -R clamav:clamav /usr/local/share/clamav
 
 EXPOSE 3310
