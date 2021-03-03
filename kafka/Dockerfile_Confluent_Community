@@ -1,11 +1,8 @@
   
 FROM openjdk:16-slim
 
-ARG full_version=6.1.0 \
-	major_version=6.1
-
-ENV FULL_VERSION=$full_version \
-	MAJOR_VERSION=$major_version
+ENV FULL_VERSION=6.1.0 \
+	MAJOR_VERSION=6.1
 
 RUN apt-get update && \
     apt-get -y install wget
