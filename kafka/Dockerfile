@@ -19,6 +19,21 @@ RUN mkdir -p /opt/kafka && \
     tar -C /opt/kafka --extract --file /opt/kafka.tgz --strip-components=1 && \
     rm /opt/kafka.tgz*
 
+RUN mkdir -p /connectors  && \
+    wget -nv https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/1.5.2.Final/debezium-connector-postgres-1.5.2.Final-plugin.tar.gz -O /connectors/debezium.tar.gz &&\
+    tar -C /connectors --extract --file /connectors/debezium.tar.gz --strip-components=1 && \
+    rm /connectors/debezium.tar.gz
+
+RUN groupadd kafka &&\
+    useradd -g kafka kafka
+
+
+RUN chown -R kafka:kafka /opt/kafka /connectors && \
+    chmod +x ./opt/kafka/bin/connect-distributed.sh
+
+USER kafka
+
+
 CMD ["./opt/kafka/bin/kafka-server-start.sh", "/conf/server.properties"]
 
 EXPOSE 2181 9092
