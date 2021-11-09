@@ -1,13 +1,26 @@
-  
-FROM openjdk:16-slim
+FROM centos as build
 
-ENV FULL_VERSION=6.1.0 \
-	MAJOR_VERSION=6.1
+ENV FULL_VERSION=7.0.0 \
+	MAJOR_VERSION=7.0
 
-RUN apt-get update && \
-    apt-get -y install wget
+RUN mkdir -p /opt/kafka
+RUN	curl http://packages.confluent.io/archive/$MAJOR_VERSION/confluent-community-$FULL_VERSION.tar.gz  -o /opt/kafka.tgz
+RUN tar -C /opt/kafka --extract --file /opt/kafka.tgz --strip-components=1
+RUN rm /opt/kafka.tgz*
 
-RUN mkdir -p /opt/kafka && \
-	wget -nv http://packages.confluent.io/archive/"$MAJOR_VERSION"/confluent-"$FULL_VERSION".tar.gz  -O /opt/kafka.tgz && \
-    tar -C /opt/kafka --extract --file /opt/kafka.tgz --strip-components=1 && \
-    rm /opt/kafka.tgz*
+
+FROM openjdk:16-alpine
+
+ENV USER=kafka
+ENV GROUP=kafka
+ENV UID=1001
+ENV GID=1001
+
+COPY --from=build /opt/kafka /opt/kafka
+
+RUN addgroup -g $GID $GROUP
+RUN adduser -u $UID -G $GROUP -h /home/$USER -D $USER
+
+RUN chown -R $USER:$GROUP /opt/$USER
+
+USER $USER
