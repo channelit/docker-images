@@ -43,7 +43,7 @@ jobs:
           context: .
           file: kafka/Dockerfile_Confluent_Community
           push: ${{ github.event_name != 'pull_request' }}
-          tags: channelit/kafka-confluent-community:latest
+          tags: ${{ env.REGISTRY }}/channelit/kafka-confluent-community:latest
 
       - name: Build and push ksql Docker image
         uses: docker/build-push-action@v2.7.0
@@ -51,4 +51,4 @@ jobs:
           context: .
           file: kafka/ksql-db/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
-          tags: channelit/ksql:latest
+          tags: ${{ env.REGISTRY }}/channelit/ksql:latest
