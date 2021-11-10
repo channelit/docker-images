@@ -19,7 +19,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: kafka-confluent-community
+  IMAGE_NAME: channelit/kafka-confluent-community
 
 
 jobs:
@@ -60,5 +60,6 @@ jobs:
           context: .
           file: kafka/Dockerfile_Confluent_Community
           push: ${{ github.event_name != 'pull_request' }}
+          platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
