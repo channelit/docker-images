@@ -19,6 +19,8 @@ ENV USER=ksql \
 
 COPY --from=build /opt/ksql /opt/ksql
 
+RUN yum install shadow-utils.x86_64 -y
+
 RUN addgroup -g $GID $GROUP
 RUN adduser -u $UID -G $GROUP -h /home/$USER -D $USER
 
