@@ -10,7 +10,7 @@ RUN curl -sq http://ksqldb-packages.s3.amazonaws.com/archive/$MAJOR_VERSION/arch
 	gpg --verify confluent-ksqldb-$FULL_VERSION.tar.gz.asc confluent-ksqldb-$FULL_VERSION.tar.gz && \
 	tar -xf confluent-ksqldb-$FULL_VERSION.tar.gz -C /opt/ksql
 
-FROM openjdk:16
+FROM openjdk:16-alpine
 
 ENV USER=ksql \
 	GROUP=ksql \
@@ -18,8 +18,6 @@ ENV USER=ksql \
 	GID=1001
 
 COPY --from=build /opt/ksql /opt/ksql
-
-RUN yum install shadow-utils.x86_64 -y
 
 RUN addgroup -g $GID $GROUP
 RUN adduser -u $UID -G $GROUP -h /home/$USER -D $USER
