@@ -29,7 +29,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Setup Docker Buildx
+      - name: Setup Docker QEMU
         uses: docker/setup-qemu-action@v1
 
       - name: Log into registry ${{ env.REGISTRY }}
