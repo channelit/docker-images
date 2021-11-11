@@ -1,29 +1,29 @@
+FROM centos as build
+
+ENV FULL_VERSION=0.21.0 \
+	MAJOR_VERSION=0.21
+
+RUN mkdir -p /opt/ksql
+RUN curl -sq http://ksqldb-packages.s3.amazonaws.com/archive/$MAJOR_VERSION/archive.key | gpg --import && \
+	curl http://ksqldb-packages.s3.amazonaws.com/archive/$MAJOR_VERSION/confluent-ksqldb-$FULL_VERSION.tar.gz --output confluent-ksqldb-$FULL_VERSION.tar.gz && \
+	curl http://ksqldb-packages.s3.amazonaws.com/archive/$MAJOR_VERSION/confluent-ksqldb-$FULL_VERSION.tar.gz.asc --output confluent-ksqldb-$FULL_VERSION.tar.gz.asc && \
+	gpg --verify confluent-ksqldb-$FULL_VERSION.tar.gz.asc confluent-ksqldb-$FULL_VERSION.tar.gz && \
+	tar -xf confluent-ksqldb-$FULL_VERSION.tar.gz -C /opt/ksql
+
 FROM openjdk:16-alpine
-MAINTAINER  Hardik Patel "hpatel@channelit.biz"
 
-RUN	apt-get update && \
-	apt-get -y install lsof procps gpg && \
-	rm -rf /var/lib/apt/lists/*
+ENV USER=ksql \
+	GROUP=ksql \
+	UID=1001 \
+	GID=1001
 
-ENV	KSQL_VER="8.6.2" \
-	KSQL_USER="ksql" \
-	KSQL_UID="8088" \
-	KSQL_GROUP="ksql" \
-	KSQL_GID="8088"
+COPY --from=build /opt/ksql /opt/ksql
 
-RUN	groupadd -r --gid $KSQL_GID $KSQL_GROUP && \
-	useradd -r --uid $KSQL_UID --gid $KSQL_GID $KSQL_USER
+RUN addgroup -g $GID $GROUP
+RUN adduser -u $UID -G $GROUP -h /home/$USER -D $USER
 
-RUN curl -sq http://ksqldb-packages.s3.amazonaws.com/archive/0.21/archive.key | gpg --import && \
-	curl http://ksqldb-packages.s3.amazonaws.com/archive/0.21/confluent-ksqldb-0.21.0.tar.gz --output confluent-ksqldb-0.21.0.tar.gz && \
-	curl http://ksqldb-packages.s3.amazonaws.com/archive/0.21/confluent-ksqldb-0.21.0.tar.gz.asc --output confluent-ksqldb-0.21.0.tar.gz.asc && \
-	gpg --verify confluent-ksqldb-0.21.0.tar.gz.asc confluent-ksqldb-0.21.0.tar.gz && \
-	tar -xf confluent-ksqldb-0.21.0.tar.gz -C /opt/ksql
+RUN chown -R $USER:$GROUP /opt/$USER
 
-RUN	chown "$KSQL_USER:$KSQL_USER" /opt/ksql
+USER $USER
 
 EXPOSE 8088
-WORKDIR /opt/ksql
-USER $KSQL_USER
-
-CMD ["./opt/kafka/bin/kafka-server-start.sh", "/conf/server.properties"]
