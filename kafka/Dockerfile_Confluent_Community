@@ -9,7 +9,7 @@ RUN tar -C /opt/kafka --extract --file /opt/kafka.tgz --strip-components=1
 RUN rm /opt/kafka.tgz*
 
 
-FROM openjdk:16-alpine
+FROM openjdk:16
 
 ENV USER=kafka
 ENV GROUP=kafka

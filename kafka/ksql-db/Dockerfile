@@ -10,7 +10,7 @@ RUN curl -sq http://ksqldb-packages.s3.amazonaws.com/archive/$MAJOR_VERSION/arch
 	gpg --verify confluent-ksqldb-$FULL_VERSION.tar.gz.asc confluent-ksqldb-$FULL_VERSION.tar.gz && \
 	tar -xf confluent-ksqldb-$FULL_VERSION.tar.gz -C /opt/ksql
 
-FROM openjdk:16-alpine
+FROM openjdk:16
 
 ENV USER=ksql \
 	GROUP=ksql \
