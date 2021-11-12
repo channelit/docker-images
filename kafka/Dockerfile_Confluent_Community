@@ -8,13 +8,12 @@ RUN	curl http://packages.confluent.io/archive/$MAJOR_VERSION/confluent-community
 RUN tar -C /opt/kafka --extract --file /opt/kafka.tgz --strip-components=1
 RUN rm /opt/kafka.tgz*
 
-
 FROM openjdk:18-slim
 
-ENV USER=kafka
-ENV GROUP=kafka
-ENV UID=1001
-ENV GID=1001
+ENV USER=kafka \
+	GROUP=kafka \
+	UID=1001 \
+	GID=1001
 
 COPY --from=build /opt/kafka /opt/kafka
 
