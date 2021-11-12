@@ -47,11 +47,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push {{ env.IMAGE_NAME }} Docker image
+      - name: Build and push ${{ env.IMAGE_NAME }} Docker image
         uses: docker/build-push-action@v2.7.0
         with:
           context: .
           platforms: linux/amd64,linux/arm64/v8
           file: ${{ env.DOCKER_FILE }}
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY }}/channelit/{{ env.IMAGE_NAME }}:latest
+          tags: ${{ env.REGISTRY }}/channelit/${{ env.IMAGE_NAME }}:latest
