@@ -3,6 +3,7 @@
 #### Build on Mac AMD
 ```
 docker build -f Dockerfile_Confluent_Community --platform linux/amd64 . -t cithub/kafka-confluent-community
+docker build --platform linux/amd64 . -t kafka
 ```
 
 #### Run locally
