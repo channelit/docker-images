@@ -27,7 +27,3 @@ RUN adduser --system --uid $UID -gid $GID --home /home/$USER --disabled-password
 RUN chown -R $USER:$GROUP /opt/$USER
 
 USER $USER
-
-CMD ["./opt/kafka/bin/kafka-server-start.sh", "/conf/server.properties"]
-
-EXPOSE 9092
