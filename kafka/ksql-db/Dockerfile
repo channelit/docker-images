@@ -8,7 +8,7 @@ RUN curl -sq http://ksqldb-packages.s3.amazonaws.com/archive/$MAJOR_VERSION/arch
 	curl http://ksqldb-packages.s3.amazonaws.com/archive/$MAJOR_VERSION/confluent-ksqldb-$FULL_VERSION.tar.gz --output confluent-ksqldb-$FULL_VERSION.tar.gz && \
 	curl http://ksqldb-packages.s3.amazonaws.com/archive/$MAJOR_VERSION/confluent-ksqldb-$FULL_VERSION.tar.gz.asc --output confluent-ksqldb-$FULL_VERSION.tar.gz.asc && \
 	gpg --verify confluent-ksqldb-$FULL_VERSION.tar.gz.asc confluent-ksqldb-$FULL_VERSION.tar.gz && \
-	tar -xf confluent-ksqldb-$FULL_VERSION.tar.gz -C /opt/ksql
+	tar xvf confluent-ksqldb-$FULL_VERSION.tar.gz --strip-components=1 -C /opt/ksql
 
 FROM openjdk:18-slim
 
