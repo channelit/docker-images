@@ -10,7 +10,7 @@ RUN curl -sq http://ksqldb-packages.s3.amazonaws.com/archive/$MAJOR_VERSION/arch
 	gpg --verify confluent-ksqldb-$FULL_VERSION.tar.gz.asc confluent-ksqldb-$FULL_VERSION.tar.gz && \
 	tar xvf confluent-ksqldb-$FULL_VERSION.tar.gz --strip-components=1 -C /opt/ksql
 
-FROM openjdk:18-slim
+FROM openjdk:11-slim
 
 ENV USER=ksql \
 	GROUP=ksql \
@@ -25,3 +25,5 @@ RUN adduser --system --uid $UID -gid $GID --home /home/$USER --disabled-password
 RUN chown -R $USER:$GROUP /opt/$USER
 
 USER $USER
+
+EXPOSE 8088
