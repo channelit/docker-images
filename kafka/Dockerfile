@@ -30,4 +30,4 @@ USER $USER
 
 CMD ["./opt/kafka/bin/kafka-server-start.sh", "/conf/server.properties"]
 
-EXPOSE 2181 9092
+EXPOSE 9092
