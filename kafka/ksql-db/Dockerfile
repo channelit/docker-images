@@ -19,8 +19,8 @@ ENV USER=ksql \
 
 COPY --from=build /opt/ksql /opt/ksql
 
-RUN addgroup -g $GID $GROUP
-RUN adduser -u $UID -G $GROUP -h /home/$USER -D $USER
+RUN addgroup --system -g $GID $GROUP
+RUN adduser --system -u $UID -G $GROUP -h /home/$USER -D $USER
 
 RUN chown -R $USER:$GROUP /opt/$USER
 
