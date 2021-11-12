@@ -5,14 +5,16 @@ name: Docker-KSQL
 # separate terms of service, privacy policy, and support
 # documentation.
 
-# on:
-#   schedule:
-#     - cron: '42 12 * * *'
-#   push:
-#     branches: [ master ]
-#     tags: [ 'v*.*.*' ]
-#   pull_request:
-#     branches: [ master ]
+on:
+  schedule:
+    - cron: '42 12 * * *'
+  push:
+    paths:
+      - 'kafka/ksql-db/Dockerfile'
+    branches: [ master ]
+    tags: [ 'v*.*.*' ]
+  pull_request:
+    branches: [ master ]
 
 env:
   REGISTRY: ghcr.io
