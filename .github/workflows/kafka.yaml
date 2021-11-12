@@ -52,6 +52,6 @@ jobs:
         with:
           context: .
           platforms: linux/amd64,linux/arm64/v8
-          file: {{ env.DOCKER_FILE }}
+          file: ${{ env.DOCKER_FILE }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ env.REGISTRY }}/channelit/{{ env.IMAGE_NAME }}:latest
