@@ -5,17 +5,12 @@ name: Kafka
 # separate terms of service, privacy policy, and support
 # documentation.
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: kafka
-  DOCKER_FILE: kafka/Dockerfile
-
 on:
   schedule:
     - cron: '42 12 * * *'
   push:
     paths:
-      - ${{ DOCKER_FILE }}
+      - 'kafka/Dockerfile'
     branches: [ master ]
     tags: [ 'v*.*.*' ]
   pull_request:
