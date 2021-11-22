@@ -1,47 +1,31 @@
-FROM openjdk:11-slim
-MAINTAINER  Hardik Patel "hpatel@channelit.biz"
+FROM centos as build
 
-ARG SOLR_DOWNLOAD_SERVER
+ARG solr_version=8.11.0
 
-RUN	apt-get update && \
-	apt-get -y install lsof procps wget gpg && \
-	rm -rf /var/lib/apt/lists/*
+ENV SOLR_VERSION=$solr_version \
+    SOLR_HOME=/opt/solr \
+    SOLR_LOGS_DIR=/solr_logs \
+    SOLR_DATA_HOME=/solr_data \
+    SOLR_CONF=/solr_conf \
+    SOLR_DOWNLOAD_SERVER="${SOLR_DOWNLOAD_SERVER:-https://dlcdn.apache.org/lucene/solr}" \
+    PATH="/opt/solr/bin:$PATH"
 
-ENV	SOLR_VER="8.6.2" \
-	SOLR_USER="solr" \
-	SOLR_UID="8983" \
-	SOLR_GROUP="solr" \
-	SOLR_GID="8983" \
-	SOLR_LOGS_DIR=/solr_logs \
-	SOLR_DATA_HOME=/solr_data \
-	SOLR_CONF=/solr_conf \
-	SOLR_DOWNLOAD_SERVER="${SOLR_DOWNLOAD_SERVER:-http://mirrors.ibiblio.org/apache/lucene/solr}" \
-	PATH="/opt/solr/bin:$PATH"
+RUN mkdir -p /opt/solr
+RUN curl $SOLR_DOWNLOAD_SERVER/$SOLR_VERSION/solr-$SOLR_VERSION.tgz -o /opt/solr.tgz
+RUN tar -C /opt/solr --extract --file /opt/solr.tgz --strip-components=1
 
-RUN	groupadd -r --gid $SOLR_GID $SOLR_GROUP && \
-	useradd -r --uid $SOLR_UID --gid $SOLR_GID $SOLR_USER
+FROM openjdk:18-slim
 
-RUN	mkdir -p /opt/solr && \
-	wget -nv ${SOLR_DOWNLOAD_SERVER}/${SOLR_VER}/solr-${SOLR_VER}.tgz -O /opt/solr.tgz && \
-	tar -C /opt/solr --extract --file /opt/solr.tgz --strip-components=1 && \
-	rm /opt/solr.tgz* && \
-	rm -Rf /opt/solr/docs && \
-	rm -Rf /opt/solr/example
+ENV USER=solr \
+    GROUP=solr \
+    UID=8983 \
+    GID=8983
 
-RUN	chown "$SOLR_USER:$SOLR_USER" /opt/solr &&\
-	mkdir -p "$SOLR_LOGS_DIR" "$SOLR_DATA_HOME" "$SOLR_CONF" && \
-	cp /opt/solr/server/solr/solr.xml $SOLR_CONF/ &&\
-	cp -r /opt/solr/server/solr/configsets/_default $SOLR_CONF/
+COPY --from=build /opt/solr /opt/solr
 
-RUN	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/solr/solr-entrypoint.sh -O /opt/solr/solr-entrypoint.sh && \
-	chmod 755 /opt/solr/solr-entrypoint.sh
+RUN addgroup --system --gid $GID $GROUP
+RUN adduser --system --uid $UID -gid $GID --home /home/$USER --disabled-password $USER
 
-RUN	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/solr/setup-certs.sh -O /opt/solr/setup-certs.sh && \
-	chmod 755 /opt/solr/setup-certs.sh
+RUN chown -R $USER:$GROUP /opt/$USER
 
-RUN	wget -q https://raw.githubusercontent.com/channelit/docker-images/master/solr/setup-jks.sh -O /opt/solr/setup-jks.sh && \
-	chmod 755 /opt/solr/setup-jks.sh
-
-EXPOSE 8983
-WORKDIR /opt/solr
-USER $SOLR_USER
+USER $USER
