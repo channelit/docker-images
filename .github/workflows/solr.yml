@@ -15,7 +15,7 @@ on:
     - cron: '42 12 * * *'
   push:
     paths:
-      - '${{ DOCKER_FILE }}'
+      - ${{ DOCKER_FILE }}
     branches: [ master ]
     tags: [ 'v*.*.*' ]
   pull_request:
