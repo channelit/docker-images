@@ -5,21 +5,22 @@ name: Solr
 # separate terms of service, privacy policy, and support
 # documentation.
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: solr
+  DOCKER_FILE: solr/Dockerfile
+
 on:
   schedule:
     - cron: '42 12 * * *'
   push:
     paths:
-      - 'kafka/kafka-connect/Dockerfile'
+      - ${{ DOCKER_FILE }}
     branches: [ master ]
     tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ master ]
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: solr
-  DOCKER_FILE: solr/Dockerfile
 
 jobs:
   build:
