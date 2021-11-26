@@ -26,7 +26,4 @@ RUN adduser --system --uid $UID -gid $GID --home /home/$USER --disabled-password
 
 RUN chown -R $USER:$GROUP /opt/$USER
 
-RUN apt update -y
-RUN apt install curl -y
-
 USER $USER
