@@ -26,4 +26,6 @@ RUN adduser --system --uid $UID -gid $GID --home /home/$USER --disabled-password
 
 RUN chown -R $USER:$GROUP /opt/$USER
 
+RUN apk --no-cache add curl
+
 USER $USER
