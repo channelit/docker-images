@@ -27,7 +27,7 @@ RUN groupadd -r --gid $ZOO_GID $ZOO_GROUP && \
     chown "$ZOO_USER:$ZOO_GROUP" "$ZOO_DATA_LOG_DIR" "$ZOO_DATA_DIR" "$ZOO_CONF_DIR" "$ZOO_LOG_DIR"
 
 RUN mkdir -p /opt/zookeeper && \
-    wget -nv https://apache.claz.org/zookeeper/zookeeper-${ZOO_VER}/apache-zookeeper-${ZOO_VER}-bin.tar.gz -O /opt/zookeeper/zookeeper.tar.gz && \
+    wget -nv https://www.apache.org/dyn/closer.lua/zookeeper/zookeeper-${ZOO_VER}/apache-zookeeper-${ZOO_VER}-bin.tar.gz -O /opt/zookeeper/zookeeper.tar.gz && \
     tar -xzf /opt/zookeeper/zookeeper.tar.gz -C /opt/zookeeper --strip-components=1 && \
     chown -R ${ZOO_USER} /opt/zookeeper
 
