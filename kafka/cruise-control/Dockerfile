@@ -2,7 +2,7 @@ FROM centos as build
 
 RUN yum install -y epel-release
 RUN yum install -y java-latest-openjdk
-RUN yum install -y git ca-certificates wget zip unzip gradle
+RUN yum install -y git ca-certificates wget zip unzip
 
 ENV JAVA_HOME /etc/alternatives/jre
 
