@@ -51,7 +51,7 @@ jobs:
         uses: docker/build-push-action@v2.7.0
         with:
           context: .
-          platforms: linux/amd64,linux/arm64/v8
+          platforms: linux/amd64,linux/arm64
           file: ${{ env.DOCKER_FILE }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ env.REGISTRY }}/channelit/${{ env.IMAGE_NAME }}:latest
