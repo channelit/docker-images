@@ -13,8 +13,7 @@ ENV PATH $PATH:/gradle-7.3.2/bin
 ENV GRADLE_OPTS=-Dorg.gradle.daemon=false
 
 RUN git clone https://github.com/linkedin/cruise-control.git
-WORKDIR /cruise-control
-RUN gradle jar
+RUN cd cruise-control && gradle --stacktrace jar
 
 RUN mv -v /cruise-control/cruise-control/build/libs/cruise-control-*.jar /cruise-control/cruise-control/build/libs/cruise-control.jar
 RUN mv -v /cruise-control/cruise-control/build/dependant-libs/cruise-control-metrics-reporter-*.jar /cruise-control/cruise-control/build/dependant-libs/cruise-control-metrics-reporter.jar
@@ -41,5 +40,4 @@ COPY --from=ui /src/cruise-control-ui/dist /opt/cruise-control/cruise-control-ui
 RUN echo "local,localhost,/kafkacruisecontrol" > /opt/cruise-control/cruise-control-ui/dist/static/config.csv
 
 EXPOSE 8090
-
 CMD [ "/opt/cruise-control/start.sh" ]
