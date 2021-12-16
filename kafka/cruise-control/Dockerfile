@@ -13,7 +13,7 @@ ENV PATH $PATH:/gradle-7.3.2/bin
 ENV GRADLE_OPTS=-Dorg.gradle.daemon=false
 
 RUN git clone https://github.com/linkedin/cruise-control.git
-RUN cd cruise-control && gradle --stacktrace jar
+RUN cd cruise-control && gradle --stacktrace --scan jar
 
 RUN mv -v /cruise-control/cruise-control/build/libs/cruise-control-*.jar /cruise-control/cruise-control/build/libs/cruise-control.jar
 RUN mv -v /cruise-control/cruise-control/build/dependant-libs/cruise-control-metrics-reporter-*.jar /cruise-control/cruise-control/build/dependant-libs/cruise-control-metrics-reporter.jar
