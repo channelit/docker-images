@@ -38,6 +38,3 @@ COPY --from=cc /cruise-control/kafka-cruise-control-start.sh /opt/cruise-control
 COPY --from=cc /cruise-control/cruise-control/build/dependant-libs /opt/cruise-control/cruise-control/build/dependant-libs
 COPY --from=ui /src/cruise-control-ui/dist /opt/cruise-control/cruise-control-ui/dist
 RUN echo "local,localhost,/kafkacruisecontrol" > /opt/cruise-control/cruise-control-ui/dist/static/config.csv
-
-EXPOSE 8090
-CMD [ "/opt/cruise-control/start.sh" ]
