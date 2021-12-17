@@ -1,4 +1,4 @@
-name: CruiseControl
+name: Cruise Control
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -18,7 +18,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: cruisecontrol
+  IMAGE_NAME: cruise-control
   DOCKER_FILE: kafka/cruise-control/Dockerfile
 
 jobs:
