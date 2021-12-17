@@ -3,7 +3,7 @@ FROM openjdk:17-buster as cc
 RUN apt-get update -y
 RUN apt-get install -y git ca-certificates wget zip unzip
 
-ENV JAVA_TOOL_OPTIONS -Dfile.encoding=UTF8
+ENV JAVA_TOOL_OPTIONS -Dfile.encoding=UTF8 -Djdk.lang.Process.launchMechanism=vfork
 
 # Install Gradle
 RUN wget https://downloads.gradle-dn.com/distributions/gradle-7.3.2-bin.zip
