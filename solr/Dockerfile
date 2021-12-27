@@ -7,7 +7,7 @@ ENV SOLR_VERSION=$solr_version \
     SOLR_LOGS_DIR=/solr_logs \
     SOLR_DATA_HOME=/solr_data \
     SOLR_CONF=/solr_conf \
-    SOLR_DOWNLOAD_SERVER="https://archive.apache.org/dist/lucene/" \
+    SOLR_DOWNLOAD_SERVER="https://archive.apache.org/dist/lucene/solr" \
     PATH="/opt/solr/bin:$PATH"
 
 RUN mkdir -p /opt/solr
