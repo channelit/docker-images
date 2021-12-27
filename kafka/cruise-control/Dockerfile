@@ -30,6 +30,11 @@ RUN npm run build
 
 FROM openjdk:17-slim
 
+ENV USER=kafka \
+    GROUP=kafka \
+    UID=1001 \
+    GID=1001
+
 RUN mkdir -p /opt/cruise-control /opt/cruise-control/cruise-control-ui
 
 COPY --from=cc /cruise-control/cruise-control/build/libs/cruise-control.jar /opt/cruise-control/cruise-control/build/libs/cruise-control.jar
@@ -38,3 +43,8 @@ COPY --from=cc /cruise-control/kafka-cruise-control-start.sh /opt/cruise-control
 COPY --from=cc /cruise-control/cruise-control/build/dependant-libs /opt/cruise-control/cruise-control/build/dependant-libs
 COPY --from=ui /src/cruise-control-ui/dist /opt/cruise-control/cruise-control-ui/dist
 RUN echo "localhost,localhost,/kafkacruisecontrol" > /opt/cruise-control/cruise-control-ui/dist/static/config.csv
+
+RUN addgroup --system --gid $GID $GROUP
+RUN adduser --system --uid $UID -gid $GID --home /home/$USER --disabled-password $USER
+
+RUN chown -R $USER:$GROUP /opt/cruise-control
