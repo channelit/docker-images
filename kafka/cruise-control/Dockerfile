@@ -51,4 +51,6 @@ RUN chown -R $USER:$GROUP /opt/cruise-control
 
 RUN chmod 777 -R /opt/cruise-control/
 
+WORKDIR /opt/cruise-control/
+
 USER kafka
