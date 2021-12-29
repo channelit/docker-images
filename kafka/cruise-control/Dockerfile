@@ -42,9 +42,13 @@ COPY --from=cc /cruise-control/config /opt/cruise-control/config
 COPY --from=cc /cruise-control/kafka-cruise-control-start.sh /opt/cruise-control/
 COPY --from=cc /cruise-control/cruise-control/build/dependant-libs /opt/cruise-control/cruise-control/build/dependant-libs
 COPY --from=ui /src/cruise-control-ui/dist /opt/cruise-control/cruise-control-ui/dist
-RUN echo "local,localhost,/kafkacruisecontrol/" > /opt/cruise-control/cruise-control-ui/dist/static/config.csv
+RUN echo "local,localhost,/kafkacruisecontrol" > /opt/cruise-control/cruise-control-ui/dist/static/config.csv
 
 RUN addgroup --system --gid $GID $GROUP
 RUN adduser --system --uid $UID -gid $GID --home /home/$USER --disabled-password $USER
 
 RUN chown -R $USER:$GROUP /opt/cruise-control
+
+RUN chmod 777 -R /opt/cruise-control/
+
+USER kafka
