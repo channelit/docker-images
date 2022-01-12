@@ -27,11 +27,11 @@ RUN curl -nv https://d1i4a15mxbxib1.cloudfront.net/api/plugins/confluentinc/kafk
     mv /confluentinc-kafka-connect-elasticsearch-11.0.5/lib/* /connectors/. &&\
     rm -rf /confluentinc-kafka-connect-elasticsearch-11.0.5
 
-RUN curl -nv https://d1i4a15mxbxib1.cloudfront.net/api/plugins/confluentinc/kafka-connect-json-schema-converter/versions/7.0.0/confluentinc-kafka-connect-json-schema-converter-7.0.0.zip -o /connectors/confluentinc-kafka-connect-json-schema-converter-7.0.0.zip &&\
-    unzip /connectors/confluentinc-kafka-connect-json-schema-converter-7.0.0.zip &&\
-    rm /connectors/confluentinc-kafka-connect-json-schema-converter-7.0.0.zip &&\
-    mv /confluentinc-kafka-connect-json-schema-converter-7.0.0/lib/* /connectors/. &&\
-    rm -rf /confluentinc-kafka-connect-json-schema-converter-7.0.0
+RUN curl -nv https://d1i4a15mxbxib1.cloudfront.net/api/plugins/confluentinc/kafka-connect-json-schema-converter/versions/7.0.1/confluentinc-kafka-connect-json-schema-converter-7.0.1.zip -o /connectors/confluentinc-kafka-connect-json-schema-converter-7.0.1.zip &&\
+    unzip /connectors/confluentinc-kafka-connect-json-schema-converter-7.0.1.zip &&\
+    rm /connectors/confluentinc-kafka-connect-json-schema-converter-7.0.1.zip &&\
+    mv /confluentinc-kafka-connect-json-schema-converter-7.0.1/lib/* /connectors/. &&\
+    rm -rf /confluentinc-kafka-connect-json-schema-converter-7.0.1
 
 
 FROM openjdk:18-slim
