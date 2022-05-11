@@ -19,6 +19,7 @@ if [[ ! -f "$ZOO_CONF_DIR/zoo.cfg" ]]; then
     echo "standaloneEnabled=$ZOO_STANDALONE_ENABLED"
     echo "admin.enableServer=$ZOO_ADMINSERVER_ENABLED"
     echo "4lw.commands.whitelist=$ZOO_4LW_COMMANDS_WHITELIST" >> "$CONFIG"
+    
     for server in $ZOO_SERVERS; do
         echo "$server" >> "$CONFIG"
     done
