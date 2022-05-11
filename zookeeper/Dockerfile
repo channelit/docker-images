@@ -46,4 +46,5 @@ ENV PATH=$PATH:/opt/zookeeper/bin \
     ZOOCFGDIR=$ZOO_CONF_DIR
 
 ENTRYPOINT ["/zookeeper-entrypoint.sh"]
+
 CMD ["/opt/zookeeper/bin/zkServer.sh", "start-foreground"]
