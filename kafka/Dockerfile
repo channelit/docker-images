@@ -6,10 +6,11 @@ ARG scala_version=2.13
 ENV KAFKA_VERSION=$kafka_version \
     SCALA_VERSION=$scala_version \
     KAFKA_HOME=/opt/kafka \
+    DOWNLOAD_SITE=https://dlcdn.apache.org \
     GLIBC_VERSION=$glibc_version
 
 RUN mkdir -p /opt/kafka
-RUN curl http://apache.mirrors.spacedump.net/kafka/$KAFKA_VERSION/kafka_$SCALA_VERSION-$KAFKA_VERSION.tgz  -o /opt/kafka.tgz
+RUN curl $DOWNLOAD_SITE/kafka/$KAFKA_VERSION/kafka_$SCALA_VERSION-$KAFKA_VERSION.tgz  -o /opt/kafka.tgz
 RUN tar -C /opt/kafka --extract --file /opt/kafka.tgz --strip-components=1
 
 FROM openjdk:18-slim
