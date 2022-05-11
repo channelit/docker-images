@@ -16,8 +16,8 @@ if [[ ! -f "$ZOO_CONF_DIR/zoo.cfg" ]]; then
     echo "autopurge.snapRetainCount=$ZOO_AUTOPURGE_SNAPRETAINCOUNT" >> "$CONFIG"
     echo "autopurge.purgeInterval=$ZOO_AUTOPURGE_PURGEINTERVAL" >> "$CONFIG"
     echo "maxClientCnxns=$ZOO_MAX_CLIENT_CNXNS" >> "$CONFIG"
-    echo "standaloneEnabled=$ZOO_STANDALONE_ENABLED"
-    echo "admin.enableServer=$ZOO_ADMINSERVER_ENABLED"
+    echo "standaloneEnabled=$ZOO_STANDALONE_ENABLED" >> "$CONFIG"
+    echo "admin.enableServer=$ZOO_ADMINSERVER_ENABLED" >> "$CONFIG"
     echo "4lw.commands.whitelist=$ZOO_4LW_COMMANDS_WHITELIST" >> "$CONFIG"
     
     for server in $ZOO_SERVERS; do

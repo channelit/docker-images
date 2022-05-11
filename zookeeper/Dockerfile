@@ -19,7 +19,9 @@ ENV ZOO_VER=3.8.0 \
     ZOO_AUTOPURGE_PURGEINTERVAL=0 \
     ZOO_AUTOPURGE_SNAPRETAINCOUNT=3 \
     ZOO_MAX_CLIENT_CNXNS=60 \
-    ZOO_STANDALONE_ENABLED=false
+    ZOO_STANDALONE_ENABLED=false \
+    ZOO_ADMINSERVER_ENABLED=true \
+    ZOO_4LW_COMMANDS_WHITELIST=mntr,conf,ruok
 
 RUN groupadd -r --gid $ZOO_GID $ZOO_GROUP && \
     useradd -r --uid $ZOO_GID --gid $ZOO_GID $ZOO_USER && \
@@ -44,5 +46,4 @@ ENV PATH=$PATH:/opt/zookeeper/bin \
     ZOOCFGDIR=$ZOO_CONF_DIR
 
 ENTRYPOINT ["/zookeeper-entrypoint.sh"]
-
 CMD ["/opt/zookeeper/bin/zkServer.sh", "start-foreground"]
