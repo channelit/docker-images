@@ -35,6 +35,7 @@ RUN wget -q https://raw.githubusercontent.com/channelit/docker-images/master/zoo
 	chmod 755 /zookeeper-entrypoint.sh
     
 WORKDIR /opt/zookeeper/
+
 VOLUME ["$ZOO_DATA_DIR", "$ZOO_DATA_LOG_DIR", "$ZOO_LOG_DIR"]
 
 EXPOSE $ZOO_PORT 2888 3888
