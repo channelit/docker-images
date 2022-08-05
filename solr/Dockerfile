@@ -1,6 +1,6 @@
 FROM centos as build
 
-ARG solr_version=8.11.1
+ARG solr_version=9.0.0
 
 ENV SOLR_VERSION=$solr_version \
     SOLR_HOME=/opt/solr \
