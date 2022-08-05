@@ -1,12 +1,12 @@
 FROM centos as build
 
-ARG kafka_version=3.2.0
+ARG kafka_version=3.2.1
 ARG scala_version=2.13
 
 ENV KAFKA_VERSION=$kafka_version \
     SCALA_VERSION=$scala_version \
     KAFKA_HOME=/opt/kafka \
-    DOWNLOAD_SITE=https://dlcdn.apache.org \
+    DOWNLOAD_SITE=https://downloads.apache.org \
     GLIBC_VERSION=$glibc_version
 
 RUN mkdir -p /opt/kafka
