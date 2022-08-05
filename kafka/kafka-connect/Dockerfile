@@ -14,6 +14,13 @@ RUN curl $DOWNLOAD_SITE/kafka/$KAFKA_VERSION/kafka_$SCALA_VERSION-$KAFKA_VERSION
 RUN tar -C /opt/kafka --extract --file /opt/kafka.tgz --strip-components=1
 RUN rm /opt/kafka.tgz*
 
+# workaround for unzip installation issue hopefullay temporary for latest centos image
+RUN cd /etc/yum.repos.d/ &&\
+    sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* &&\
+    sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-* &&\
+    yum update -y
+
+
 RUN yum install unzip -y
 
 RUN mkdir -p /connectors  && \
