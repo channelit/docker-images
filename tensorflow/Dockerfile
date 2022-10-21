@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:latest-py3-jupyter
+FROM tensorflow/tensorflow:latest
 WORKDIR /
 RUN \
 	apt-get update &&\
