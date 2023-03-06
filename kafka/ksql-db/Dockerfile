@@ -1,7 +1,7 @@
 FROM centos as build
 
-ENV FULL_VERSION=0.28.2 \
-	MAJOR_VERSION=0.28.2
+ENV FULL_VERSION=0.28.3 \
+	MAJOR_VERSION=0.28.3
 
 RUN mkdir -p /opt/ksql
 RUN curl -sq http://ksqldb-packages.s3.amazonaws.com/archive/$MAJOR_VERSION/archive.key | gpg --import && \
