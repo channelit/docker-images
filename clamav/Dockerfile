@@ -1,6 +1,6 @@
 FROM centos:7
 
-ENV CLAM_VERSION=0.103.1
+ENV CLAM_VERSION=1.0.1
 
 # only for centos8
 RUN yum -y groupinstall "Development Tools"
