@@ -22,5 +22,9 @@ ENV USER=mongo \
 
 RUN groupadd -r -g $GID $GROUP
 RUN useradd -r -u $UID -g $USER -m -d /opt/$USER -s /bin/bash $USER
+RUN mkdir -p /data/db
+RUN chown -R $UID:$UID /data/db
+
+ENTRYPOINT  ["/bin/sh", "-c" ,"mongod --dbpath=/data/db --bind_ip_all"]
 
 #USER $USER
