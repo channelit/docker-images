@@ -14,7 +14,7 @@ RUN apt update
 RUN apt upgrade
 RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install tzdata
 RUN apt install curl -y
-RUN dpkg -i /mongo.deb
+RUN sudo dpkg -i /mongo.deb
 
 ENV USER=mongo \
     GROUP=mongo \
