@@ -2,17 +2,18 @@ FROM ubuntu:20.04
 
 MAINTAINER Channel IT Services, LLC
 
-ARG arch_type=amd
+ARG arch_type=amd \
+    mongo_major_version=7.0 \
+    mongo_minor_version=7.0.2
 
 ENV MONGO_VERSION=$mongo_version \
-    MONGO_DOWNLOAD_URL="https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/7.0/multiverse/binary-${arch_type}64/mongodb-org-server_7.0.1_${arch_type}64.deb"
+    MONGO_DOWNLOAD_URL="https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/${mongo_major_version}/multiverse/binary-${arch_type}64/mongodb-org-server_${mongo_minor_version}_${arch_type}64.deb"
 
+ADD $MONGO_DOWNLOAD_URL /mongo.deb
 RUN apt update
 RUN apt upgrade
-RUN apt install curl -y
-RUN echo $MONGO_DOWNLOAD_URL
-RUN curl $MONGO_DOWNLOAD_URL -o /mongo.deb
 RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install tzdata
+RUN apt install curl -y
 RUN dpkg -i /mongo.deb
 
 ENV USER=mongo \
