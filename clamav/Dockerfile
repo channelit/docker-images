@@ -1,37 +1,35 @@
-FROM centos:7
+FROM registry.access.redhat.com/ubi8/ubi:latest As clam-build
 
-ENV CLAM_VERSION=1.0.1
+ENV CLAM_VERSION=1.2.0
 
-# only for centos8
-RUN yum -y groupinstall "Development Tools"
-RUN yum -y install epel-release
-#RUN yum -y config-manager --set-enabled PowerTools
-RUN yum -y update
-RUN yum -y repolist
 
-# dependencies
-RUN yum install -y openssl openssl-devel libcurl-devel zlib-devel libpng-devel libxml2-devel json-c-devel bzip2-devel pcre2-devel ncurses-devel
-
-# unit test dependencies
-RUN yum install -y valgrind check check-devel
-
-# download tar and install
 RUN mkdir -p /opt/clamav
-RUN curl -LSo /opt/clamav.tar.gz https://www.clamav.net/downloads/production/clamav-$CLAM_VERSION.tar.gz
-RUN tar xvf /opt/clamav.tar.gz --strip-components=1 -C /opt/clamav/
-RUN cd /opt/clamav &&\
-	./configure --enable-check &&\
-	make -j2 &&\
-	make check &&\
-	make install
+RUN curl -LSo /opt/clamav/clamav.rpm https://www.clamav.net/downloads/production/clamav-${CLAM_VERSION}.linux.x86_64.rpm
+RUN curl -LSo /opt/clamav/clamav.sig https://www.clamav.net/downloads/production/clamav-${CLAM_VERSION}.linux.x86_64.rpm.sig
+RUN yum localinstall -y --disableplugin=subscription-manage /opt/clamav/clamav.rpm
 
-RUN mkdir /usr/local/share/clamav
-RUN cp /usr/local/etc/freshclam.conf.sample /usr/local/etc/freshclam.conf
-RUN cp /usr/local/etc/clamd.conf.sample /usr/local/etc/clamd.conf
 
-# Add clamav user
-RUN groupadd clamav &&\
-    useradd -g clamav -s /bin/false -c "Clam Antivirus" clamav &&\
-    chown -R clamav:clamav /usr/local/share/clamav
+FROM public.ecr.aws/lambda/java:17
+
+ENV	LAMBDA_TASK_ROOT="/var/task"
+
+COPY --from=clam-build /usr/local/bin/clamscan ${LAMBDA_TASK_ROOT}
+COPY --from=clam-build /usr/local/bin/freshelam ${LAMBDA_TASK_ROOT}
+COPY --from=clam-build /usr/local/11b64/*.80.* ${LAMBDA_TASK_ROOT}/
+COPY --from=clam-build /etc/pki/ca-trust/source/anchors/* /etc/pki/ca-trust/source/anchors/
+COPY --from=clam-build /opt /opt
+
+RUN yum install ca-certificates -y
+RUN update-ca-trust
+RUN update-ca-trust force-enable
+
+RUN echo "DatabaseMirror database. clamav. net" > ${LAMBDA_TASK_ROOT}/freshclam.conf
+RUN echo "CompressLocalDatabase yes" » ${LAMBDA_TASK_ROOT}/freshclam. conf
+RUN echo "HTTPProxyServer proxy,apps.dhs.gov" > ${LAMBDA_TASK_ROOT}/freshclam.conf
+RUN echo "HTTPProxyPort 89" » ${LAMBDA_TASK_ROOT}/freshclam.conf
+RUN echo "DatabaseOwner root" » ${LAMBDA_TASK_ROOT}/freshclam.conf
+
+#COPY classes ${LAMBDA_TASK_ROOT}
+#COPY dependency/* ${LAMBDA_TASK_ROOT}/11b/
 
 EXPOSE 3310
