@@ -5,7 +5,6 @@ ENV CLAM_VERSION=1.2.0
 
 RUN mkdir -p /opt/clamav
 RUN curl -LSo /opt/clamav/clamav.rpm https://www.clamav.net/downloads/production/clamav-${CLAM_VERSION}.linux.x86_64.rpm
-RUN curl -LSo /opt/clamav/clamav.sig https://www.clamav.net/downloads/production/clamav-${CLAM_VERSION}.linux.x86_64.rpm.sig
 RUN yum localinstall -y --disableplugin=subscription-manage /opt/clamav/clamav.rpm
 
 
@@ -14,7 +13,7 @@ FROM public.ecr.aws/lambda/java:17
 ENV	LAMBDA_TASK_ROOT="/var/task"
 
 COPY --from=clam-build /usr/local/bin/clamscan ${LAMBDA_TASK_ROOT}
-COPY --from=clam-build /usr/local/bin/freshelam ${LAMBDA_TASK_ROOT}
+COPY --from=clam-build /usr/local/bin/freshclam ${LAMBDA_TASK_ROOT}
 COPY --from=clam-build /usr/local/11b64/*.80.* ${LAMBDA_TASK_ROOT}/
 COPY --from=clam-build /etc/pki/ca-trust/source/anchors/* /etc/pki/ca-trust/source/anchors/
 COPY --from=clam-build /opt /opt
