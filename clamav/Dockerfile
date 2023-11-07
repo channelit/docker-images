@@ -14,7 +14,7 @@ ENV	LAMBDA_TASK_ROOT="/var/task"
 
 COPY --from=clam-build /usr/local/bin/clamscan ${LAMBDA_TASK_ROOT}
 COPY --from=clam-build /usr/local/bin/freshclam ${LAMBDA_TASK_ROOT}
-COPY --from=clam-build /usr/local/11b64/*.80.* ${LAMBDA_TASK_ROOT}/
+COPY --from=clam-build /usr/local/lib64/*.80.* ${LAMBDA_TASK_ROOT}/
 COPY --from=clam-build /etc/pki/ca-trust/source/anchors/* /etc/pki/ca-trust/source/anchors/
 COPY --from=clam-build /opt /opt
 
