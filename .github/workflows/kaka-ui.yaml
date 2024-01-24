@@ -1,0 +1,57 @@
+name: Kafka Connect
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+on:
+  schedule:
+    - cron: '42 12 * * *'
+  push:
+    paths:
+      - 'kafka/ui/Dockerfile_kafka-ui'
+    branches: [ master ]
+    tags: [ 'v*.*.*' ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: kafka-connect
+  DOCKER_FILE: kafka/ui/Dockerfile_kafka-ui
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log into registry ${{ env.REGISTRY }}
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push ${{ env.IMAGE_NAME }} Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64/v8
+          file: ${{ env.DOCKER_FILE }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ env.REGISTRY }}/channelit/${{ env.IMAGE_NAME }}:latest
