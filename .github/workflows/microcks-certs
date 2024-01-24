@@ -1,4 +1,4 @@
-name: Kafka UI
+name: Microcks With Certs
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -10,7 +10,7 @@ on:
     - cron: '42 12 * * *'
   push:
     paths:
-      - 'kafka/ui/Dockerfile_kafka-ui'
+      - 'microcks/Dockerfile'
     branches: [ master ]
     tags: [ 'v*.*.*' ]
   pull_request:
@@ -18,8 +18,8 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: kafka-ui
-  DOCKER_FILE: kafka/ui/Dockerfile_kafka-ui
+  IMAGE_NAME: microcks-certs
+  DOCKER_FILE: microcks/Dockerfile
 
 jobs:
   build:
