@@ -23,10 +23,10 @@ RUN update-ca-trust
 RUN update-ca-trust force-enable
 
 RUN echo "DatabaseMirror database. clamav. net" > ${LAMBDA_TASK_ROOT}/freshclam.conf
-RUN echo "CompressLocalDatabase yes" » ${LAMBDA_TASK_ROOT}/freshclam. conf
-RUN echo "HTTPProxyServer proxy,apps.dhs.gov" > ${LAMBDA_TASK_ROOT}/freshclam.conf
-RUN echo "HTTPProxyPort 89" » ${LAMBDA_TASK_ROOT}/freshclam.conf
-RUN echo "DatabaseOwner root" » ${LAMBDA_TASK_ROOT}/freshclam.conf
+RUN echo "CompressLocalDatabase yes" >> ${LAMBDA_TASK_ROOT}/freshclam.conf
+RUN echo "HTTPProxyServer proxy,apps.dhs.gov" >> ${LAMBDA_TASK_ROOT}/freshclam.conf
+RUN echo "HTTPProxyPort 89" >> ${LAMBDA_TASK_ROOT}/freshclam.conf
+RUN echo "DatabaseOwner root" >> ${LAMBDA_TASK_ROOT}/freshclam.conf
 
 #COPY classes ${LAMBDA_TASK_ROOT}
 #COPY dependency/* ${LAMBDA_TASK_ROOT}/11b/
