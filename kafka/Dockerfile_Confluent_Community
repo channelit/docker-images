@@ -8,7 +8,7 @@ RUN	curl http://packages.confluent.io/archive/$MAJOR_VERSION/confluent-community
 RUN tar -C /opt/kafka --extract --file /opt/kafka.tgz --strip-components=1
 RUN rm /opt/kafka.tgz*
 
-FROM openjdk:18-slim
+FROM openjdk:24-slim
 
 ENV USER=kafka \
 	GROUP=kafka \
