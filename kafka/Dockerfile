@@ -13,7 +13,7 @@ RUN mkdir -p /opt/kafka
 RUN curl $DOWNLOAD_SITE/kafka/$KAFKA_VERSION/kafka_$SCALA_VERSION-$KAFKA_VERSION.tgz  -o /opt/kafka.tgz
 RUN tar -C /opt/kafka --extract --file /opt/kafka.tgz --strip-components=1
 
-FROM openjdk:18-slim
+FROM openjdk:24-slim
 
 ENV USER=kafka \
     GROUP=kafka \
