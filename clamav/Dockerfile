@@ -1,10 +1,10 @@
 FROM registry.access.redhat.com/ubi8/ubi:latest As clam-build
 
-ENV CLAM_VERSION=1.2.0
+ENV CLAM_VERSION=1.3.0
 
 
 RUN mkdir -p /opt/clamav
-RUN curl -LSo /opt/clamav/clamav.rpm https://www.clamav.net/downloads/production/clamav-${CLAM_VERSION}.linux.x86_64.rpm
+RUN curl -LSo /opt/clamav/clamav.rpm https://www.clamav.net/downloads/production/clamav-${CLAM_VERSION}.linux.i686.rpm
 RUN yum localinstall -y --disableplugin=subscription-manage /opt/clamav/clamav.rpm
 
 
