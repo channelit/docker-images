@@ -1,6 +1,6 @@
 FROM registry.access.redhat.com/ubi8/ubi:latest As clam-build
 
-ENV CLAM_VERSION=1.3.0
+ENV CLAM_VERSION=1.4.1
 
 
 RUN mkdir -p /opt/clamav
