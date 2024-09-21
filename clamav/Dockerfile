@@ -18,17 +18,16 @@ COPY --from=clam-build /usr/local/lib64/*.so.* ${LAMBDA_TASK_ROOT}/
 COPY --from=clam-build /etc/pki/ca-trust/source/anchors/* /etc/pki/ca-trust/source/anchors/
 COPY --from=clam-build /opt /opt
 
-RUN yum install ca-certificates -y
-RUN update-ca-trust
-RUN update-ca-trust force-enable
-
 RUN echo "DatabaseMirror database.clamav.net" > ${LAMBDA_TASK_ROOT}/freshclam.conf
 RUN echo "CompressLocalDatabase yes" >> ${LAMBDA_TASK_ROOT}/freshclam.conf
 #RUN echo "HTTPProxyServer proxy.com" >> ${LAMBDA_TASK_ROOT}/freshclam.conf
 RUN echo "HTTPProxyPort 80" >> ${LAMBDA_TASK_ROOT}/freshclam.conf
 RUN echo "DatabaseOwner root" >> ${LAMBDA_TASK_ROOT}/freshclam.conf
 
-#COPY classes ${LAMBDA_TASK_ROOT}
-#COPY dependency/* ${LAMBDA_TASK_ROOT}/lib/
+#COPY requirements.txt ${LAMBDA_TASK_ROOT}
+#RUN pip install -r requirements.txt --target ${LAMBDA_TASK_ROOT}
+#COPY src/ ${LAMBDA_TASK_ROOT}
+#RUN chmod 755 -R ${LAMBDA_TASK_ROOT}
+#CMD ["handler.handler"]
 
 EXPOSE 3310
