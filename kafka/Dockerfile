@@ -1,6 +1,6 @@
 FROM centos as build
 
-ARG kafka_version=3.9.0
+ARG kafka_version=3.9
 ARG scala_version=2.13
 
 ENV KAFKA_VERSION=$kafka_version \
