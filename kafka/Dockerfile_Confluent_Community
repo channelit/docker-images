@@ -1,6 +1,6 @@
 FROM centos as build
 
-ENV FULL_VERSION=7.7.0 \
+ENV FULL_VERSION=7.7.2 \
 	MAJOR_VERSION=7.7
 
 RUN mkdir -p /opt/kafka
