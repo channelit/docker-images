@@ -1,8 +1,7 @@
 FROM registry.access.redhat.com/ubi9/openjdk-21
 
 ENV VERSION=0.7.2
-ENV ES_JAVA_OPTS=-XX:UseSVE=0
-ENV CLI_JAVA_OPTS=-XX:UseSVE=0
+ENV JAVA_TOOL_OPTIONS="-XX:UseSVE=0"
 
 RUN mkdir /opt/kafka-ui
 RUN curl -LSo /opt/kafka-ui/kafka-ui.jar https://github.com/provectus/kafka-ui/releases/download/v${VERSION}/kafka-ui-api-v${VERSION}.jar
