@@ -1,6 +1,6 @@
-FROM registry.access.redhat.com/ubi8/ubi:latest As clam-build
+FROM registry.access.redhat.com/ubi8/ubi:latest AS clam-build
 
-ENV CLAM_VERSION=1.4.1
+ENV CLAM_VERSION=1.4.2
 
 
 RUN mkdir -p /opt/clamav
@@ -23,6 +23,15 @@ RUN echo "CompressLocalDatabase yes" >> ${LAMBDA_TASK_ROOT}/freshclam.conf
 #RUN echo "HTTPProxyServer proxy.com" >> ${LAMBDA_TASK_ROOT}/freshclam.conf
 RUN echo "HTTPProxyPort 80" >> ${LAMBDA_TASK_ROOT}/freshclam.conf
 RUN echo "DatabaseOwner root" >> ${LAMBDA_TASK_ROOT}/freshclam.conf
+
+RUN update-ca-trust
+RUN update-ca-trust force-enable
+
+# Fix for locale warning in AWS images
+RUN dnf install -y langpacks-en
+RUN dnf install glibc-langpack-en
+ENV LC_ALL=en_US.UTF-8
+ENV LANG=en_US.UTF-8
 
 #COPY requirements.txt ${LAMBDA_TASK_ROOT}
 #RUN pip install -r requirements.txt --target ${LAMBDA_TASK_ROOT}
