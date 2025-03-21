@@ -1,4 +1,4 @@
-FROM centos as build
+FROM centos:8 as build
 
 ARG kafka_version=4.0.0
 ARG scala_version=2.13

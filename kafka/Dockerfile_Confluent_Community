@@ -1,7 +1,7 @@
-FROM centos as build
+FROM centos:8 as build
 
-ENV FULL_VERSION=7.7.2 \
-	MAJOR_VERSION=7.7
+ENV FULL_VERSION=7.9.0 \
+	MAJOR_VERSION=7.9
 
 RUN mkdir -p /opt/kafka
 RUN	curl http://packages.confluent.io/archive/$MAJOR_VERSION/confluent-community-$FULL_VERSION.tar.gz  -o /opt/kafka.tgz
